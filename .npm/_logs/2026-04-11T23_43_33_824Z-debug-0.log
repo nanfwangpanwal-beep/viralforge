@@ -1,0 +1,17 @@
+0 verbose cli /data/data/com.termux/files/usr/bin/node /data/data/com.termux/files/usr/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@11.12.1
+2 info using node@v25.8.2
+3 silly config load:file:/data/data/com.termux/files/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/data/data/com.termux/files/home/.npmrc
+5 silly config load:file:/data/data/com.termux/files/usr/etc/npmrc
+6 verbose title npm bin
+7 verbose argv "bin" "--global"
+8 verbose logfile logs-max:10 dir:/data/data/com.termux/files/home/.npm/_logs/2026-04-11T23_43_33_824Z-
+9 verbose logfile /data/data/com.termux/files/home/.npm/_logs/2026-04-11T23_43_33_824Z-debug-0.log
+10 silly logfile done cleaning log files
+11 verbose cwd /data/data/com.termux/files/usr/lib/node_modules/heroku/node_modules/yarn
+12 verbose os Linux 5.10.209-android12-9-00016-g7c6bbcca33e1-ab12029497
+13 verbose node v25.8.2
+14 verbose npm  v11.12.1
+15 verbose exit 1
+16 verbose code 1
