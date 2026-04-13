@@ -1,209 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ViralForge OS | Elite AI</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViralForge OS | Intelligence Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Outfit:wght@300;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --neon: #00ffa6;
-            --neon-glow: rgba(0, 255, 166, 0.4);
-            --bg-deep: #05060a;
+            --accent: #00ffa6;
+            --accent-glow: rgba(0, 255, 166, 0.4);
+            --bg: #030408;
             --surface: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-dim: #8e9196;
         }
 
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            cursor: none;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
 
         body {
-            height: 100vh; overflow: hidden;
-            background: var(--bg-deep); color: white;
+            background-color: var(--bg);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1200px;
         }
 
-        /* ===== CYBER GRID BACKGROUND ===== */
-        .grid-overlay {
-            position: fixed; inset: 0;
-            background-image: 
-                linear-gradient(rgba(0, 255, 166, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 166, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            perspective: 1000px;
-            z-index: 1;
+        /* Animated Nebula Background */
+        .nebula {
+            position: fixed; inset: 0; z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 166, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 195, 255, 0.07) 0%, transparent 40%);
+            filter: blur(100px);
+            animation: drift 15s infinite alternate ease-in-out;
         }
 
-        .aurora {
-            position: fixed; inset: -50%; z-index: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 166, 0.1), transparent 50%);
-            filter: blur(120px);
-            animation: pulse 8s infinite alternate;
-        }
+        @keyframes drift { from { transform: scale(1); } to { transform: scale(1.1) translate(10px, 10px); } }
 
-        @keyframes pulse { from { opacity: 0.5; transform: scale(1); } to { opacity: 0.8; transform: scale(1.2); } }
-
-        /* ===== LUXURY CURSOR ===== */
-        .cursor {
-            position: fixed; width: 6px; height: 6px; background: var(--neon);
-            border-radius: 50%; pointer-events: none; z-index: 10000;
-            box-shadow: 0 0 15px var(--neon), 0 0 30px var(--neon);
-        }
-
-        /* ===== MODAL / AUTH ===== */
-        .modal {
-            position: fixed; inset: 0; z-index: 1000;
-            background: radial-gradient(circle at center, rgba(5, 6, 10, 0.8), #05060a);
-            display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .auth-card {
-            background: rgba(10, 11, 16, 0.9);
+        /* The Main Suite Card */
+        .suite-container {
+            width: 95%; max-width: 1000px; height: 650px;
+            background: rgba(10, 11, 15, 0.8);
+            backdrop-filter: blur(40px) saturate(180%);
             border: 1px solid var(--border);
-            padding: 50px; border-radius: 40px; width: 420px;
-            text-align: center; position: relative;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 166, 0.05);
+            border-radius: 32px;
+            display: flex;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8), inset 0 0 40px rgba(255,255,255,0.02);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
         }
 
-        .neon-line {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 60px; height: 2px; background: var(--neon);
-            box-shadow: 0 0 15px var(--neon);
-        }
-
-        h1 { font-size: 32px; font-weight: 800; letter-spacing: -1px; margin-bottom: 30px; }
-        h1 span { color: var(--neon); text-shadow: 0 0 15px var(--neon-glow); }
-
-        input {
-            width: 100%; padding: 18px; margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border); border-radius: 16px;
-            color: white; font-size: 14px; transition: 0.3s;
-        }
-        input:focus { border-color: var(--neon); outline: none; box-shadow: 0 0 15px rgba(0, 255, 166, 0.1); }
-
-        .btn-neon {
-            width: 100%; padding: 18px; border-radius: 16px; border: 1px solid var(--neon);
-            background: transparent; color: var(--neon); font-weight: 800;
-            cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px;
-        }
-        .btn-neon:hover { background: var(--neon); color: black; box-shadow: 0 0 30px var(--neon-glow); }
-
-        /* ===== MAIN APP INTERFACE ===== */
-        .app-container {
-            display: none; height: 100vh; position: relative; z-index: 10;
-            grid-template-columns: 300px 1fr;
-        }
-
+        /* Sidebar Navigation */
         .sidebar {
-            background: rgba(5, 6, 10, 0.6); backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border); padding: 40px 30px;
+            width: 240px; border-right: 1px solid var(--border);
+            padding: 30px 20px; display: flex; flex-direction: column;
         }
 
-        .nav-link {
-            padding: 15px; border-radius: 12px; color: #666; font-weight: 600;
-            margin-bottom: 10px; transition: 0.3s; cursor: pointer;
+        .brand { font-family: 'Outfit'; font-weight: 700; font-size: 22px; letter-spacing: -1px; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
+        .brand-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+
+        .nav-item {
+            padding: 12px 15px; border-radius: 12px; font-size: 14px; font-weight: 500;
+            color: var(--text-dim); margin-bottom: 8px; transition: 0.3s;
         }
-        .nav-link.active { color: var(--neon); background: rgba(0, 255, 166, 0.05); }
+        .nav-item.active { background: var(--surface); color: var(--accent); border: 1px solid var(--border); }
+        .nav-item:hover:not(.active) { color: #fff; background: rgba(255,255,255,0.02); }
 
-        .viewport { padding: 60px; display: flex; flex-direction: column; }
+        /* Main Viewport */
+        .viewport { flex: 1; padding: 40px; display: flex; flex-direction: column; overflow-y: auto; }
 
-        .chat-box {
-            flex: 1; background: var(--surface); border: 1px solid var(--border);
-            border-radius: 30px; margin-bottom: 30px; padding: 30px;
-            overflow-y: auto; display: flex; flex-direction: column; gap: 20px;
+        .header { margin-bottom: 30px; }
+        .header h1 { font-family: 'Outfit'; font-size: 32px; letter-spacing: -1px; }
+        .header p { color: var(--text-dim); font-size: 14px; }
+
+        /* Input Controls */
+        .controls-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 25px; }
+        
+        .input-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 10px; }
+        
+        input, select {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+            padding: 18px; border-radius: 16px; color: white; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 255, 166, 0.1); }
+
+        /* The Button */
+        .forge-btn {
+            width: 100%; padding: 20px; border: none; border-radius: 18px;
+            background: #fff; color: #000; font-weight: 800; font-size: 15px;
+            cursor: pointer; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative; overflow: hidden;
+        }
+        .forge-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 20px 40px var(--accent-glow); }
+        .forge-btn:active { transform: translateY(0); }
+
+        /* Results Area */
+        .results-window { margin-top: 30px; display: none; flex-direction: column; gap: 12px; }
+        
+        .hook-card {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 20px; border-radius: 20px; display: flex; justify-content: space-between;
+            align-items: center; animation: slideIn 0.5s ease forwards;
         }
 
-        .msg-ai { color: var(--neon); font-size: 18px; line-height: 1.6; font-weight: 500; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .input-bar {
-            display: flex; gap: 15px; background: rgba(255,255,255,0.02);
-            padding: 10px; border-radius: 20px; border: 1px solid var(--border);
+        .copy-btn {
+            background: rgba(0, 255, 166, 0.1); border: 1px solid var(--accent);
+            color: var(--accent); padding: 8px 15px; border-radius: 10px; font-size: 12px;
+            font-weight: 700; cursor: pointer;
         }
 
-        .input-bar input { margin: 0; border: none; background: transparent; }
+        /* Diagnostics / Loading */
+        .diagnostics {
+            display: none; font-family: monospace; font-size: 12px; color: var(--accent);
+            margin-top: 20px; opacity: 0.7;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 800px) {
+            .suite-container { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; flex-direction: row; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; }
+            .nav-item { white-space: nowrap; margin-bottom: 0; margin-right: 10px; }
+            .controls-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="grid-overlay"></div>
-    <div class="aurora"></div>
-    <div class="cursor" id="cursor"></div>
+    <div class="nebula"></div>
 
-    <div class="modal" id="auth">
-        <div class="auth-card">
-            <div class="neon-line"></div>
-            <h1>Viral<span>Forge</span> OS</h1>
-            <input type="email" placeholder="ACCESS_EMAIL" id="email">
-            <input type="password" placeholder="SYSTEM_KEY">
-            <button class="btn-neon" onclick="init()">Initialize System</button>
-        </div>
-    </div>
-
-    <div class="app-container" id="app">
+    <div class="suite-container" id="mainCard">
         <aside class="sidebar">
-            <h2 style="font-size: 14px; letter-spacing: 4px; color: #444; margin-bottom: 40px;">CORE_TERMINAL</h2>
-            <div class="nav-link active">DASHBOARD</div>
-            <div class="nav-link">STRATEGY_GEN</div>
-            <div class="nav-link">MARKET_PULSE</div>
-            <div class="nav-link">SYSTEM_LOGS</div>
+            <div class="brand"><div class="brand-dot"></div> ViralForge.OS</div>
+            <div class="nav-item active">Neural Terminal</div>
+            <div class="nav-item">Content Matrix</div>
+            <div class="nav-item">Trend Arbitrage</div>
+            <div class="nav-item">Asset Library</div>
+            <div class="nav-item" style="margin-top: auto;">System Settings</div>
         </aside>
 
         <main class="viewport">
-            <div style="margin-bottom: 30px;">
-                <span style="color: var(--neon); font-size: 12px; letter-spacing: 2px;">STATUS: OPTIMAL</span>
-                <h2 style="font-size: 32px; font-weight: 800;">Neural Synthesis Engine</h2>
+            <div class="header">
+                <h1>Executive Suite</h1>
+                <p>Advanced algorithmic hook synthesis for global creators.</p>
             </div>
 
-            <div class="chat-box" id="feed">
-                <div class="msg-ai">> System initialized. Awaiting creative directives...</div>
+            <div class="controls-grid">
+                <div class="input-group">
+                    <label>Target Niche</label>
+                    <input type="text" id="niche" placeholder="e.g. Luxury Finance, AI SaaS">
+                </div>
+                <div class="input-group">
+                    <label>Strategy Mode</label>
+                    <select id="mode">
+                        <option>Authoritative</option>
+                        <option>Controversial</option>
+                        <option>Curiosity-Gap</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="input-bar">
-                <input type="text" id="userInput" placeholder="COMMAND: Generate viral strategy for..." onkeypress="handle(event)">
-                <button class="btn-neon" style="width: 120px; padding: 12px;" onclick="send()">EXECUTE</button>
+            <button class="forge-btn" id="forgeBtn" onclick="initiateForge()">INITIALIZE SYNTHESIS</button>
+
+            <div class="diagnostics" id="logs">
+                > Initializing Neural Network...<br>
+                > Scraping Global Trends...<br>
+                > Analyzing Psychological Triggers...
             </div>
+
+            <div class="results-window" id="results">
+                </div>
         </main>
     </div>
 
     <script>
-        function init() {
-            document.getElementById('auth').style.display = 'none';
-            document.getElementById('app').style.display = 'grid';
-        }
-
-        const cur = document.getElementById('cursor');
+        const card = document.getElementById('mainCard');
+        
+        // 3D Tilt Effect
         document.addEventListener('mousemove', (e) => {
-            cur.style.left = e.clientX + 'px';
-            cur.style.top = e.clientY + 'px';
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
         });
 
-        function handle(e) { if(e.key === 'Enter') send(); }
+        async function initiateForge() {
+            const niche = document.getElementById('niche').value;
+            if(!niche) return alert("System requires niche input.");
 
-        function send() {
-            const input = document.getElementById('userInput');
-            const feed = document.getElementById('feed');
-            if(!input.value) return;
+            const btn = document.getElementById('forgeBtn');
+            const logs = document.getElementById('logs');
+            const results = document.getElementById('results');
 
-            feed.innerHTML += `<div style="color: #666;">> ${input.value}</div>`;
-            
-            const response = document.createElement('div');
-            response.className = 'msg-ai';
-            response.innerHTML = '> Synthesizing...';
-            feed.appendChild(response);
+            btn.innerText = "FORGING...";
+            btn.disabled = true;
+            logs.style.display = "block";
+            results.style.display = "none";
 
-            setTimeout(() => {
-                response.innerHTML = '> ANALYSIS COMPLETE: Target high-retention "Negative Hook" strategy identified. Recommendation: "Stop making the $500 mistake in your niche."';
-                feed.scrollTop = feed.scrollHeight;
-            }, 1000);
+            try {
+                const response = await fetch(`/generate?niche=${encodeURIComponent(niche)}`);
+                const data = await response.json();
 
-            input.value = "";
+                setTimeout(() => {
+                    logs.style.display = "none";
+                    results.style.display = "flex";
+                    btn.innerText = "INITIALIZE SYNTHESIS";
+                    btn.disabled = false;
+                    results.innerHTML = "";
+
+                    const hooks = Array.isArray(data.hooks) ? data.hooks : [data.hook];
+                    hooks.forEach(h => {
+                        const div = document.createElement('div');
+                        div.className = 'hook-card';
+                        div.innerHTML = `
+                            <div style="font-weight: 600; font-size: 15px;">${h}</div>
+                            <button class="copy-btn" onclick="copyText('${h.replace(/'/g, "\\'")}')">COPY</button>
+                        `;
+                        results.appendChild(div);
+                    });
+                }, 1500); // Simulate processing for "Premium" feel
+
+            } catch (err) {
+                btn.innerText = "ENGINE ERROR";
+                logs.innerText = "> Failed to connect to server.";
+            }
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert("Copied to clipboard.");
         }
     </script>
 </body>
