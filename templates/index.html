@@ -66,7 +66,7 @@
         .btn-forge {
             width: 100%; padding: 22px; border-radius: 20px; border: none;
             background: linear-gradient(90deg, var(--mint), var(--violet));
-            color: #000; font-family: 'Exo', sans-serif; font-weight: 900;
+            color: #000; font-family: 'Exo', sans-serif; font-weight: 800;
             font-size: 1.1rem; text-transform: uppercase; cursor: pointer; margin-top: 20px;
             transition: 0.4s;
         }
@@ -98,10 +98,27 @@
             border-radius: 12px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--violet);
             display: flex; justify-content: space-between;
         }
+
+        /* --- NOTIFICATION TOAST SYSTEM (Alert Replacement) --- */
+        #notification-host {
+            position: fixed; top: 20px; right: 20px; z-index: 10000;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast {
+            background: var(--glass); border: 1px solid var(--border); padding: 15px 25px;
+            border-radius: 15px; border-left: 3px solid var(--mint); backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #fff;
+            animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        .toast.fade-out { animation: toastOut 0.4s ease forwards; }
+        @keyframes toastOut { to { opacity: 0; transform: translateY(-20px); } }
+
     </style>
 </head>
 <body>
 
+<div id="notification-host"></div>
 <div class="ambient-neural"></div>
 
 <div class="container">
@@ -159,7 +176,7 @@
                 <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Voice Samples (Paste 3-5 Texts)</label>
                 <textarea id="voiceSamples" style="height: 290px;" placeholder="I use lowercase only. I hate emojis. I speak in short sentences."></textarea>
             </div>
-            <button class="btn-forge" style="background: transparent; border: 1px solid var(--border); color: #fff;" onclick="alert('Digital Twin Synced.')">Lock Voice</button>
+            <button class="btn-forge" style="background: transparent; border: 1px solid var(--border); color: #fff;" onclick="showToast('Digital Twin Synchronized')">Lock Voice</button>
         </div>
 
         <div class="card span-12">
@@ -184,6 +201,19 @@
 </div>
 
 <script>
+    function showToast(message) {
+        const host = document.getElementById('notification-host');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerText = message;
+        host.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('fade-out');
+            setTimeout(() => toast.remove(), 400);
+        }, 3000);
+    }
+
     function forgeEliteReply() {
         const card = document.getElementById('ghostCard');
         const res = document.getElementById('resultArea');
@@ -191,7 +221,6 @@
         const timer = document.getElementById('timer');
         const move = document.getElementById('move').value;
 
-        // Visual Feedback
         card.classList.add('scanning');
         res.style.display = 'none';
 
@@ -219,12 +248,20 @@
             res.style.display = 'block';
             text.innerText = db[move].reply;
             timer.innerText = db[move].time;
+            showToast('Response Forged Successfully');
         }, 1800);
     }
 
     function forgeViralHook() {
         const niche = document.getElementById('niche').value || "Industry";
-        alert("VIRALFORGE GENERATED: Why 99% of " + niche + " creators fail—and the 3-minute fix they're ignoring.");
+        const message = "VIRALFORGE GENERATED: Why 99% of " + niche + " creators fail—and the 3-minute fix they're ignoring.";
+        
+        // Output result directly to a new toast or can be integrated into UI
+        showToast('Viral Hook Forged');
+        
+        // If you want the hook text to be usable, you could also copy it to clipboard automatically
+        navigator.clipboard.writeText(message);
+        showToast('Hook copied to clipboard');
     }
 </script>
 
