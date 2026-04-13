@@ -4,7 +4,6 @@ from openai import OpenAI
 
 app = Flask(__name__)
 
-# Initialize client simply
 api_key = os.environ.get("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key)
 
@@ -16,8 +15,7 @@ def home():
 def generate():
     niche = request.args.get('niche', 'trending topics')
     if not api_key:
-        return jsonify({"status": "error", "message": "API Key missing on server"}), 500
-        
+        return jsonify({"status": "error", "message": "API Key missing"}), 500
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -28,6 +26,7 @@ def generate():
         )
         return jsonify({
             "status": "success", 
+            "niche": niche,
             "content": response.choices[0].message.content
         })
     except Exception as e:
