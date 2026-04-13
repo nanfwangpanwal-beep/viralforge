@@ -16,104 +16,58 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; min-height: 100vh; }
+        body { background: var(--bg); color: #fff; overflow-x: hidden; min-height: 100vh; padding-bottom: 50px; }
 
-        /* --- BACKGROUND ATMOSPHERE --- */
-        .ambient-neural {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at 50% -20%, #151b2d 0%, #000 100%);
-            z-index: -1;
-        }
-
+        .ambient-neural { position: fixed; inset: 0; background: radial-gradient(circle at 50% -20%, #151b2d 0%, #000 100%); z-index: -1; }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
 
-        /* --- TOP BRANDING --- */
+        /* --- HEADER & BRANDING --- */
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
         .logo { font-family: 'Exo', sans-serif; font-size: 1.8rem; letter-spacing: -1.5px; font-weight: 800; }
         .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .secure-tag { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--mint); padding: 6px 15px; border: 1px solid var(--border); border-radius: 50px; background: rgba(53, 240, 186, 0.05); }
 
-        /* --- BENTO GRID LAYOUT --- */
+        /* --- BENTO ARCHITECTURE --- */
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-        .card { 
-            background: var(--glass); 
-            border: 1px solid var(--border); 
-            border-radius: 35px; 
-            padding: 30px; 
-            backdrop-filter: blur(40px); 
-            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .card:hover { border-color: rgba(53, 240, 186, 0.4); transform: translateY(-5px); box-shadow: var(--neon-glow); }
-
+        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 30px; backdrop-filter: blur(40px); position: relative; overflow: hidden; }
         .span-8 { grid-column: span 8; }
         .span-4 { grid-column: span 4; }
         .span-12 { grid-column: span 12; }
 
         @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
 
-        /* --- UI ELEMENTS --- */
         h3 { font-family: 'Exo', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #555; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
         h3::before { content: "◈"; color: var(--mint); }
 
-        textarea, select, input {
-            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            border-radius: 18px; padding: 18px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
-        }
-        textarea:focus { border-color: var(--mint); background: rgba(255,255,255,0.05); }
+        textarea, select, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 18px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; }
+        textarea:focus { border-color: var(--mint); }
 
-        .btn-forge {
-            width: 100%; padding: 22px; border-radius: 20px; border: none;
-            background: linear-gradient(90deg, var(--mint), var(--violet));
-            color: #000; font-family: 'Exo', sans-serif; font-weight: 800;
-            font-size: 1.1rem; text-transform: uppercase; cursor: pointer; margin-top: 20px;
-            transition: 0.4s;
-        }
+        .btn-forge { width: 100%; padding: 22px; border-radius: 20px; border: none; background: linear-gradient(90deg, var(--mint), var(--violet)); color: #000; font-family: 'Exo', sans-serif; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; margin-top: 20px; transition: 0.4s; }
         .btn-forge:hover { filter: brightness(1.1); transform: scale(1.02); }
 
-        /* --- NEURAL SCAN ANIMATION --- */
-        .scan-line {
-            position: absolute; top: -100%; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to bottom, transparent, rgba(53, 240, 186, 0.05), transparent);
-            z-index: 1; pointer-events: none;
-        }
+        /* --- HISTORY RAILS (YELLOW BOX AREA) --- */
+        .history-rail { margin-top: 25px; display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .history-rail::-webkit-scrollbar { display: none; }
+        .history-item { flex: 0 0 140px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 12px; border-radius: 15px; cursor: pointer; transition: 0.3s; }
+        .history-item:hover { border-color: var(--mint); }
+        .history-item span { display: block; font-family: 'JetBrains Mono'; font-size: 8px; color: var(--mint); margin-bottom: 5px; }
+        .history-item p { font-size: 10px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* --- OUTPUT ARCHITECTURE (RED BOX AREA) --- */
+        .output-portal { margin-top: 30px; background: #080a0f; border: 1px solid var(--border); border-radius: 25px; padding: 25px; border-left: 4px solid var(--mint); min-height: 120px; }
+        .output-header { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; margin-bottom: 15px; }
+        .output-header b { color: var(--mint); }
+        .main-response { font-size: 1.2rem; line-height: 1.5; font-weight: 500; color: #fff; margin-bottom: 15px; }
+        .full-notes { border-top: 1px solid var(--border); padding-top: 15px; font-size: 11px; color: #666; line-height: 1.6; }
+
+        /* --- NOTIFICATION SYSTEM --- */
+        #notification-host { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: var(--glass); border: 1px solid var(--border); padding: 15px 25px; border-radius: 15px; border-left: 3px solid var(--mint); backdrop-filter: blur(10px); color: #fff; font-size: 0.9rem; animation: toastIn 0.4s ease forwards; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+
+        .scan-line { position: absolute; top: -100%; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, transparent, rgba(53, 240, 186, 0.05), transparent); pointer-events: none; }
         .scanning .scan-line { animation: scan 2s linear infinite; }
         @keyframes scan { 0% { top: -50%; } 100% { top: 100%; } }
-
-        /* --- OUTPUT ARCHITECTURE --- */
-        .result-area { margin-top: 30px; display: none; animation: slideUp 0.6s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .stealth-status { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; margin-bottom: 12px; }
-        .stealth-status span b { color: var(--mint); }
-
-        .reply-display { 
-            background: #080a0f; border-left: 4px solid var(--mint); padding: 25px; 
-            border-radius: 0 20px 20px 0; font-size: 1.3rem; line-height: 1.4; font-weight: 500;
-        }
-
-        .latency-advice {
-            margin-top: 15px; background: rgba(167, 95, 255, 0.05); padding: 12px 20px;
-            border-radius: 12px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--violet);
-            display: flex; justify-content: space-between;
-        }
-
-        /* --- NOTIFICATION TOAST SYSTEM (Alert Replacement) --- */
-        #notification-host {
-            position: fixed; top: 20px; right: 20px; z-index: 10000;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .toast {
-            background: var(--glass); border: 1px solid var(--border); padding: 15px 25px;
-            border-radius: 15px; border-left: 3px solid var(--mint); backdrop-filter: blur(10px);
-            font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #fff;
-            animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes toastIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-        .toast.fade-out { animation: toastOut 0.4s ease forwards; }
-        @keyframes toastOut { to { opacity: 0; transform: translateY(-20px); } }
-
     </style>
 </head>
 <body>
@@ -131,137 +85,112 @@
         <div class="card span-8" id="ghostCard">
             <div class="scan-line"></div>
             <h3>Elite Ghostwriter</h3>
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 10px; color: #444; text-transform: uppercase; margin-bottom: 8px; display: block;">Chat Context / Recipient Subtext</label>
-                <textarea id="chatInput" placeholder="Paste the last few messages... ViralForge will scan for power gaps."></textarea>
+            <textarea id="chatInput" placeholder="Paste history... Scanning for power gaps."></textarea>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <select id="archetype">
+                    <option>The Ego-Centric</option>
+                    <option>The Ghoster</option>
+                </select>
+                <select id="move">
+                    <option value="push">Push-Pull Tension</option>
+                    <option value="stoic">Stoic Scarcity</option>
+                </select>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Target Archetype</label>
-                    <select id="archetype">
-                        <option>The Ego-Centric (High Power)</option>
-                        <option>The Ghoster (Cold Interest)</option>
-                        <option>The Negotiator (Logic Based)</option>
-                        <option>The Playful Distractor</option>
-                    </select>
-                </div>
-                <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Desired Move</label>
-                    <select id="move">
-                        <option value="push">Push-Pull Tension</option>
-                        <option value="stoic">Stoic Scarcity</option>
-                        <option value="humor">Pattern Interrupt</option>
-                        <option value="expert">Expert Dominance</option>
-                    </select>
-                </div>
+            
+            <div class="history-rail" id="ghostHistory">
+                <div class="history-item"><span>ARCHIVE_01</span><p>honestly, i was starting...</p></div>
+                <div class="history-item"><span>ARCHIVE_02</span><p>fair enough. i'm heading...</p></div>
             </div>
-            <button class="btn-forge" onclick="forgeEliteReply()">Forge Stealth Reply</button>
 
-            <div class="result-area" id="resultArea">
-                <div class="stealth-status">
-                    <span>STEALTH_RATING: <b>99.8% HUMAN</b></span>
-                    <span>MOVE: <b>HIGH-VALUE FRAME</b></span>
-                </div>
-                <div class="reply-display" id="replyText"></div>
-                <div class="latency-advice">
-                    <span>RESPONSE LATENCY: <b id="timer">18m 42s</b></span>
-                    <span>ROI: <b style="color:var(--mint);">+88% CAPITAL</b></span>
-                </div>
-            </div>
+            <button class="btn-forge" onclick="forgeAction('ghost')">Forge Stealth Reply</button>
         </div>
 
         <div class="card span-4">
             <h3>Identity Forge</h3>
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Voice Samples (Paste 3-5 Texts)</label>
-                <textarea id="voiceSamples" style="height: 290px;" placeholder="I use lowercase only. I hate emojis. I speak in short sentences."></textarea>
+            <textarea id="voiceSamples" style="height: 200px;" placeholder="I hate emojis. Short sentences. Lowercase..."></textarea>
+            
+            <div id="voiceStatus" style="font-family:'JetBrains Mono'; font-size: 10px; color:#444; margin-top:15px; text-align:center;">
+                STARK_CALIBRATION: <b style="color:var(--mint)">OFFLINE</b>
             </div>
-            <button class="btn-forge" style="background: transparent; border: 1px solid var(--border); color: #fff;" onclick="showToast('Digital Twin Synchronized')">Lock Voice</button>
+            
+            <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff;" onclick="syncVoice()">Lock Voice</button>
         </div>
 
         <div class="card span-12">
             <h3>Viral Forge Engine</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; align-items: flex-end;">
-                <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Industry Niche</label>
-                    <input type="text" id="niche" placeholder="Finance, SaaS, Luxury...">
+            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: center;">
+                <input type="text" id="niche" placeholder="Niche (e.g. Finance)">
+                <select id="hookType"><option>Authority Gap</option><option>Logic Defiance</option></select>
+                <button class="btn-forge" style="margin:0; padding:18px 40px;" onclick="forgeAction('viral')">Forge Hook</button>
+            </div>
+
+            <div class="history-rail" id="viralHistory">
+                <div class="history-item"><span>HOOK_01</span><p>Why 99% of Finance fail...</p></div>
+            </div>
+
+            <div class="output-portal" id="outputArea" style="display:none;">
+                <div class="output-header">
+                    <span>STEALTH_RATING: <b id="rating">99.8%</b></span>
+                    <span>ENGINE_SYNC: <b id="sync">STARK_CALIBRATED</b></span>
                 </div>
-                <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Psychological Hook</label>
-                    <select id="hookType">
-                        <option>The Authority Gap</option>
-                        <option>The Negative Constraint</option>
-                        <option>Logic Defiance</option>
-                    </select>
+                <div class="main-response" id="outText">Generating neural response...</div>
+                <div class="full-notes" id="outNotes">
+                    VARIABLES: Frame retention set to High. Pattern interrupt injected in segment 2. Calibrated for stoic scarcity based on recipient subtext.
                 </div>
-                <button class="btn-forge" style="margin: 0;" onclick="forgeViralHook()">Forge Viral Hook</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function showToast(message) {
+    function showToast(msg) {
         const host = document.getElementById('notification-host');
         const toast = document.createElement('div');
         toast.className = 'toast';
-        toast.innerText = message;
+        toast.innerText = msg;
         host.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.classList.add('fade-out');
-            setTimeout(() => toast.remove(), 400);
-        }, 3000);
+        setTimeout(() => toast.remove(), 3000);
     }
 
-    function forgeEliteReply() {
+    function syncVoice() {
+        document.getElementById('voiceStatus').innerHTML = 'STARK_CALIBRATION: <b style="color:var(--mint)">SYNCED</b>';
+        showToast('Voice Neural Mapping Complete');
+    }
+
+    function forgeAction(type) {
         const card = document.getElementById('ghostCard');
-        const res = document.getElementById('resultArea');
-        const text = document.getElementById('replyText');
-        const timer = document.getElementById('timer');
-        const move = document.getElementById('move').value;
-
+        const output = document.getElementById('outputArea');
+        const outText = document.getElementById('outText');
+        const outNotes = document.getElementById('outNotes');
+        
         card.classList.add('scanning');
-        res.style.display = 'none';
-
-        const db = {
-            "push": {
-                reply: "honestly, i was starting to think you were interesting, but now you’re just being predictable. we might have to rethink this.",
-                time: "22m 14s"
-            },
-            "stoic": {
-                reply: "fair enough. i'm heading into a session anyway, so we'll just leave it at that for now.",
-                time: "34m 05s"
-            },
-            "humor": {
-                reply: "you’re dangerous. i was supposed to be productive tonight, but now i’m just wondering what else you’re good at besides being a distraction.",
-                time: "14m 50s"
-            },
-            "expert": {
-                reply: "i appreciate the enthusiasm, but let's stick to the data—the logic here is what actually changes the game.",
-                time: "08m 22s"
-            }
-        };
+        output.style.display = 'block';
+        outText.innerText = "Processing through Neural Layers...";
 
         setTimeout(() => {
             card.classList.remove('scanning');
-            res.style.display = 'block';
-            text.innerText = db[move].reply;
-            timer.innerText = db[move].time;
-            showToast('Response Forged Successfully');
-        }, 1800);
+            if(type === 'ghost') {
+                outText.innerText = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
+                outNotes.innerText = "NOTES: Calibrated for Push-Pull tension. Use of 'predictable' creates an authority gap, forcing them to re-qualify their interest to you.";
+                updateHistory('ghostHistory', outText.innerText);
+            } else {
+                const niche = document.getElementById('niche').value || 'Industry';
+                outText.innerText = `Why 99% of ${niche} creators fail—and the 3-minute fix they're ignoring.`;
+                outNotes.innerText = "NOTES: Uses Authority Gap and Pattern Interrupt. High click-through potential for " + niche + " niche audiences.";
+                updateHistory('viralHistory', outText.innerText);
+            }
+            showToast('Generation Successful');
+        }, 1500);
     }
 
-    function forgeViralHook() {
-        const niche = document.getElementById('niche').value || "Industry";
-        const message = "VIRALFORGE GENERATED: Why 99% of " + niche + " creators fail—and the 3-minute fix they're ignoring.";
-        
-        // Output result directly to a new toast or can be integrated into UI
-        showToast('Viral Hook Forged');
-        
-        // If you want the hook text to be usable, you could also copy it to clipboard automatically
-        navigator.clipboard.writeText(message);
-        showToast('Hook copied to clipboard');
+    function updateHistory(id, text) {
+        const rail = document.getElementById(id);
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        item.innerHTML = `<span>LATEST_SYNC</span><p>${text}</p>`;
+        rail.prepend(item);
+        if(rail.children.length > 6) rail.lastChild.remove();
     }
 </script>
 
