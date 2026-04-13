@@ -3,42 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViralForge AI</title>
+    <title>ViralForge AI | Hook Generator</title>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #1a1a1a; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 400px; text-align: center; }
-        h1 { color: #00ff88; margin-bottom: 0.5rem; }
-        input { width: 100%; padding: 12px; margin: 1rem 0; border-radius: 8px; border: none; background: #2a2a2a; color: white; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #00ff88; color: black; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #00cc6e; }
-        #result { margin-top: 1.5rem; line-height: 1.5; color: #ccc; font-style: italic; }
+        /* Modern Dark Theme */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0a0a0a; 
+            color: #ffffff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        .container { 
+            background: #141414; 
+            padding: 2.5rem; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8); 
+            width: 90%; 
+            max-width: 450px; 
+            text-align: center;
+            border: 1px solid #333;
+        }
+        h1 { 
+            color: #00ff88; 
+            font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        p { color: #888; margin-bottom: 2rem; }
+        input { 
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 1.5rem; 
+            border-radius: 10px; 
+            border: 1px solid #333; 
+            background: #1f1f1f; 
+            color: white; 
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button { 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 10px; 
+            border: none; 
+            background: linear-gradient(45deg, #00ff88, #00bd65); 
+            color: black; 
+            font-weight: bold; 
+            font-size: 1rem;
+            cursor: pointer; 
+            transition: transform 0.2s; 
+        }
+        button:active { transform: scale(0.98); }
+        #result-box { 
+            margin-top: 2rem; 
+            padding: 15px;
+            background: #1f1f1f;
+            border-radius: 10px;
+            min-height: 50px;
+            display: none; /* Hidden until generated */
+        }
+        #hook-text { color: #00ff88; font-weight: 500; font-style: italic; }
+        .loading { color: #888; font-size: 0.9rem; margin-top: 1rem; display: none; }
     </style>
 </head>
 <body>
-    <div class="card">
+    <div class="container">
         <h1>ViralForge</h1>
-        <p>Enter your niche to generate a hook</p>
-        <input type="text" id="nicheInput" placeholder="e.g. Fitness, Crypto, Cooking">
-        <button onclick="generateHook()">Generate Viral Hook</button>
-        <div id="result"></div>
+        <p>Turn your niche into a viral hook.</p>
+        
+        <input type="text" id="nicheInput" placeholder="Enter Niche (e.g. Real Estate)">
+        <button onclick="generateHook()">Generate Hook</button>
+        
+        <div id="loading" class="loading">Consulting the AI...</div>
+
+        <div id="result-box">
+            <div id="hook-text"></div>
+        </div>
     </div>
 
     <script>
         async function generateHook() {
             const niche = document.getElementById('nicheInput').value;
-            const resDiv = document.getElementById('result');
-            resDiv.innerText = "Generating magic...";
+            const resultBox = document.getElementById('result-box');
+            const hookText = document.getElementById('hook-text');
+            const loading = document.getElementById('loading');
+
+            if (!niche) {
+                alert("Please enter a niche first!");
+                return;
+            }
+
+            // Show loading, hide result
+            loading.style.display = "block";
+            resultBox.style.display = "none";
             
             try {
-                const response = await fetch(`/generate?niche=${niche}`);
+                // This calls the /generate route in your app.py
+                const response = await fetch(`/generate?niche=${encodeURIComponent(niche)}`);
                 const data = await response.json();
+                
+                loading.style.display = "none";
+
                 if (data.status === "success") {
-                    resDiv.innerText = `"${data.hook}"`;
+                    resultBox.style.display = "block";
+                    hookText.innerText = data.hook;
                 } else {
-                    resDiv.innerText = "Error: " + data.message;
+                    resultBox.style.display = "block";
+                    // This will show your custom OpenAI account error messages
+                    hookText.innerText = "Error: " + data.message;
                 }
             } catch (err) {
-                resDiv.innerText = "Could not connect to the engine.";
+                loading.style.display = "none";
+                resultBox.style.display = "block";
+                hookText.innerText = "Connection failed. Is the server live?";
             }
         }
     </script>
