@@ -1,35 +1,38 @@
 from flask import Flask, request, jsonify
+import os
 from openai import OpenAI
 
 app = Flask(__name__)
 
-client = OpenAI(api_key="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")
+# Initialize client simply
+api_key = os.environ.get("OPENAI_API_KEY")
+client = OpenAI(api_key=api_key)
 
 @app.route('/')
 def home():
-    return "ViralForge API is running 🚀"
+    return "ViralForge AI Engine is Online."
 
-@app.route('/generate')
+@app.route('/generate', methods=['GET'])
 def generate():
-    niche = request.args.get('niche', 'business')
-
-    prompt = f"""
-    Generate a viral short-form video idea in the {niche} niche.
-
-    Include:
-    - Hook (very attention grabbing)
-    - Content idea
-    - Caption
-    """
-
-    response = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        messages=[{"role": "user", "content": prompt}]
-    )
-
-    return jsonify({
-        "result": response.choices[0].message.content
-    })
+    niche = request.args.get('niche', 'trending topics')
+    if not api_key:
+        return jsonify({"status": "error", "message": "API Key missing on server"}), 500
+        
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a viral content creator."},
+                {"role": "user", "content": f"Create a viral hook for {niche}."}
+            ]
+        )
+        return jsonify({
+            "status": "success", 
+            "content": response.choices[0].message.content
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)

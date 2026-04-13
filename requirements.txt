@@ -1,3 +1,3 @@
-flask
-openai
-gunicorn
+Flask==3.0.3
+gunicorn==22.0.0
+openai==1.23.2
