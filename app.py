@@ -1,32 +1,30 @@
 from flask import Flask, request, jsonify
 import os
-from openai import OpenAI
+import openai
 
 app = Flask(__name__)
 
-api_key = os.environ.get("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key)
+# This version is more stable for Render's environment
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 @app.route('/')
 def home():
-    return "ViralForge AI Engine is Online."
+    return "ViralForge Engine is Online."
 
 @app.route('/generate', methods=['GET'])
 def generate():
-    niche = request.args.get('niche', 'trending topics')
-    if not api_key:
-        return jsonify({"status": "error", "message": "API Key missing"}), 500
+    niche = request.args.get('niche', 'trending')
     try:
-        response = client.chat.completions.create(
+        # Using the older, more stable method for simple deployments
+        response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a viral content creator."},
-                {"role": "user", "content": f"Create a viral hook for {niche}."}
+                {"role": "system", "content": "You are a viral hook generator."},
+                {"role": "user", "content": f"Create a hook for {niche}"}
             ]
         )
         return jsonify({
-            "status": "success", 
-            "niche": niche,
+            "status": "success",
             "content": response.choices[0].message.content
         })
     except Exception as e:
