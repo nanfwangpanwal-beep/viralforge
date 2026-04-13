@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViralForge X | Elite Intelligence</title>
+    <title>ViralForge Elite X | The Standard</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-grad: linear-gradient(90deg, #00ffa6 0%, #00d4ff 50%, #d946ef 100%);
-            --bg-obsidian: #030712;
-            --glass-card: rgba(17, 24, 39, 0.75);
-            --border-glow: rgba(0, 255, 166, 0.2);
-            --text-muted: #94a3b8;
+            --primary-glow: #00ffa6;
+            --accent-glow: #d946ef;
+            --bg-ultra: #020617;
+            --glass: rgba(15, 23, 42, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: var(--bg-obsidian); 
+            background: var(--bg-ultra); 
             color: #fff; 
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
@@ -24,233 +24,252 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
-        /* --- NEURAL PLEXUS CANVAS --- */
-        #plexus { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.6; }
+        /* --- DYNAMIC NEURAL BACKGROUND --- */
+        #neuralCanvas { position: fixed; inset: 0; z-index: 1; opacity: 0.5; pointer-events: none; }
 
-        /* --- RESPONSIVE COMMAND CENTER --- */
-        .command-center {
+        /* --- THE COMMAND CONSOLE --- */
+        .console {
             position: relative;
             z-index: 10;
-            width: 92%;
-            max-width: 1000px;
-            background: var(--glass-card);
-            backdrop-filter: blur(30px) saturate(150%);
-            border: 1px solid var(--border-glow);
+            width: 100%;
+            max-width: 950px;
+            background: var(--glass);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
             border-radius: 40px;
             padding: clamp(1.5rem, 5vw, 4rem);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 50px rgba(0, 255, 166, 0.05);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            animation: consoleEntry 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Header Info */
-        .sys-header {
+        @keyframes consoleEntry { from { opacity: 0; transform: scale(0.95) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        .system-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            color: var(--text-muted);
+            font-size: 0.65rem;
+            color: var(--primary-glow);
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
         }
-        .status-dot { height: 8px; width: 8px; background: #00ffa6; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #00ffa6; }
+
+        .status-pill { padding: 4px 12px; background: rgba(0, 255, 166, 0.1); border-radius: 100px; border: 1px solid rgba(0, 255, 166, 0.2); }
 
         h1 {
-            font-size: clamp(2.8rem, 8vw, 5rem);
+            font-size: clamp(2.5rem, 7vw, 5rem);
             font-weight: 800;
-            line-height: 0.85;
             letter-spacing: -4px;
+            line-height: 0.85;
             margin-bottom: 1rem;
-            background: #fff;
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, #fff 0%, var(--primary-glow) 50%, var(--accent-glow) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        h1 span { background: var(--primary-grad); -webkit-background-clip: text; }
 
-        .tagline { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; max-width: 500px; }
+        .subtitle { color: #94a3b8; font-size: clamp(0.9rem, 2vw, 1.1rem); margin-bottom: 3.5rem; max-width: 550px; line-height: 1.6; }
 
-        /* --- BENTO INPUT GRID --- */
-        .input-grid {
+        /* --- BENTO INPUTS --- */
+        .bento-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        @media (min-width: 768px) {
-            .input-grid { grid-template-columns: 2fr 1fr 1fr; }
-            .span-full { grid-column: span 3; }
+        @media (min-width: 768px) { .bento-grid { grid-template-columns: 2fr 1fr 1fr; } }
+
+        .input-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 15px 20px;
+            transition: 0.3s;
         }
 
-        .field { position: relative; }
-        .label {
+        .input-box:focus-within { border-color: var(--primary-glow); box-shadow: 0 0 20px rgba(0, 255, 166, 0.1); }
+
+        label {
             display: block;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.6rem;
-            text-transform: uppercase;
             color: #4b5563;
             margin-bottom: 8px;
-            padding-left: 5px;
+            text-transform: uppercase;
         }
 
         input, select {
             width: 100%;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid var(--border-glow);
-            padding: 20px;
-            border-radius: 20px;
+            background: transparent;
+            border: none;
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.05rem;
             outline: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
         }
 
-        input:focus, select:focus { border-color: #00ffa6; background: rgba(0, 255, 166, 0.05); }
-
-        /* --- THE ULTIMATE ACTION BUTTON --- */
-        .activate-btn {
+        /* --- THE IGNITION BUTTON --- */
+        .ignite-btn {
             width: 100%;
             padding: 24px;
             border: none;
             border-radius: 24px;
-            background: var(--primary-grad);
+            background: #fff;
             color: #000;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: 0.4s;
-            box-shadow: 0 10px 40px rgba(0, 255, 166, 0.2);
+            cursor: pointer;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .activate-btn:hover {
-            transform: scale(1.02);
-            filter: brightness(1.1);
-            box-shadow: 0 15px 50px rgba(217, 70, 239, 0.3);
+        .ignite-btn:hover {
+            background: var(--primary-glow);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 255, 166, 0.3);
         }
 
-        /* Results Area */
-        #results { margin-top: 3rem; display: grid; grid-template-columns: 1fr; gap: 15px; }
-        @media (min-width: 768px) { #results { grid-template-columns: 1fr 1fr; } }
-
-        .concept-box {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-glow);
+        /* --- RESULTS --- */
+        #outputArea { margin-top: 3rem; }
+        .strategy-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
             padding: 25px;
-            border-radius: 25px;
-            transition: 0.3s;
+            border-left: 4px solid var(--primary-glow);
+            margin-bottom: 15px;
+            animation: slideIn 0.6s forwards;
         }
-        .concept-box:hover { background: rgba(255,255,255,0.05); }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+        .logic-tag { font-size: 0.65rem; color: var(--accent-glow); font-family: 'JetBrains Mono'; font-weight: 700; }
     </style>
 </head>
 <body>
 
-<canvas id="plexus"></canvas>
+<canvas id="neuralCanvas"></canvas>
 
-<div class="command-center">
-    <div class="sys-header">
-        <div><span class="status-dot"></span> CORE SYSTEM ONLINE</div>
-        <div>VIRALFORGE X-SERIES</div>
+<div class="console">
+    <div class="system-meta">
+        <div class="status-pill">● CORE_SYSTEM_ACTIVE</div>
+        <div>NODE_V.4.0_ELITE</div>
     </div>
 
-    <h1>Viral<span>Forge</span></h1>
-    <p class="tagline">The world's most advanced intelligence engine for elite creators.</p>
+    <h1>Forge Your <span>Legacy.</span></h1>
+    <p class="subtitle">Enter your domain to generate ultra-luxury, high-retention content frameworks instantly.</p>
 
-    <div class="input-grid">
-        <div class="field">
-            <span class="label">Niche / Target Industry</span>
-            <input type="text" id="niche" placeholder="e.g. Fintech, SaaS, Luxury">
+    <div class="bento-grid">
+        <div class="input-box">
+            <label>Niche Industry</label>
+            <input type="text" id="niche" placeholder="e.g. Fintech Luxury">
         </div>
-        <div class="field">
-            <span class="label">Trigger</span>
-            <select id="trigger">
-                <option>Hype</option>
-                <option>Curiosity</option>
+        <div class="input-box">
+            <label>Psychological Tone</label>
+            <select id="tone">
                 <option>Authority</option>
+                <option>Curiosity Gap</option>
+                <option>Aggressive Hype</option>
             </select>
         </div>
-        <div class="field">
-            <span class="label">Channel</span>
+        <div class="input-box">
+            <label>Channel Optimization</label>
             <select id="channel">
-                <option>TikTok</option>
-                <option>IG Reels</option>
-                <option>YT Shorts</option>
+                <option>TikTok (Global)</option>
+                <option>IG Reels (Premium)</option>
+                <option>YouTube Shorts</option>
             </select>
         </div>
     </div>
 
-    <button class="activate-btn" onclick="activateForge()">Activate Forge Engine</button>
+    <button class="ignite-btn" onclick="igniteEngine()">Engage Viral Engine</button>
 
-    <div id="results"></div>
+    <div id="outputArea"></div>
 </div>
 
 <script>
-    // --- PLEXUS ENGINE ---
-    const canvas = document.getElementById('plexus');
+    // --- NEURAL NETWORK BACKGROUND ---
+    const canvas = document.getElementById('neuralCanvas');
     const ctx = canvas.getContext('2d');
-    let points = [];
-    const maxPoints = 80;
+    let nodes = [];
 
-    function init() {
+    function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        points = [];
-        for(let i=0; i<maxPoints; i++) {
-            points.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5
-            });
+    }
+
+    class Node {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+        }
+        update() {
+            this.x += this.vx; this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
         }
     }
 
-    function animate() {
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        points.forEach((p, i) => {
-            p.x += p.vx; p.y += p.vy;
-            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    function init() {
+        resize();
+        for(let i=0; i<60; i++) nodes.push(new Node());
+    }
 
-            points.slice(i + 1).forEach(p2 => {
-                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                if(dist < 150) {
-                    ctx.strokeStyle = `rgba(0, 255, 166, ${1 - dist/150})`;
+    function draw() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        nodes.forEach((n, i) => {
+            n.update();
+            nodes.slice(i+1).forEach(n2 => {
+                let d = Math.hypot(n.x - n2.x, n.y - n2.y);
+                if(d < 180) {
+                    ctx.strokeStyle = `rgba(0, 255, 166, ${1 - d/180})`;
                     ctx.lineWidth = 0.5;
-                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
                 }
             });
         });
-        requestAnimationFrame(animate);
+        requestAnimationFrame(draw);
     }
 
-    window.addEventListener('resize', init);
-    init(); animate();
+    window.onresize = resize;
+    init(); draw();
 
-    // --- FORGE LOGIC ---
-    function activateForge() {
-        const btn = document.querySelector('.activate-btn');
-        const res = document.getElementById('results');
-        const n = document.getElementById('niche').value;
-        if(!n) return;
+    // --- ENGINE LOGIC ---
+    function igniteEngine() {
+        const niche = document.getElementById('niche').value;
+        const out = document.getElementById('outputArea');
+        if(!niche) return;
 
-        btn.innerText = "CALCULATING VIRALITY...";
-        res.innerHTML = "";
+        out.innerHTML = `<div style="text-align:center; font-family:'JetBrains Mono'; color:var(--primary-glow);">CALIBRATING ALGORITHMS...</div>`;
 
         setTimeout(() => {
-            btn.innerText = "ACTIVATE FORGE ENGINE";
-            const concepts = [
-                `Why 99% of ${n} startups fail in the first 30 days.`,
-                `The "Hidden Truth" about ${n} nobody tells you.`
+            out.innerHTML = "";
+            const briefs = [
+                { tag: "PSYCHOLOGICAL_HOOK", h: `The $10k ${niche} mistake you're making right now.` },
+                { tag: "AUTHORITY_PILLAR", h: `How elite ${niche} creators are dominating 2026.` }
             ];
-            concepts.forEach(c => {
+
+            briefs.forEach(b => {
                 const div = document.createElement('div');
-                div.className = "concept-box";
-                div.innerHTML = `<div style="color:#00ffa6; font-size:0.7rem; margin-bottom:10px;">GENERATED STRATEGY</div><div style="font-weight:600;">${c}</div>`;
-                res.appendChild(div);
+                div.className = "strategy-card";
+                div.innerHTML = `
+                    <div class="logic-tag">${b.tag}</div>
+                    <div style="font-size:1.2rem; font-weight:600; margin-top:10px;">"${b.h}"</div>
+                `;
+                out.appendChild(div);
             });
-        }, 1500);
+        }, 1200);
     }
 </script>
 
