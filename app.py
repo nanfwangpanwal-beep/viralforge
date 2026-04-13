@@ -4,32 +4,34 @@ import openai
 
 app = Flask(__name__)
 
-# This version is more stable for Render's environment
+# Use the older, bulletproof initialization for Render
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 @app.route('/')
 def home():
-    return "ViralForge Engine is Online."
+    return "ViralForge Engine is Online. Use /generate?niche=money"
 
 @app.route('/generate', methods=['GET'])
 def generate():
     niche = request.args.get('niche', 'trending')
     try:
-        # Using the older, more stable method for simple deployments
+        # Universal call format
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a viral hook generator."},
-                {"role": "user", "content": f"Create a hook for {niche}"}
+                {"role": "user", "content": f"Create a viral hook for {niche}"}
             ]
         )
         return jsonify({
             "status": "success",
-            "content": response.choices[0].message.content
+            "hook": response.choices[0].message.content
         })
     except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
+        return jsonify({
+            "status": "error", 
+            "message": str(e)
+        }), 500
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
