@@ -2,119 +2,225 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>viralforge | Neural Workspace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ViralForge | Neural Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --mint: #35f0ba;
-            --dark: #0a0a0a;
+            --mint: #35F0BA;
+            --violet: #A75FFF;
+            --bg: #030508;
+            --glass: rgba(15, 18, 25, 0.9);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
-        /* Glow-Visibility for Section Names */
-        h3 {
-            color: #fff !important; 
-            text-shadow: 0 0 10px rgba(53, 240, 186, 0.4); 
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; padding-bottom: 50px; }
 
-        /* Mobile-Perfect Copy Positioning */
-        .copy-pill {
-            position: absolute;
-            top: 12px !important;
-            right: 12px !important;
-            background: rgba(53, 240, 186, 0.15) !important;
-            backdrop-filter: blur(5px);
-            font-weight: 700;
-            border: 1px solid var(--mint) !important;
-            padding: 4px 12px;
-            border-radius: 20px;
-            color: var(--mint);
-            cursor: pointer;
-            z-index: 10;
-        }
+        .ambient-neural { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, #0d121f 0%, #000 100%); z-index: -1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 25px 20px; }
 
-        /* Neural Pulse Animation for Output Boxes */
-        .output-area {
-            position: relative;
-            background: #111;
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 15px;
-            min-height: 100px;
+        /* --- GLOWING HEADER --- */
+        header { 
+            position: sticky; top: 0; z-index: 1000; background: rgba(3, 5, 8, 0.9); 
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
         }
+        .logo { font-family: 'Exo', sans-serif; font-size: 1.5rem; font-weight: 800; text-shadow: 0 0 12px rgba(53, 240, 186, 0.5); }
+        .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .chronos-module { text-align: right; font-family: 'JetBrains Mono'; }
+        #live-clock { font-size: 11px; font-weight: 700; display: block; }
+        #live-date { font-size: 8px; color: var(--mint); text-transform: uppercase; letter-spacing: 1px; }
 
+        /* --- BENTO CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 30px; backdrop-filter: blur(25px); position: relative; overflow: hidden; transition: 0.4s; }
+        .span-8 { grid-column: span 8; } .span-4 { grid-column: span 4; } .span-12 { grid-column: span 12; }
+        @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
+
+        h3 { font-family: 'Exo', sans-serif; font-size: 0.85rem; letter-spacing: 2.5px; text-transform: uppercase; color: #fff; text-shadow: 0 0 10px rgba(53, 240, 186, 0.4); margin-bottom: 20px; }
+
+        /* --- OUTPUT PORTALS --- */
+        .output-area { 
+            margin-top: 20px; background: rgba(5, 7, 10, 0.95); border-radius: 25px; 
+            padding: 30px; position: relative; display: none; border-left: 3px solid var(--mint);
+        }
         .output-area::after {
-            content: "";
-            position: absolute;
-            inset: -1px;
-            border-radius: 20px;
-            padding: 1px;
+            content: ""; position: absolute; inset: -1px; border-radius: 25px; padding: 1px;
             background: linear-gradient(90deg, transparent, var(--mint), transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            background-size: 200% auto;
-            animation: pulseGradient 4s linear infinite;
-            pointer-events: none;
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            background-size: 200% auto; animation: pulse 3s linear infinite; pointer-events: none;
+        }
+        @keyframes pulse { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+
+        /* --- GLITCH & MATERIALIZE --- */
+        .glitch-text { animation: materialize 0.4s ease-out; color: #eee; font-size: 1.2rem; font-weight: 500; margin: 15px 0; }
+        @keyframes materialize { 
+            0% { opacity: 0; transform: skewX(10deg); filter: blur(2px); } 
+            50% { opacity: 0.8; transform: skewX(-5deg); } 
+            100% { opacity: 1; transform: skewX(0); } 
         }
 
-        @keyframes pulseGradient {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
+        /* --- SOCIAL SUITE & CONTROLS --- */
+        .output-ctrl { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; z-index: 10; }
+        .pill-btn { 
+            background: rgba(53, 240, 186, 0.1); border: 1px solid var(--mint); color: var(--mint);
+            font-family: 'JetBrains Mono'; font-size: 9px; font-weight: 700; padding: 6px 12px;
+            border-radius: 10px; cursor: pointer; transition: 0.2s;
         }
+        .pill-btn:hover { background: var(--mint); color: #000; box-shadow: 0 0 15px var(--mint); }
+        .share-x { border-color: #fff; color: #fff; background: rgba(255,255,255,0.05); }
 
-        /* General History Styling */
-        .history-item {
-            background: rgba(255,255,255,0.05);
-            margin: 8px 0;
-            padding: 10px;
-            border-radius: 8px;
-            font-family: monospace;
-        }
-        .history-item span {
-            color: var(--mint);
-            display: block;
-            font-size: 0.8em;
-            margin-bottom: 4px;
-        }
+        /* --- INPUTS & UI --- */
+        textarea, select, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 18px; color: #fff; outline: none; margin-bottom: 10px; }
+        .btn-forge { width: 100%; padding: 20px; border-radius: 20px; border: none; background: linear-gradient(90deg, var(--mint), var(--violet)); color: #000; font-family: 'Exo', sans-serif; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+        
+        .id-tag { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--mint); opacity: 0.6; margin-bottom: 5px; display: block; }
+        .history-rail { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
+        .history-item { flex: 0 0 160px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 12px; border-radius: 15px; font-size: 10px; }
+
+        #notif-host { position: fixed; bottom: 20px; right: 20px; z-index: 10000; }
+        .toast { background: var(--glass); border: 1px solid var(--mint); padding: 12px 20px; border-radius: 12px; font-size: 11px; margin-top: 10px; animation: slideIn 0.3s ease forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); } }
     </style>
 </head>
 <body>
 
-    <div class="workspace">
-        <h3>System Output</h3>
-        <div class="output-area" id="mainOutput">
-            <div class="copy-pill" onclick="copyText()">COPY</div>
+<header>
+    <div class="logo">Viral<span>Forge.</span></div>
+    <div class="chronos-module"><span id="live-clock">00:00:00</span><span id="live-date">SYNCING...</span></div>
+</header>
+
+<div id="notif-host"></div>
+<div class="ambient-neural"></div>
+
+<div class="container">
+    <div class="grid">
+        <div class="card span-8">
+            <h3>Elite Ghostwriter</h3>
+            <textarea id="gIn" placeholder="Input target dialogue..." rows="4"></textarea>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <select id="gArc"><option value="cold">Cold Ghoster</option><option value="ego">Ego-Centric</option></select>
+                <select id="gMove"><option value="tension">Push-Pull</option><option value="scarcity">Scarcity</option></select>
             </div>
+            <div class="history-rail" id="gHist"></div>
+            <button class="btn-forge" onclick="executeForge('ghost')">Forge Stealth Reply</button>
+            
+            <div class="output-area" id="gOutBox">
+                <div class="output-ctrl">
+                    <button class="pill-btn share-x" onclick="shareSocial('x', 'gRes')">SHARE_X</button>
+                    <button class="pill-btn" onclick="copyResult('gRes')">COPY</button>
+                </div>
+                <span class="id-tag" id="gMeta"></span>
+                <div class="glitch-text" id="gRes"></div>
+            </div>
+        </div>
 
-        <div id="gHist"></div>
-        <div id="sHist"></div>
+        <div class="card span-4">
+            <h3>Identity Forge</h3>
+            <textarea id="voiceIn" placeholder="Voice samples..." style="height:170px;" oninput="saveLocal()"></textarea>
+            <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff;" onclick="notify('Neural Sync Locked')">Lock Identity</button>
+        </div>
+
+        <div class="card span-12">
+            <h3>Viral Forge Engine</h3>
+            <div style="display:grid; grid-template-columns: 1fr 1fr auto; gap:10px;">
+                <input type="text" id="vNiche" placeholder="Niche (SaaS, AI...)">
+                <select id="vHook"><option value="gap">Authority Gap</option><option value="pattern">Pattern Interrupt</option></select>
+                <button class="btn-forge" style="margin:0; padding:0 30px;" onclick="executeForge('viral')">Forge Hook</button>
+            </div>
+            <div class="history-rail" id="vHist"></div>
+            
+            <div class="output-area" id="vOutBox">
+                <div class="output-ctrl">
+                    <button class="pill-btn share-x" onclick="shareSocial('x', 'vRes')">SHARE_X</button>
+                    <button class="pill-btn" onclick="copyResult('vRes')">COPY</button>
+                </div>
+                <span class="id-tag" id="vMeta"></span>
+                <div class="glitch-text" id="vRes"></div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        function addHist(id, txt) {
-            const rail = document.getElementById(id);
-            if (!rail) return;
-            
-            const div = document.createElement('div');
-            div.className = 'history-item';
-            
-            // REPLACING ARC_ WITH PROFESSIONAL LOGIC
-            const prefix = id === 'gHist' ? 'NEURAL_LOG' : 'SYNC_ID';
-            const hex = Math.floor(Math.random()*16777215).toString(16).toUpperCase().substring(0,4);
-            
-            div.innerHTML = `<span>${prefix}_${hex}</span><p>${txt}</p>`;
-            rail.prepend(div);
-            
-            if(rail.children.length > 4) rail.lastChild.remove();
-        }
+<script>
+    // 1. INITIALIZATION & PERSISTENCE
+    window.onload = () => {
+        updateClock(); setInterval(updateClock, 1000);
+        const saved = localStorage.getItem('vf_voice');
+        if(saved) document.getElementById('voiceIn').value = saved;
+    };
+    function saveLocal() { localStorage.setItem('vf_voice', document.getElementById('voiceIn').value); }
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-US', {hour12:false});
+        document.getElementById('live-date').innerText = now.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
+    }
 
-        function copyText() {
-            // Logic for copying text
-            console.log("Content copied to clipboard.");
-        }
-    </script>
+    // 2. ENGINE LOGIC
+    function executeForge(type) {
+        const outBox = document.getElementById(type === 'ghost' ? 'gOutBox' : 'vOutBox');
+        const resText = document.getElementById(type === 'ghost' ? 'gRes' : 'vRes');
+        const meta = document.getElementById(type === 'ghost' ? 'gMeta' : 'vMeta');
+        
+        notify(`${type.toUpperCase()}_ENGINE_CALIBRATING`);
+        outBox.style.display = 'none';
+
+        setTimeout(() => {
+            const hex = Math.floor(Math.random()*65535).toString(16).toUpperCase().padStart(4, '0');
+            const prefix = type === 'ghost' ? 'NEURAL_LOG' : 'SYNC_ID';
+            meta.innerText = `${prefix}_${hex}`;
+            
+            let content = "";
+            if(type === 'ghost') {
+                content = document.getElementById('gArc').value === 'cold' ? 
+                    "honestly, i was starting to think you were interesting, but you're being predictable." :
+                    "I expected a bit more depth from this conversation. Let's try again when you're ready.";
+            } else {
+                const niche = document.getElementById('vNiche').value || 'Industry';
+                content = `Why 99% of ${niche} founders fail—and the 3-minute fix they ignore in 2026.`;
+            }
+
+            resText.innerText = content;
+            outBox.style.display = 'block';
+            addHistory(type === 'ghost' ? 'gHist' : 'vHist', content, prefix, hex);
+        }, 1200);
+    }
+
+    function addHistory(railId, txt, prefix, hex) {
+        const rail = document.getElementById(railId);
+        const item = document.createElement('div');
+        item.className = 'history-item';
+        item.innerHTML = `<span>[${prefix}_${hex}]</span><p>${txt}</p>`;
+        rail.prepend(item);
+        if(rail.children.length > 5) rail.lastChild.remove();
+    }
+
+    // 3. SOCIAL & UTILITY
+    function copyResult(id) {
+        navigator.clipboard.writeText(document.getElementById(id).innerText);
+        notify("DATA_COPIED_TO_CLIPBOARD");
+    }
+
+    function shareSocial(platform, textId) {
+        const text = encodeURIComponent(document.getElementById(textId).innerText);
+        const url = platform === 'x' ? `https://twitter.com/intent/tweet?text=${text}` : `https://wa.me/?text=${text}`;
+        window.open(url, '_blank');
+        notify(`ROUTING_TO_${platform.toUpperCase()}`);
+    }
+
+    function notify(msg) {
+        const host = document.getElementById('notif-host');
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.innerText = `[SYS] ${msg}`;
+        host.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+    }
+</script>
+
 </body>
 </html>
