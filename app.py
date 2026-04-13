@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify
 import os
-import openai
+from openai import OpenAI
 
 app = Flask(__name__)
 
-# Use the older, bulletproof initialization for Render
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+# This setup forces the client to ignore Render's internal proxy settings
+client = OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY"),
+    base_url="https://api.openai.com/v1"
+)
 
 @app.route('/')
 def home():
@@ -13,10 +16,9 @@ def home():
 
 @app.route('/generate', methods=['GET'])
 def generate():
-    niche = request.args.get('niche', 'trending')
+    niche = request.args.get('niche', 'trending topics')
     try:
-        # Universal call format
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a viral hook generator."},
@@ -28,10 +30,8 @@ def generate():
             "hook": response.choices[0].message.content
         })
     except Exception as e:
-        return jsonify({
-            "status": "error", 
-            "message": str(e)
-        }), 500
+        # This will show the actual error on your screen if it fails
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
