@@ -3,222 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ViralForge Elite | The Standard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>ViralForge Elite | Actionable Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #35F0BA;
-            --accent: #A75FFF;
-            --bg: #0C0E14; /* Deepened for luxury contrast */
-            --glass: rgba(18, 20, 28, 0.96);
+            --primary: #00ffa6;
+            --accent: #d946ef;
+            --bg: #030712;
+            --glass: rgba(17, 24, 39, 0.85);
             --border: rgba(255, 255, 255, 0.08);
+            --text-dim: #64748b;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: crosshair; }
+
         body { 
-            background: var(--bg); 
-            color: #E0E0E0; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg); 
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            padding: 10px;
+            padding: 20px;
         }
 
-        #neuralCanvas { position: fixed; inset: 0; z-index: 1; opacity: 0.35; pointer-events: none; }
+        /* Animated Neural Plexus Background */
+        #plexusCanvas { position: fixed; inset: 0; z-index: 1; opacity: 0.5; pointer-events: none; }
 
-        .app-wrapper {
+        /* --- THE MASTER SHELL --- */
+        .master-shell {
             position: relative;
             z-index: 10;
             width: 100%;
             max-width: 900px;
-            margin-top: 3vh;
-            padding-bottom: 80px;
+            background: var(--glass);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: clamp(1.5rem, 5vw, 3.5rem);
+            box-shadow: 0 40px 100px rgba(0,0,0,1);
+            animation: appEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* --- TRUST & PROGRESS BAR --- */
-        .progress-bar {
+        @keyframes appEntry { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        /* --- HEADER & TRUST signals --- */
+        .top-meta {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 2rem;
-            padding: 0 10px;
-        }
-
-        .step-indicator {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            color: #484f58;
+            font-size: 0.65rem;
+            color: var(--primary);
+            letter-spacing: 2.5px;
+            margin-bottom: 2rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-        }
-        .step-indicator.active { color: var(--primary); }
-        .step-indicator.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 1px; background: var(--primary); box-shadow: 0 0 8px var(--primary); }
-
-        /* --- HEADER --- */
-        h1 { font-size: clamp(3.5rem, 9vw, 5.5rem); font-weight: 800; letter-spacing: -5px; line-height: 0.8; margin-bottom: 1rem; text-align: left; }
-        h1 span { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .tagline { color: #8b949e; font-size: 1.1rem; margin-bottom: 3.5rem; max-width: 600px; line-height: 1.6; border-left: 2px solid var(--accent); padding-left: 20px; }
-
-        /* --- FORGE CONSOLE --- */
-        .console {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 36px;
-            padding: clamp(1.5rem, 5vw, 2.5rem);
-            backdrop-filter: blur(40px);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         }
 
-        .input-cluster { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 2rem; }
-        @media (min-width: 768px) { .input-cluster { grid-template-columns: 2fr 1fr 1fr; } }
+        .signal { display: flex; align-items: center; gap: 8px; }
+        .pulse { height: 6px; width: 6px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); animation: blnk 1.5s infinite; }
+        @keyframes blnk { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        .input-box {
-            background: rgba(0,0,0,0.4);
+        h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 800; letter-spacing: -3px; line-height: 0.85; margin-bottom: 1rem; }
+        h1 span { background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .promise { color: #94a3b8; font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; line-height: 1.5; }
+
+        /* --- THE FORGE COMMANDS --- */
+        .forge-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) { .forge-grid { grid-template-columns: 2fr 1fr 1fr; } }
+
+        .field-group {
+            background: rgba(0,0,0,0.3);
             border: 1px solid var(--border);
-            border-radius: 22px;
-            padding: 16px 22px;
+            border-radius: 18px;
+            padding: 12px 20px;
             transition: 0.3s;
         }
-        .input-box:focus-within { border-color: var(--primary); box-shadow: 0 0 30px rgba(53, 240, 186, 0.15); }
 
-        label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #64748b; margin-bottom: 6px; text-transform: uppercase; font-weight: 700; }
+        .field-group:focus-within { border-color: var(--primary); box-shadow: 0 0 25px rgba(0, 255, 166, 0.08); }
 
-        input, select { width: 100%; background: transparent; border: none; color: #fff; font-size: 1.1rem; outline: none; font-weight: 600; }
+        label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: #4b5563; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- THE BUTTON (From Landing Page logic) --- */
-        .forge-btn {
+        input, select { width: 100%; background: transparent; border: none; color: #fff; font-size: 1rem; outline: none; font-weight: 600; }
+
+        /* --- THE MAIN ACTION CTA --- */
+        .execute-btn {
             width: 100%;
-            padding: 26px;
-            border-radius: 22px;
+            padding: 24px;
+            border-radius: 20px;
             border: none;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+            background: #fff;
             color: #000;
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             cursor: pointer;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            box-shadow: 0 10px 40px rgba(167, 95, 255, 0.3);
-        }
-
-        .forge-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(53, 240, 186, 0.4); filter: brightness(1.1); }
-        .forge-btn:active { transform: scale(0.98); }
-
-        /* --- RESULTS (Expanded Breathing Room) --- */
-        #resultsArea { 
-            margin-top: 4rem; 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 25px; 
-        }
-
-        @media (min-width: 768px) { #resultsArea { grid-template-columns: 1fr 1fr; } }
-
-        .strategy-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 35px;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            transition: 0.4s;
-            animation: entry 0.7s ease-out forwards;
-        }
-        .strategy-card:hover { background: rgba(255,255,255,0.04); border-color: var(--primary); }
-
-        @keyframes entry { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-
-        .platform-badge {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--primary);
-            background: rgba(53, 240, 186, 0.1);
-            padding: 6px 16px;
-            border-radius: 100px;
-            width: fit-content;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
-        .strategy-hook { font-size: 1.6rem; font-weight: 800; line-height: 1.1; color: #fff; letter-spacing: -1px; }
-
-        .logic-explanation {
-            background: rgba(0,0,0,0.3);
-            padding: 22px;
-            border-radius: 24px;
-            font-size: 1rem;
-            color: #BBBBBB;
-            line-height: 1.7;
-            border: 1px solid rgba(255,255,255,0.05);
+        .execute-btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 255, 166, 0.25);
         }
 
-        .logic-explanation strong { color: var(--accent); }
+        /* --- RESULTS --- */
+        #outputPanel { margin-top: 3.5rem; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+        #outputPanel::-webkit-scrollbar { width: 4px; }
+        #outputPanel::-webkit-scrollbar-thumb { background: var(--border); }
 
+        .result-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 20px;
+            border-left: 3px solid var(--primary);
+            margin-bottom: 15px;
+            animation: resultReveal 0.6s ease-out forwards;
+        }
+
+        @keyframes resultReveal { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); } }
+
+        .card-meta { font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+        .typed-hook { font-size: 1.25rem; font-weight: 600; line-height: 1.4; color: #e5e7eb; }
     </style>
 </head>
 <body>
 
-<canvas id="neuralCanvas"></canvas>
+<canvas id="plexusCanvas"></canvas>
 
-<div class="app-wrapper">
-    <div class="progress-bar">
-        <span class="step-indicator active">01. Industry</span>
-        <span class="step-indicator">02. Trigger</span>
-        <span class="step-indicator">03. Format</span>
-        <span class="step-indicator">04. Forge</span>
+<div class="master-shell">
+    <div class="top-meta">
+        <div class="signal"><span class="pulse"></span> System: Online</div>
+        <div class="signal">ViralForge ELITE</div>
     </div>
 
-    <h1>Viral<span>Forge.</span></h1>
-    <p class="tagline">Convert high-value niches into viral authority with verified AI frameworks. Trusted by creators worldwide.</p>
+    <h1>Forge <span>Legacy.</span></h1>
+    <p class="promise">Convert high-value niches into viral authority with verified psychological frameworks.</p>
 
-    <div class="console">
-        <div class="input-cluster">
-            <div class="input-box">
-                <label>Select Industry</label>
-                <input type="text" id="industry" placeholder="e.g. Finance, SaaS">
-            </div>
-            <div class="input-box">
-                <label>Choose Trigger</label>
-                <select id="trigger">
-                    <option>Authority Gap</option>
-                    <option>Logic Defiance</option>
-                    <option>Pattern Interrupt</option>
-                </select>
-            </div>
-            <div class="input-box">
-                <label>Target Channel</label>
-                <select id="channel">
-                    <option>Omni-Channel</option>
-                    <option>LinkedIn Executive</option>
-                    <option>X Threads</option>
-                    <option>TikTok/Reels</option>
-                </select>
-            </div>
+    <div class="forge-grid">
+        <div class="field-group">
+            <label>Content Niche</label>
+            <input type="text" id="niche" placeholder="e.g. Luxury Real Estate">
         </div>
-
-        <button class="forge-btn" onclick="forgeStrategy()">Forge Viral Strategy</button>
+        <div class="field-group">
+            <label>Psychological Tone</label>
+            <select id="tone"><option>Authority</option><option>Hype</option><option>Storytelling</option></select>
+        </div>
+        <div class="field-group">
+            <label>Delivery Channel</label>
+            <select id="platform"><option>TikTok</option><option>IG Reels</option><option>YT Shorts</option></select>
+        </div>
     </div>
 
-    <div id="resultsArea"></div>
+    <button class="execute-btn" id="btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Execute Forge Engine
+    </button>
+
+    <div id="outputPanel"></div>
 </div>
 
 <script>
-    // --- LIVELY BACKGROUND ---
-    const canvas = document.getElementById('neuralCanvas');
+    const canvas = document.getElementById('plexusCanvas');
     const ctx = canvas.getContext('2d');
-    let pts = [];
+    let points = [];
 
+    // --- PLEXUS ENGINE (Lively background from samples) ---
     function init() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        pts = [];
-        for(let i=0; i<85; i++) {
-            pts.push({
+        points = [];
+        for(let i=0; i<80; i++) {
+            points.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 vx: (Math.random() - 0.5) * 0.4,
@@ -229,15 +198,15 @@
 
     function draw() {
         ctx.clearRect(0,0,canvas.width, canvas.height);
-        pts.forEach((p, i) => {
+        points.forEach((p, i) => {
             p.x += p.vx; p.y += p.vy;
             if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
             if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-            pts.slice(i+1).forEach(p2 => {
+            points.slice(i+1).forEach(p2 => {
                 let d = Math.hypot(p.x - p2.x, p.y - p2.y);
-                if(d < 170) {
-                    ctx.strokeStyle = `rgba(53, 240, 186, ${1 - d/170})`;
+                if(d < 160) {
+                    ctx.strokeStyle = `rgba(0, 255, 166, ${1 - d/160})`;
                     ctx.lineWidth = 0.5;
                     ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                 }
@@ -248,39 +217,30 @@
     window.addEventListener('resize', init);
     init(); draw();
 
-    // --- FORGE ENGINE ---
-    function forgeStrategy() {
-        const ind = document.getElementById('industry').value || "Industry";
-        const res = document.getElementById('resultsArea');
-        res.innerHTML = `<div style="grid-column: 1/-1; text-align:center; font-family:'JetBrains Mono'; color:var(--primary); padding:50px;">ENGAGING FORGE ENGINE...</div>`;
+    // --- GENERATION ENGINE ---
+    const nicheInput = document.getElementById('niche');
+    const btn = document.getElementById('btn');
+    const panel = document.getElementById('outputPanel');
 
+    btn.onclick = () => {
+        const n = nicheInput.value.trim();
+        if(!n) return;
+
+        btn.disabled = true;
+        btn.innerText = "FORGING masterwork...";
+        panel.innerHTML = "";
+
+        // Simulated AI delay
         setTimeout(() => {
-            res.innerHTML = "";
-            const strategies = [
-                { p: "LINKEDIN EXECUTIVE", h: `Why 99% of ${ind} startups fail — and the 3 secrets to avoid it.`, l: "Leverages <strong>Negative Constraint</strong>. High-level readers engage with risk mitigation and proven frameworks." },
-                { p: "X VIRAL THREAD", h: `The ${ind} Authority Gap: How to dominate without being loud. 🧵`, l: "Uses <strong>The Curiosity Gap</strong>. Threads that challenge the loud 'status quo' always trigger high bookmark rates." },
-                { p: "TIKTOK / REELS", h: `Stop doing this in ${ind} immediately.`, l: "The <strong>Pattern Interrupt</strong>. Commands the user to stop the scroll by highlighting an invisible mistake." },
-                { p: "NEWSLETTER (DEEP VALUE)", h: `The raw math behind an elite ${ind} operation.`, l: "Focuses on <strong>Radical Transparency</strong>. Direct value and math always convert better with email subscribers." }
+            btn.disabled = false;
+            btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Execute Forge Engine`;
+            
+            const hooks = [
+                `The $10,000 ${n} mistake creators are making right now.`,
+                `Why nobody in ${n} is talking about this hidden algorithm shift.`
             ];
 
-            strategies.forEach((s, idx) => {
+            hooks.forEach((text, i) => {
                 setTimeout(() => {
-                    const div = document.createElement('div');
-                    div.className = "strategy-card";
-                    div.innerHTML = `
-                        <span class="platform-badge">${s.p}</span>
-                        <div class="strategy-hook">${s.h}</div>
-                        <div class="logic-explanation"><strong>Forge Logic:</strong> ${s.l}</div>
-                    `;
-                    res.appendChild(div);
-                    if(idx === strategies.length - 1) {
-                         window.scrollTo({ top: res.offsetTop - 50, behavior: 'smooth' });
-                    }
-                }, idx * 150);
-            });
-        }, 1200);
-    }
-</script>
-
-</body>
-</html>
+                    const card = document.createElement('div');
+                    card
