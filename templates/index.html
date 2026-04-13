@@ -10,124 +10,100 @@
             --mint: #35F0BA;
             --violet: #A75FFF;
             --bg: #030508;
-            --glass: rgba(15, 18, 25, 0.9);
+            --card-bg: rgba(15, 18, 25, 0.9);
             --border: rgba(255, 255, 255, 0.08);
-            /* Original fixed Subtle Neon Glow */
-            --neon-glow: 0 0 25px rgba(53, 240, 186, 0.1);
+            --glow: 0 0 15px rgba(53, 240, 186, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; padding-bottom: 50px; }
+        body { background: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; }
 
-        .ambient-neural { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, #0d121f 0%, #000 100%); z-index: -1; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
-
-        /* --- GLOW-VISIBILITY HEADER --- */
         header { 
             position: sticky; top: 0; z-index: 1000; background: rgba(3, 5, 8, 0.9); 
             backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
-            padding: 12px 25px; display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
         }
         .logo { 
-            font-family: 'Exo', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: -1px;
-            /* Premium branding glow visibility */
+            font-family: 'Exo', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -1px;
             text-shadow: 0 0 12px rgba(53, 240, 186, 0.5); 
         }
         .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
         .chronos-module { text-align: right; font-family: 'JetBrains Mono'; }
         #live-clock { font-size: 11px; color: #fff; font-weight: 700; display: block; }
         #live-date { font-size: 8px; color: var(--mint); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- BENTO GRID SYSTEM WITH ORIGINAL GLASS/GLOW --- */
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; }
         .card { 
-            background: var(--glass); /* Re-established deep glass look */
-            border: 1px solid var(--border); 
-            border-radius: 35px; 
-            padding: 30px; 
-            backdrop-filter: blur(25px); /* Re-established deep backdrop blur */
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; overflow: hidden;
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 30px; 
+            padding: 25px; backdrop-filter: blur(25px); position: relative; overflow: hidden;
+            transition: 0.3s ease;
         }
-        /* Re-established subtle neon glow on hover */
-        .card:hover { border-color: rgba(53, 240, 186, 0.4); box-shadow: var(--neon-glow); }
-
         .span-8 { grid-column: span 8; } .span-4 { grid-column: span 4; } .span-12 { grid-column: span 12; }
 
-        @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } .card { border-radius: 25px; } }
-
-        h3 { font-family: 'Exo', sans-serif; font-size: 0.85rem; letter-spacing: 2.5px; text-transform: uppercase; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; text-shadow: 0 0 10px rgba(53, 240, 186, 0.4); }
-
-        textarea, select, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 18px; color: #fff; font-size: 0.95rem; outline: none; transition: 0.2s; }
-
-        .btn-forge { width: 100%; padding: 20px; border-radius: 20px; border: none; background: linear-gradient(90deg, var(--mint), var(--violet)); color: #000; font-family: 'Exo', sans-serif; font-weight: 800; font-size: 1rem; text-transform: uppercase; cursor: pointer; margin-top: 15px; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .btn-forge:active { transform: scale(0.97); }
-
-        /* --- PROFESSIONAL OUTPUT PORTAL (RED BOX AREA) --- */
-        .output-portal { 
-            margin-top: 25px; background: rgba(5, 7, 10, 0.8); border: 1px solid var(--border); 
-            border-radius: 30px; padding: 30px; display: none; position: relative;
-            border-left: 3px solid var(--mint); animation: fadeIn 0.4s ease forwards;
+        h3 { 
+            font-family: 'Exo', sans-serif; font-size: 0.75rem; letter-spacing: 3px; 
+            text-transform: uppercase; color: #fff !important; 
+            text-shadow: 0 0 10px rgba(53, 240, 186, 0.5); margin-bottom: 20px;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Integrated constant Neural Sync Pulse logic (Adds to how alive it is) */
-        .output-portal::after {
-            content: ""; position: absolute; inset: -1px; border-radius: 30px; padding: 1px;
+        textarea, select, input { 
+            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
+            border-radius: 15px; padding: 15px; color: #fff; font-size: 0.9rem; outline: none;
+        }
+
+        .btn-forge { 
+            width: 100%; padding: 18px; border-radius: 15px; border: none; 
+            background: linear-gradient(90deg, var(--mint), var(--violet)); 
+            color: #000; font-family: 'Exo', sans-serif; font-weight: 800; 
+            text-transform: uppercase; cursor: pointer; margin-top: 15px;
+        }
+
+        /* --- INTEGRATED OUTPUT AREA --- */
+        .output-area { 
+            margin-top: 20px; background: rgba(5, 7, 10, 0.95); border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 25px; padding: 30px; position: relative; display: none;
+            overflow: hidden;
+        }
+
+        .output-area::after {
+            content: ""; position: absolute; inset: -1px; border-radius: 25px; padding: 1px;
             background: linear-gradient(90deg, transparent, var(--mint), transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
-            background-size: 200% auto; animation: neuralPulse 4s linear infinite; z-index: 1;
+            background-size: 200% auto; animation: pulseGradient 3s linear infinite; pointer-events: none;
         }
-        @keyframes neuralPulse { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+
+        @keyframes pulseGradient { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
         
-        /* PERFECTED COPY & SOCIAL POSITIONING (MOBILE VIEW) */
-        .output-ctrl { position: absolute; top: 12px; right: 12px; z-index: 5; display: flex; gap: 8px; }
-        .copy-pill, .share-pill { 
-            background: rgba(53, 240, 186, 0.15); border: 1px solid rgba(53, 240, 186, 0.3);
-            backdrop-filter: blur(5px); color: var(--mint); font-family: 'JetBrains Mono'; 
-            font-size: 8px; font-weight: 700; padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: 0.2s;
+        @keyframes textGlitch {
+            0% { opacity: 0; transform: skewX(10deg); filter: blur(2px); }
+            20% { opacity: 0.8; transform: skewX(-10deg); filter: blur(0px); }
+            100% { opacity: 1; transform: skewX(0deg); }
         }
-        .copy-pill:hover, .share-pill:hover { background: var(--mint); color: #000; }
-        /* Professional social identifiers */
-        .share-x { border-color: #fff; color: #fff; background: rgba(255,255,255,0.05); }
 
-        .main-response { font-size: 1.4rem; font-weight: 500; line-height: 1.4; color: #fff; margin: 20px 0; padding-right: 60px; z-index: 2; position: relative; }
-        .meta-tags { display: flex; gap: 20px; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; }
-        .meta-tags b { color: var(--mint); }
-        
-        /* Auto-highlight keywords strategy */
-        .strategy-notes { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); font-size: 11px; color: #666; }
-        .strategy-notes mark { background: transparent; color: var(--mint); font-weight: 600; }
+        .glitch-text { animation: textGlitch 0.4s ease-out; color: #eee; line-height: 1.5; font-size: 1.1rem; padding-right: 60px; }
 
-        /* --- HISTORY RAILS (YELLOW BOX AREA) --- */
-        .history-rail { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
-        .history-rail::-webkit-scrollbar { display: none; }
-        .history-item { 
-            flex: 0 0 145px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); 
-            padding: 12px; border-radius: 18px; font-size: 10px; cursor: pointer; transition: 0.2s;
+        .copy-pill { 
+            position: absolute; top: 12px; right: 12px; 
+            background: rgba(53, 240, 186, 0.15); border: 1px solid var(--mint);
+            color: var(--mint); font-family: 'JetBrains Mono'; font-size: 9px; 
+            padding: 6px 12px; border-radius: 8px; cursor: pointer; z-index: 5; font-weight: 700; backdrop-filter: blur(5px);
         }
-        .history-item:hover { border-color: var(--mint); background: rgba(53, 240, 186, 0.03); }
-        .history-item span { font-family: 'JetBrains Mono'; color: var(--mint); display: block; margin-bottom: 4px; }
-        .history-item p { color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* --- NOTIFICATION & LOADING SYNC --- */
-        #notification-host { position: fixed; bottom: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
-        .stealth-notif { 
-            background: var(--glass); border: 1px solid var(--border); border-left: 3px solid var(--violet);
-            padding: 12px 20px; border-radius: 12px; backdrop-filter: blur(10px);
-            font-size: 11px; font-weight: 600; color: #fff; letter-spacing: 0.5px;
-            animation: toastIn 0.3s ease forwards;
+        .id-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--mint);
+            background: rgba(53, 240, 186, 0.1); padding: 2px 8px; border-radius: 4px;
+            text-transform: uppercase; margin-bottom: 8px; display: inline-block;
         }
-        @keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* --- LOADING OVERLAYS --- */
-        .loading-shimmer {
-            position: absolute; inset: 0; background: var(--bg); display: none; 
-            flex-direction: column; align-items: center; justify-content: center; z-index: 10; border-radius: 35px;
-        }
-        .loader-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--mint); width: 0%; transition: width 1.5s linear; box-shadow: 0 0 10px var(--mint); }
+        .history-rail { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .history-item { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 15px; border-radius: 15px; }
+
+        @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
+        .loader { position: absolute; inset: 0; background: var(--bg); display: none; align-items: center; justify-content: center; z-index: 50; }
     </style>
 </head>
 <body>
@@ -136,73 +112,52 @@
     <div class="logo">Viral<span>Forge.</span></div>
     <div class="chronos-module">
         <span id="live-clock">00:00:00</span>
-        <span id="live-date">CONNECTING...</span>
+        <span id="live-date">SYNCING...</span>
     </div>
 </header>
 
-<div id="notification-host"></div>
-<div class="ambient-neural"></div>
+<div id="notif-box"></div>
 
 <div class="container">
     <div class="grid">
-        <div class="card span-8" id="ghostCard">
-            <div class="loading-shimmer" id="gLoad">
-                <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--mint);">NEURAL_SCAN_ACTIVE</span>
-                <div style="width:60%; height:2px; background:rgba(255,255,255,0.1); position:relative; margin-top:15px;"><div class="loader-fill" id="glFill"></div></div>
-            </div>
+        <div class="card span-8">
+            <div class="loader" id="gLoad"><span style="font-family:'JetBrains Mono'; color:var(--mint); font-size:10px;">NEURAL_SCAN_ACTIVE</span></div>
             <h3>Elite Ghostwriter</h3>
-            <textarea id="gIn" placeholder="Paste target history... Scanning for power gaps." rows="4"></textarea>
+            <textarea id="gIn" placeholder="Input target dialogue..." rows="4"></textarea>
+            <button class="btn-forge" onclick="runForge('ghost')">Forge Stealth Reply</button>
             
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-                <select id="gArc"><option>Archetype: Ego-Centric</option><option>Archetype: Cold Ghoster</option></select>
-                <select id="gMove"><option>Strategy: Push-Pull Tension</option><option>Strategy: Stoic Scarcity</option></select>
+            <div class="output-area" id="gOut">
+                <div class="copy-pill" onclick="doCopy('gRes')">COPY</div>
+                <div id="gRes" class="glitch-text">...</div>
             </div>
             <div class="history-rail" id="gHist"></div>
-            <button class="btn-forge" onclick="forge('ghost')">Forge Stealth Reply</button>
         </div>
 
         <div class="card span-4">
             <h3>Identity Forge</h3>
-            <textarea id="voiceIn" placeholder="Feed voice samples ( lowercase, dry wit, hate emojis )..." style="height:150px;"></textarea>
-            <div class="neural-accuracy">
-                <div class="accuracy-label"><span>NEURAL_ACCURACY</span><span id="accNum">94%</span></div>
-                <div class="accuracy-track"><div style="width:94%; height:100%; background:var(--mint);"></div></div>
-            </div>
-            <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff;" onclick="alert('Digital Twin Synced.')">Lock Voice</button>
+            <textarea id="vIn" placeholder="Feed voice samples..." style="height:150px;"></textarea>
+            <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff;" onclick="toast('Neural Identity Locked')">Lock Voice</button>
         </div>
 
-        <div class="card span-12" id="viralCard">
-            <div class="loading-shimmer" id="vLoad">
-                <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--mint);">VIRAL_STRATEGY_FORGING</span>
-                <div style="width:60%; height:2px; background:rgba(255,255,255,0.1); position:relative; margin-top:15px;"><div class="loader-fill" id="vlFill"></div></div>
-            </div>
+        <div class="card span-12">
+            <div class="loader" id="vLoad"><span style="font-family:'JetBrains Mono'; color:var(--mint); font-size:10px;">VIRAL_CALIBRATION_ACTIVE</span></div>
             <h3>Viral Forge Engine</h3>
             <div style="display:grid; grid-template-columns: 1fr 1fr auto; gap:10px;">
-                <input type="text" id="vIn" placeholder="Niche: (SaaS, AI, Luxury...)">
-                <select id="vHook"><option>Hook: Authority Gap</option><option>Hook: Logic Defiance</option></select>
-                <button class="btn-forge" style="margin:0; padding:15px 30px;" onclick="forge('viral')">Forge Hook</button>
+                <input type="text" id="nIn" placeholder="Niche...">
+                <select id="vMode"><option>Authority Gap</option><option>Pattern Interrupt</option></select>
+                <button class="btn-forge" style="margin:0; padding:15px 30px;" onclick="runForge('viral')">Forge Hook</button>
+            </div>
+            
+            <div class="output-area" id="vOut">
+                <div class="copy-pill" onclick="doCopy('vRes')">COPY</div>
+                <div id="vRes" class="glitch-text">...</div>
             </div>
             <div class="history-rail" id="vHist"></div>
-
-            <div class="output-portal" id="outBox">
-                <div class="output-ctrl">
-                    <button class="share-pill share-x" onclick="shareTo सोशल('x')">SHARE_X</button>
-                    <button class="share-pill" style="border-color:#25D366; color:#25D366; background:rgba(37,211,102,0.05);" onclick="shareTo सोशल('whatsapp')">WA</button>
-                    <button class="copy-pill" onclick="copyResult()">COPY</button>
-                </div>
-                <div class="res-meta">
-                    <span>STEALTH_RATING: <b>99.8% HUMAN</b></span>
-                    <span>ENGINE_SYNC: <b>STARK_V5</b></span>
-                </div>
-                <div class="main-response" id="resText"></div>
-                <div class="strategy-notes" id="resStrategy"></div>
-            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // LUXURY CLOCK SCRIPT
     function updateClock() {
         const now = new Date();
         document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-US', {hour12:false});
@@ -210,70 +165,65 @@
     }
     setInterval(updateClock, 1000); updateClock();
 
-    // STEALTH NOTIFICATION
-    function notify(message) {
-        const host = document.getElementById('notification-host');
-        const n = document.createElement('div');
-        n.className = 'stealth-notif';
-        n.innerText = `[SYS] ${message}`;
-        host.appendChild(n);
-        setTimeout(() => n.remove(), 3000);
+    function toast(msg) {
+        const b = document.getElementById('notif-box');
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.style = "background: var(--card-bg); border: 1px solid var(--mint); padding: 12px; border-radius: 12px; font-size: 11px; text-align: center; box-shadow: var(--glow); margin-bottom: 10px;";
+        t.innerText = `[SYS] ${msg}`;
+        b.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
     }
 
-    function forge(type) {
+    function runForge(type) {
         const load = document.getElementById(type === 'ghost' ? 'gLoad' : 'vLoad');
-        const fill = document.getElementById(type === 'ghost' ? 'glFill' : 'vlFill');
-        const box = document.getElementById('outBox');
+        const out = document.getElementById(type === 'ghost' ? 'gOut' : 'vOut');
+        const res = document.getElementById(type === 'ghost' ? 'gRes' : 'vRes');
+        
         load.style.display = 'flex';
-        fill.style.width = '100%';
-        box.style.display = 'none';
+        out.style.display = 'none';
 
         setTimeout(() => {
             load.style.display = 'none';
-            fill.style.width = '0%';
-            box.style.display = 'block';
+            out.style.display = 'block';
             
+            let content = "";
             if(type === 'ghost') {
-                document.getElementById('resText').innerText = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
-                document.getElementById('resStrategy').innerHTML = "Uses <mark>Pattern Interrupt</mark>. Creates an immediate <mark>Authority Gap</mark> that forces the recipient to re-qualify their interest to you.";
-                addHist('gHist', "honestly, i was starting...");
+                content = "honestly, i was starting to think you were interesting, but you're being predictable.";
+                addHist('gHist', content);
             } else {
-                const n = document.getElementById('vIn').value || 'Industry';
-                document.getElementById('resText').innerText = `Why 99% of ${n} founders fail—and the 3-minute fix they're ignoring.`;
-                document.getElementById('resStrategy').innerHTML = "Leverages <mark>Negative Constraint</mark> hook. Targets the fear of failure while offering an 'easy' proprietary solution.";
-                addHist('vHist', "Why 99% of founders...");
+                content = "Stop building features. Start building solutions.";
+                addHist('vHist', content);
             }
-            notify("Neural Sync Successful");
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 1500);
+            
+            res.innerText = content;
+            toast("Generation Complete");
+        }, 1200);
     }
 
     function addHist(id, txt) {
         const rail = document.getElementById(id);
-        const item = document.createElement('div');
-        item.className = 'history-item';
+        if (!rail) return;
+        const div = document.createElement('div');
+        div.className = 'history-item';
         
-        // REPLACING ARC_ WITH PROFESSIONAL LOGIC
         const prefix = id === 'gHist' ? 'NEURAL_LOG' : 'SYNC_ID';
-        item.innerHTML = `<span>${prefix}</span><p>${txt}</p>`;
-        rail.prepend(item);
-        if(rail.children.length > 5) rail.lastChild.remove();
+        const hex = Math.floor(Math.random() * 65535).toString(16).toUpperCase().padStart(4, '0');
+
+        div.innerHTML = `
+            <div style="border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 5px;">
+                <span class="id-tag">${prefix}_${hex}</span>
+                <p style="font-size: 13px; color: #888;">${txt}</p>
+            </div>
+        `;
+
+        rail.prepend(div);
+        if (rail.children.length > 5) rail.lastChild.remove();
     }
 
-    function copyResult() {
-        const text = document.getElementById('resText').innerText;
-        if(text) {
-            navigator.clipboard.writeText(text);
-            notify("Data Copied to Clipboard");
-        }
-    }
-
-    // Advanced Social Suite Logic
-    function shareTo सोशल(platform) {
-        const text = encodeURIComponent(document.getElementById('resText').innerText);
-        const url = platform === 'x' ? `https://twitter.com/intent/tweet?text=${text}` : `https://wa.me/?text=${text}`;
-        window.open(url, '_blank');
-        notify(`ROUTING TO ${platform.toUpperCase()}`);
+    function doCopy(id) {
+        navigator.clipboard.writeText(document.getElementById(id).innerText);
+        toast("Copied to Clipboard");
     }
 </script>
 
