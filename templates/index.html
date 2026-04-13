@@ -1,363 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ViralForge | Social Architecture OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --mint: #35F0BA;
-            --violet: #A75FFF;
-            --bg: #030508;
-            --card-bg: rgba(15, 18, 25, 0.9);
-            --border: rgba(255, 255, 255, 0.08);
-            --neon: 0 0 20px rgba(53, 240, 186, 0.1);
-        }
+<style>
+    /* Glow-Visibility for Section Names */
+    h3 {
+        color: #fff !important; /* Making titles pure white for visibility */
+        text-shadow: 0 0 10px rgba(53, 240, 186, 0.4); /* Adding the brand glow */
+        letter-spacing: 3px;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; padding-bottom: 50px; }
+    /* Mobile-Perfect Copy Positioning */
+    .copy-pill {
+        top: 12px !important;
+        right: 12px !important;
+        background: rgba(53, 240, 186, 0.15) !important;
+        backdrop-filter: blur(5px);
+        font-weight: 700;
+        border: 1px solid var(--mint) !important;
+    }
 
-        .ambient-neural {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at 50% 50%, #0d121f 0%, #000 100%);
-            z-index: -1;
-        }
+    /* Neural Pulse Animation for Output Boxes */
+    .output-area {
+        position: relative;
+    }
+    .output-area::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 20px;
+        padding: 1px;
+        background: linear-gradient(90deg, transparent, var(--mint), transparent);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        background-size: 200% auto;
+        animation: pulseGradient 4s linear infinite;
+    }
 
-        header { 
-            position: sticky; top: 0; z-index: 1000; background: rgba(3, 5, 8, 0.85); 
-            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
-            padding: 12px 25px; display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo { font-family: 'Exo', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -1px; }
-        .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .chronos-module { text-align: right; font-family: 'JetBrains Mono'; }
-        #live-clock { font-size: 11px; color: #fff; font-weight: 700; display: block; letter-spacing: 1px; }
-        #live-date { font-size: 8px; color: var(--mint); text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
-        .sync-dot { display: inline-block; width: 4px; height: 4px; background: var(--mint); border-radius: 50%; margin-right: 5px; animation: blink 2s infinite; box-shadow: 0 0 8px var(--mint); }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
-
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-        .card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            border-radius: 35px; 
-            padding: 30px; 
-            backdrop-filter: blur(25px); 
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; overflow: hidden;
-        }
-        .card:hover { border-color: rgba(53, 240, 186, 0.4); transform: translateY(-4px); box-shadow: var(--neon); }
-
-        .span-8 { grid-column: span 8; }
-        .span-4 { grid-column: span 4; }
-        .span-12 { grid-column: span 12; }
-
-        /* MOBILE-FIRST PRECISION */
-        @media (max-width: 900px) { 
-            .span-8, .span-4 { grid-column: span 12; } 
-            .card { padding: 20px; border-radius: 25px; }
-            h1, .logo { font-size: 1.2rem; }
-            .main-response { font-size: 1.1rem; }
-            h3 { font-size: 0.75rem; }
-        }
-
-        h3 { 
-            font-family: 'Exo', sans-serif; 
-            font-size: 0.85rem; 
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-            color: #555; 
-            margin-bottom: 20px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            /* GLOW-ENHANCED BRANDING */
-            text-shadow: 0 0 12px rgba(53, 240, 186, 0.3);
-        }
-        h3::before { content: "◈"; color: var(--mint); box-shadow: 0 0 10px var(--mint); }
-
-        textarea, select, input { 
-            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
-            border-radius: 18px; padding: 18px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
-        }
-        textarea:focus, input:focus { border-color: var(--mint); background: rgba(255,255,255,0.06); }
-
-        .btn-forge { 
-            width: 100%; padding: 22px; border-radius: 20px; border: none; 
-            background: linear-gradient(90deg, var(--mint), var(--violet)); 
-            color: #000; font-family: 'Exo', sans-serif; font-weight: 800; 
-            font-size: 1.1rem; text-transform: uppercase; cursor: pointer; margin-top: 20px;
-            transition: 0.4s; position: relative;
-        }
-        .btn-forge:hover { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 30px rgba(53, 240, 186, 0.4); }
-
-        .history-rail { display: flex; gap: 12px; overflow-x: auto; padding: 15px 0; margin: 10px 0; scrollbar-width: none; }
-        .history-rail::-webkit-scrollbar { display: none; }
-        .history-item { 
-            flex: 0 0 160px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
-            padding: 15px; border-radius: 20px; cursor: pointer; transition: 0.3s;
-        }
-        .history-item:hover { background: rgba(53, 240, 186, 0.05); border-color: var(--mint); }
-        .history-item span { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--mint); text-transform: uppercase; }
-        .history-item p { font-size: 11px; color: #777; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        .output-portal { 
-            margin-top: 30px; background: rgba(5, 7, 10, 0.8); border: 1px solid var(--border); 
-            border-radius: 30px; padding: 30px; border-left: 4px solid var(--mint);
-            position: relative; animation: slideUp 0.5s ease;
-        }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } }
-        
-        /* REFINED COPY POSITIONING */
-        .copy-btn { 
-            position: absolute; top: 15px; right: 15px; 
-            background: rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border); color: #fff; padding: 6px 12px; border-radius: 10px; 
-            font-size: 9px; cursor: pointer; transition: 0.3s; font-family: 'JetBrains Mono';
-            z-index: 5;
-        }
-        .copy-btn:hover { background: var(--mint); color: #000; }
-
-        .main-response { font-size: 1.4rem; font-weight: 500; line-height: 1.4; color: #fff; margin: 25px 0 20px 0; }
-        .meta-tags { display: flex; gap: 20px; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; }
-        .meta-tags b { color: var(--mint); }
-        
-        .strategy-notes { 
-            margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); 
-            font-size: 12px; color: #666; line-height: 1.6; 
-        }
-        .strategy-notes mark { background: transparent; color: var(--mint); font-weight: 600; }
-
-        #notification-host { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
-        .stealth-notif { 
-            background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--violet);
-            padding: 12px 20px; border-radius: 12px; backdrop-filter: blur(10px);
-            font-size: 11px; font-weight: 600; color: #fff; letter-spacing: 0.5px;
-            animation: toastIn 0.3s ease forwards;
-        }
-        @keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        .loading-shimmer {
-            position: absolute; inset: 0; background: var(--bg); z-index: 10;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            border-radius: 35px;
-        }
-        .loader-bar { width: 60%; height: 2px; background: rgba(255,255,255,0.1); position: relative; margin-top: 15px; }
-        .loader-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--mint); width: 0%; transition: width 1.5s linear; }
-
-    </style>
-</head>
-<body>
-
-<div id="notification-host"></div>
-<div class="ambient-neural"></div>
-
-<header>
-    <div class="logo">Viral<span>Forge.</span></div>
-    <div class="chronos-module">
-        <span id="live-clock">00:00:00</span>
-        <span id="live-date"><span class="sync-dot"></span>CONNECTING...</span>
-    </div>
-</header>
-
-<div class="container">
-    <div class="grid">
-        <div class="card span-8" id="ghostCard">
-            <div class="loading-shimmer" id="ghostLoader">
-                <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--mint); letter-spacing: 2px;">NEURAL_SCAN_ACTIVE</span>
-                <div class="loader-bar"><div class="loader-fill" id="gl-fill"></div></div>
-            </div>
-            <h3>Elite Ghostwriter</h3>
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 10px; color: #444; text-transform: uppercase; margin-bottom: 8px; display: block;">Chat Context / Recipient Subtext</label>
-                <textarea id="chatInput" placeholder="Paste the last few messages... Scanning for power gaps."></textarea>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Tone Architecture</label>
-                    <select id="tactic">
-                        <option>Professional</option>
-                        <option>Provocative</option>
-                        <option>Empathetic</option>
-                        <option>Sarcastic</option>
-                    </select>
-                </div>
-                <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Social Strategy</label>
-                    <select>
-                        <option>Push-Pull Tension</option>
-                        <option>Stoic Scarcity</option>
-                        <option>Expert Dominance</option>
-                        <option>De-escalation</option>
-                    </select>
-                </div>
-            </div>
-            
-            <button class="btn-forge" onclick="executeForge('ghost')">Forge Stealth Reply</button>
-            
-            <div class="history-rail" id="ghostHistory"></div>
-
-            <div class="output-portal" id="ghostOutput" style="display:none;">
-                <button class="copy-btn" onclick="copyResult('gResText')">COPY_TEXT</button>
-                <div class="meta-tags">
-                    <span>STEALTH: <b>99.8%</b></span>
-                    <span>ENGINE: <b>STARK_V3</b></span>
-                    <span>STATUS: <b style="color:var(--mint)">OPTIMAL</b></span>
-                </div>
-                <div class="main-response" id="gResText">...</div>
-                <div class="strategy-notes" id="gResNotes">...</div>
-            </div>
-        </div>
-
-        <div class="card span-4">
-            <h3>Identity Forge</h3>
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Voice Samples (Texts, Emails)</label>
-                <textarea id="voiceIn" style="height: 290px;" placeholder="I speak in lowercase, I hate emojis, I use dry wit..."></textarea>
-            </div>
-            <div style="margin-top:20px;">
-                <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono'; font-size:9px; color:#444; margin-bottom:5px;">
-                    <span>NEURAL_ACCURACY</span><span id="accVal">0%</span>
-                </div>
-                <div style="width:100%; height:4px; background:rgba(255,255,255,0.05); border-radius:10px;">
-                    <div id="accBar" style="width:0%; height:100%; background:var(--mint); border-radius:10px; transition:1s;"></div>
-                </div>
-            </div>
-            <button class="btn-forge" style="background: transparent; border: 1px solid var(--border); color: #fff;" onclick="lockVoice()">Lock Neural Voice</button>
-        </div>
-
-        <div class="card span-12" id="viralCard">
-            <div class="loading-shimmer" id="viralLoader">
-                <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--mint); letter-spacing: 2px;">VIRAL_CALIBRATION_ACTIVE</span>
-                <div class="loader-bar"><div class="loader-fill" id="vl-fill"></div></div>
-            </div>
-            <h3>Viral Forge Engine</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; align-items: flex-end;">
-                <div>
-                    <label>Target Niche Industry</label>
-                    <input type="text" id="niche" placeholder="Finance, SaaS, Luxury...">
-                </div>
-                <div>
-                    <label>Viral Structure Hook</label>
-                    <select id="hookType">
-                        <option>Controversial Statement</option>
-                        <option>Authority Gap</option>
-                        <option>Negative Constraint</option>
-                        <option>Story Opener</option>
-                    </select>
-                </div>
-                <button class="btn-forge" style="margin: 0;" onclick="executeForge('viral')">Forge Viral Hook</button>
-            </div>
-            
-            <div class="history-rail" id="viralHistory"></div>
-
-            <div class="output-portal" id="viralOutput" style="display:none;">
-                <button class="copy-btn" onclick="copyResult('vResText')">COPY_TEXT</button>
-                <div class="meta-tags">
-                    <span>STEALTH: <b>99.1%</b></span>
-                    <span>ENGINE: <b>HYPER_V6</b></span>
-                    <span>STATUS: <b style="color:var(--mint)">OPTIMAL</b></span>
-                </div>
-                <div class="main-response" id="vResText">...</div>
-                <div class="strategy-notes" id="vResNotes">...</div>
-            </div>
-        </div>
-    </div>
-</div>
+    @keyframes pulseGradient {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+</style>
 
 <script>
-    function updateClock() {
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' });
-        document.getElementById('live-clock').innerText = timeStr;
-        document.getElementById('live-date').innerHTML = `<span class="sync-dot"></span>${dateStr}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    function notify(message) {
-        const host = document.getElementById('notification-host');
-        const n = document.createElement('div');
-        n.className = 'stealth-notif';
-        n.innerText = `[SYS] ${message}`;
-        host.appendChild(n);
-        setTimeout(() => { n.style.opacity = '0'; setTimeout(() => n.remove(), 500); }, 3000);
-    }
-
-    function lockVoice() {
-        const bar = document.getElementById('accBar');
-        const val = document.getElementById('accVal');
-        bar.style.width = "94%";
-        val.innerText = "94%";
-        notify("Neural Identity Calibrated");
-    }
-
-    function executeForge(type) {
-        let loader, bar, outPortal, resText, resNotes, histRailId;
-        
-        if(type === 'ghost') {
-            loader = document.getElementById('ghostLoader');
-            bar = document.getElementById('gl-fill');
-            outPortal = document.getElementById('ghostOutput');
-            resText = document.getElementById('gResText');
-            resNotes = document.getElementById('gResNotes');
-            histRailId = 'ghostHistory';
-        } else {
-            loader = document.getElementById('viralLoader');
-            bar = document.getElementById('vl-fill');
-            outPortal = document.getElementById('viralOutput');
-            resText = document.getElementById('vResText');
-            resNotes = document.getElementById('vResNotes');
-            histRailId = 'viralHistory';
-        }
-        
-        loader.style.display = 'flex';
-        bar.style.width = '100%';
-        outPortal.style.display = 'none';
-
-        setTimeout(() => {
-            loader.style.display = 'none';
-            bar.style.width = '0%';
-            outPortal.style.display = 'block';
-            
-            if(type === 'ghost') {
-                resText.innerText = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
-                resNotes.innerHTML = "STRATEGY: Uses <mark>Pattern Interrupt</mark>. Recipient is accustomed to high power; calling them 'predictable' creates an immediate <mark>Authority Gap</mark> they will try to fill.";
-                addHistory(histRailId, "honestly, i was starting...");
-            } else {
-                const niche = document.getElementById('niche').value || 'Industry';
-                resText.innerText = `Why 99% of ${niche} founders fail—and the 3-minute fix they're ignoring in 2026.`;
-                resNotes.innerHTML = "STRATEGY: High <mark>Negative Constraint</mark> hook. Targets the fear of failure while offering an 'easy' proprietary solution.";
-                addHistory(histRailId, `Why 99% of ${niche}...`);
-            }
-            notify("Neural Generation Complete");
-        }, 1600);
-    }
-
-    /* PROFESSIONAL LOGIC IDENTIFIERS: SESSION_LOG */
-    function addHistory(id, txt) {
+    function addHist(id, txt) {
         const rail = document.getElementById(id);
-        const item = document.createElement('div');
-        item.className = 'history-item';
-        item.innerHTML = `<span>SESSION_LOG_${Date.now().toString().slice(-4)}</span><p>${txt}</p>`;
-        rail.prepend(item);
-        if(rail.children.length > 5) rail.lastChild.remove();
-    }
-
-    function copyResult(resId) {
-        const text = document.getElementById(resId).innerText;
-        if(text) {
-            navigator.clipboard.writeText(text);
-            notify("Data Copied to Clipboard");
-        }
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        
+        // REPLACING ARC_ WITH PROFESSIONAL LOGIC
+        const prefix = id === 'gHist' ? 'NEURAL_LOG' : 'SYNC_ID';
+        const hex = Math.floor(Math.random()*16777215).toString(16).toUpperCase().substring(0,4);
+        
+        div.innerHTML = `<span>${prefix}_${hex}</span><p>${txt}</p>`;
+        rail.prepend(div);
+        if(rail.children.length > 4) rail.lastChild.remove();
     }
 </script>
-
-</body>
-</html>
