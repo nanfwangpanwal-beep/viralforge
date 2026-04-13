@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ViralForge AI</title>
+<title>ViralForge AI | Luxury Content Engine</title>
 
 <style>
 * {
@@ -16,160 +16,226 @@ body {
     font-family: "Inter", sans-serif;
     background: radial-gradient(circle at top, #0f172a, #020617);
     color: #fff;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    padding: 20px;
 }
 
-/* animated glow bg */
+/* Luxury Animated Background */
 body::before {
     content: "";
     position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(0,255,166,0.15), transparent);
-    filter: blur(120px);
-    animation: float 8s infinite ease-in-out;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 255, 166, 0.1), transparent);
+    filter: blur(140px);
+    animation: float 10s infinite ease-in-out;
+    z-index: -1;
 }
+
 @keyframes float {
-    0%,100% { transform: translateY(0);}
-    50% { transform: translateY(-40px);}
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-30px, -50px); }
 }
 
 .container {
-    width: 95%;
-    max-width: 520px;
-    padding: 2.5rem;
-    border-radius: 24px;
-    backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    width: 100%;
+    max-width: 550px;
+    padding: 3rem;
+    border-radius: 32px;
+    backdrop-filter: blur(30px);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    text-align: center;
 }
 
 h1 {
-    font-size: 2.3rem;
+    font-size: 2.8rem;
+    font-weight: 800;
     background: linear-gradient(90deg, #00ffa6, #00c3ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
 }
 
-p {
+p.tagline {
     color: #94a3b8;
-    margin: 10px 0 2rem;
+    margin: 10px 0 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 300;
 }
 
-/* input */
+/* Advanced Inputs */
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 2rem;
+}
+
 .input-group {
     position: relative;
 }
 
 input {
     width: 100%;
-    padding: 16px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #00ffa6;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.selectors {
+    display: flex;
+    gap: 12px;
+}
+
+select {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    cursor: pointer;
     outline: none;
 }
 
 .counter {
     position: absolute;
-    right: 10px;
-    top: 12px;
+    right: 15px;
+    top: 18px;
     font-size: 0.75rem;
     color: #64748b;
 }
 
-/* button */
-button {
+/* Premium Button */
+button#generateBtn {
     width: 100%;
-    padding: 16px;
-    margin-top: 1rem;
-    border-radius: 14px;
+    padding: 20px;
+    border-radius: 16px;
     border: none;
     background: linear-gradient(135deg, #00ffa6, #00c3ff);
-    color: #021617;
-    font-weight: 600;
+    color: #020617;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: 0.25s;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s;
 }
 
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+button#generateBtn::after {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
 }
 
 button:hover:not(:disabled) {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 255, 166, 0.3);
 }
 
-/* hooks list */
+/* Results Card */
 #results {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     display: none;
+    text-align: left;
 }
 
-.hook {
-    background: rgba(255,255,255,0.03);
-    padding: 14px;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    animation: fadeIn 0.4s ease;
+.result-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 24px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    animation: slideUp 0.6s ease forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: #00ffa6;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .hook-text {
-    font-size: 0.95rem;
-    color: #00ffa6;
-    flex: 1;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    font-weight: 500;
+    margin-bottom: 15px;
 }
 
-/* copy btn */
-.copy {
-    background: rgba(255,255,255,0.05);
-    border: none;
-    padding: 6px 10px;
-    border-radius: 8px;
-    cursor: pointer;
+.brief-details {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 15px;
+    font-size: 0.85rem;
     color: #94a3b8;
 }
 
-.copy:hover {
-    background: rgba(0,255,166,0.2);
+.copy-btn {
+    background: rgba(0, 255, 166, 0.1);
+    border: 1px solid rgba(0, 255, 166, 0.2);
     color: #00ffa6;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    float: right;
 }
 
-/* loading */
+/* Loading */
 .loading {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     display: none;
-    font-size: 0.9rem;
+    font-style: italic;
     color: #64748b;
+    font-size: 0.9rem;
 }
 
-/* toast */
 .toast {
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
     background: #00ffa6;
     color: #021617;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
     display: none;
-}
-
-/* animation */
-@keyframes fadeIn {
-    from {opacity:0; transform:translateY(10px);}
-    to {opacity:1; transform:translateY(0);}
+    z-index: 100;
 }
 </style>
 </head>
@@ -178,21 +244,36 @@ button:hover:not(:disabled) {
 
 <div class="container">
     <h1>ViralForge AI</h1>
-    <p>Generate scroll-stopping viral hooks instantly.</p>
+    <p class="tagline">The Executive Creative Director for Global Creators.</p>
 
-    <div class="input-group">
-        <input id="nicheInput" maxlength="50" placeholder="Enter niche (e.g. Real Estate)">
-        <div class="counter" id="counter">0/50</div>
+    <div class="input-section">
+        <div class="input-group">
+            <input id="nicheInput" maxlength="50" placeholder="Enter niche (e.g. Fitness Luxury)">
+            <div class="counter" id="counter">0/50</div>
+        </div>
+        
+        <div class="selectors">
+            <select id="toneSelect">
+                <option value="Controversial">🔥 Controversial</option>
+                <option value="Educational" selected>🎓 Educational</option>
+                <option value="Inspirational">✨ Inspirational</option>
+            </select>
+            <select id="platformSelect">
+                <option value="TikTok">TikTok</option>
+                <option value="Instagram Reels">Instagram Reels</option>
+                <option value="YouTube Shorts">YouTube Shorts</option>
+            </select>
+        </div>
     </div>
 
-    <button id="generateBtn">Generate Hooks</button>
+    <button id="generateBtn">Forge Viral Concept</button>
 
-    <div class="loading" id="loading">⚡ Generating viral hooks...</div>
+    <div class="loading" id="loading">⚡ Analyzing trending algorithms...</div>
 
     <div id="results"></div>
 </div>
 
-<div class="toast" id="toast">Copied!</div>
+<div class="toast" id="toast">Copied to Clipboard!</div>
 
 <script>
 const input = document.getElementById("nicheInput");
@@ -202,30 +283,37 @@ const results = document.getElementById("results");
 const loading = document.getElementById("loading");
 const toast = document.getElementById("toast");
 
-/* character counter */
 input.addEventListener("input", () => {
     counter.innerText = input.value.length + "/50";
-});
-
-/* enter key */
-input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") generateHooks();
 });
 
 btn.onclick = generateHooks;
 
 async function generateHooks() {
     const niche = input.value.trim();
-    if (!niche) return alert("Enter a niche");
+    const tone = document.getElementById("toneSelect").value;
+    const platform = document.getElementById("platformSelect").value;
+
+    if (!niche) return alert("Please specify your niche.");
 
     btn.disabled = true;
     loading.style.display = "block";
     results.style.display = "none";
 
+    // "Luxury" Loading Messages
+    const msgs = ["⚡ Scanning Viral Patterns...", "🧠 Applying Psychological Triggers...", "🔥 Forging Masterpiece..."];
+    let i = 0;
+    const interval = setInterval(() => {
+        loading.innerText = msgs[i % msgs.length];
+        i++;
+    }, 1200);
+
     try {
-        const res = await fetch(`/generate?niche=${encodeURIComponent(niche)}`);
+        // Updated API call to include more context
+        const res = await fetch(`/generate?niche=${encodeURIComponent(niche)}&tone=${tone}&platform=${platform}`);
         const data = await res.json();
 
+        clearInterval(interval);
         loading.style.display = "none";
         btn.disabled = false;
         results.innerHTML = "";
@@ -235,38 +323,38 @@ async function generateHooks() {
             const hooks = Array.isArray(data.hooks) ? data.hooks : [data.hook];
 
             hooks.forEach(h => {
-                const div = document.createElement("div");
-                div.className = "hook";
+                const card = document.createElement("div");
+                card.className = "result-card";
 
-                div.innerHTML = `
-                    <div class="hook-text">${h}</div>
-                    <button class="copy">Copy</button>
+                card.innerHTML = `
+                    <span class="badge">${platform} Strategy</span>
+                    <button class="copy-btn">Copy Hook</button>
+                    <div class="hook-text">"${h}"</div>
+                    <div class="brief-details">
+                        <p style="margin-bottom:8px;"><strong>🎬 Visual Trigger:</strong> Fast-paced pattern interrupt with bold text overlay.</p>
+                        <p><strong>✍️ Caption:</strong> Most people in ${niche} are doing this wrong. Here is the secret... 👇</p>
+                    </div>
                 `;
 
-                div.querySelector(".copy").onclick = () => {
+                card.querySelector(".copy-btn").onclick = () => {
                     navigator.clipboard.writeText(h);
                     showToast();
                 };
 
-                results.appendChild(div);
+                results.appendChild(card);
             });
-
-        } else {
-            results.innerHTML = `<div class="hook-text">Error: ${data.message}</div>`;
         }
-
-    } catch {
+    } catch (e) {
+        clearInterval(interval);
         loading.style.display = "none";
         btn.disabled = false;
-        results.style.display = "block";
-        results.innerHTML = `<div class="hook-text">Server error</div>`;
+        alert("Server connection failed. Please try again.");
     }
 }
 
-/* toast */
 function showToast() {
     toast.style.display = "block";
-    setTimeout(() => toast.style.display = "none", 1500);
+    setTimeout(() => toast.style.display = "none", 2000);
 }
 </script>
 
