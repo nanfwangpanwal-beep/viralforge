@@ -18,14 +18,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; padding-bottom: 50px; }
 
-        /* --- BACKGROUND NEURAL FLOW --- */
         .ambient-neural {
             position: fixed; inset: 0;
             background: radial-gradient(circle at 50% 50%, #0d121f 0%, #000 100%);
             z-index: -1;
         }
 
-        /* --- LUXURIOUS STICKY HEADER --- */
         header { 
             position: sticky; top: 0; z-index: 1000; background: rgba(3, 5, 8, 0.85); 
             backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
@@ -34,7 +32,6 @@
         .logo { font-family: 'Exo', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -1px; }
         .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* PREMIUM TIME/DATE MODULE */
         .chronos-module { text-align: right; font-family: 'JetBrains Mono'; }
         #live-clock { font-size: 11px; color: #fff; font-weight: 700; display: block; letter-spacing: 1px; }
         #live-date { font-size: 8px; color: var(--mint); text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
@@ -43,7 +40,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
 
-        /* --- BENTO GRID SYSTEM --- */
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
         .card { 
             background: var(--card-bg); 
@@ -60,20 +56,36 @@
         .span-4 { grid-column: span 4; }
         .span-12 { grid-column: span 12; }
 
-        @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
+        /* MOBILE-FIRST PRECISION */
+        @media (max-width: 900px) { 
+            .span-8, .span-4 { grid-column: span 12; } 
+            .card { padding: 20px; border-radius: 25px; }
+            h1, .logo { font-size: 1.2rem; }
+            .main-response { font-size: 1.1rem; }
+            h3 { font-size: 0.75rem; }
+        }
 
-        /* --- UI TYPOGRAPHY --- */
-        h3 { font-family: 'Exo', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #555; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        h3 { 
+            font-family: 'Exo', sans-serif; 
+            font-size: 0.85rem; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            color: #555; 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            /* GLOW-ENHANCED BRANDING */
+            text-shadow: 0 0 12px rgba(53, 240, 186, 0.3);
+        }
         h3::before { content: "◈"; color: var(--mint); box-shadow: 0 0 10px var(--mint); }
 
-        /* --- INPUT ELEMENTS --- */
         textarea, select, input { 
             width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
             border-radius: 18px; padding: 18px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
         }
         textarea:focus, input:focus { border-color: var(--mint); background: rgba(255,255,255,0.06); }
 
-        /* --- PREMIUM FORGE BUTTONS --- */
         .btn-forge { 
             width: 100%; padding: 22px; border-radius: 20px; border: none; 
             background: linear-gradient(90deg, var(--mint), var(--violet)); 
@@ -83,7 +95,6 @@
         }
         .btn-forge:hover { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 30px rgba(53, 240, 186, 0.4); }
 
-        /* --- HISTORY RAILS (YELLOW AREA) --- */
         .history-rail { display: flex; gap: 12px; overflow-x: auto; padding: 15px 0; margin: 10px 0; scrollbar-width: none; }
         .history-rail::-webkit-scrollbar { display: none; }
         .history-item { 
@@ -94,7 +105,6 @@
         .history-item span { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--mint); text-transform: uppercase; }
         .history-item p { font-size: 11px; color: #777; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* --- THE RED BOX: UNIFIED DUAL-OUTPUT PORTALS --- */
         .output-portal { 
             margin-top: 30px; background: rgba(5, 7, 10, 0.8); border: 1px solid var(--border); 
             border-radius: 30px; padding: 30px; border-left: 4px solid var(--mint);
@@ -102,14 +112,18 @@
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } }
         
+        /* REFINED COPY POSITIONING */
         .copy-btn { 
-            position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.05); 
-            border: 1px solid var(--border); color: #fff; padding: 8px 15px; border-radius: 12px; 
-            font-size: 10px; cursor: pointer; transition: 0.3s; font-family: 'JetBrains Mono';
+            position: absolute; top: 15px; right: 15px; 
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border); color: #fff; padding: 6px 12px; border-radius: 10px; 
+            font-size: 9px; cursor: pointer; transition: 0.3s; font-family: 'JetBrains Mono';
+            z-index: 5;
         }
         .copy-btn:hover { background: var(--mint); color: #000; }
 
-        .main-response { font-size: 1.4rem; font-weight: 500; line-height: 1.4; color: #fff; margin: 20px 0; }
+        .main-response { font-size: 1.4rem; font-weight: 500; line-height: 1.4; color: #fff; margin: 25px 0 20px 0; }
         .meta-tags { display: flex; gap: 20px; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; }
         .meta-tags b { color: var(--mint); }
         
@@ -119,7 +133,6 @@
         }
         .strategy-notes mark { background: transparent; color: var(--mint); font-weight: 600; }
 
-        /* --- NOTIFICATION & LOADING SYNC --- */
         #notification-host { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
         .stealth-notif { 
             background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--violet);
@@ -129,7 +142,6 @@
         }
         @keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* --- LOADING OVERLAYS (CONTEXT-AWARE) --- */
         .loading-shimmer {
             position: absolute; inset: 0; background: var(--bg); z-index: 10;
             display: none; flex-direction: column; align-items: center; justify-content: center;
@@ -188,8 +200,7 @@
             
             <button class="btn-forge" onclick="executeForge('ghost')">Forge Stealth Reply</button>
             
-            <div class="history-rail" id="ghostHistory">
-                </div>
+            <div class="history-rail" id="ghostHistory"></div>
 
             <div class="output-portal" id="ghostOutput" style="display:none;">
                 <button class="copy-btn" onclick="copyResult('gResText')">COPY_TEXT</button>
@@ -243,8 +254,7 @@
                 <button class="btn-forge" style="margin: 0;" onclick="executeForge('viral')">Forge Viral Hook</button>
             </div>
             
-            <div class="history-rail" id="viralHistory">
-                </div>
+            <div class="history-rail" id="viralHistory"></div>
 
             <div class="output-portal" id="viralOutput" style="display:none;">
                 <button class="copy-btn" onclick="copyResult('vResText')">COPY_TEXT</button>
@@ -261,7 +271,6 @@
 </div>
 
 <script>
-    // 1. CLOCK SCRIPT
     function updateClock() {
         const now = new Date();
         const timeStr = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -272,7 +281,6 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. STEALTH NOTIFICATION
     function notify(message) {
         const host = document.getElementById('notification-host');
         const n = document.createElement('div');
@@ -282,7 +290,6 @@
         setTimeout(() => { n.style.opacity = '0'; setTimeout(() => n.remove(), 500); }, 3000);
     }
 
-    // 3. LOGIC & EXECUTION
     function lockVoice() {
         const bar = document.getElementById('accBar');
         const val = document.getElementById('accVal');
@@ -294,7 +301,6 @@
     function executeForge(type) {
         let loader, bar, outPortal, resText, resNotes, histRailId;
         
-        // CONTEXT-AWARE ASSIGNMENT
         if(type === 'ghost') {
             loader = document.getElementById('ghostLoader');
             bar = document.getElementById('gl-fill');
@@ -311,18 +317,15 @@
             histRailId = 'viralHistory';
         }
         
-        // Visual Feedback
         loader.style.display = 'flex';
         bar.style.width = '100%';
-        outPortal.style.display = 'none'; // Clear previous
+        outPortal.style.display = 'none';
 
-        // Simulate AI Processing
         setTimeout(() => {
             loader.style.display = 'none';
             bar.style.width = '0%';
             outPortal.style.display = 'block';
             
-            // Generate Data based on type and input
             if(type === 'ghost') {
                 resText.innerText = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
                 resNotes.innerHTML = "STRATEGY: Uses <mark>Pattern Interrupt</mark>. Recipient is accustomed to high power; calling them 'predictable' creates an immediate <mark>Authority Gap</mark> they will try to fill.";
@@ -337,11 +340,12 @@
         }, 1600);
     }
 
+    /* PROFESSIONAL LOGIC IDENTIFIERS: SESSION_LOG */
     function addHistory(id, txt) {
         const rail = document.getElementById(id);
         const item = document.createElement('div');
         item.className = 'history-item';
-        item.innerHTML = `<span>ARC_${Date.now().toString().slice(-4)}</span><p>${txt}</p>`;
+        item.innerHTML = `<span>SESSION_LOG_${Date.now().toString().slice(-4)}</span><p>${txt}</p>`;
         rail.prepend(item);
         if(rail.children.length > 5) rail.lastChild.remove();
     }
