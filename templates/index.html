@@ -3,36 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ViralForge | Social Architecture OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;600&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <title>Forge Legacy | Social Architecture OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --mint: #35F0BA;
             --violet: #A75FFF;
             --bg: #000000;
-            --glass: rgba(12, 15, 22, 0.95);
+            --glass: rgba(12, 15, 22, 0.8);
             --border: rgba(255, 255, 255, 0.08);
             --neon-glow: 0 0 25px rgba(53, 240, 186, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; min-height: 100vh; padding-bottom: 50px; }
+        body { background: var(--bg); color: #fff; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
 
         .ambient-neural { position: fixed; inset: 0; background: radial-gradient(circle at 50% -20%, #151b2d 0%, #000 100%); z-index: -1; }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
 
-        /* --- HEADER & BRANDING --- */
+        /* --- BRANDING --- */
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
         .logo { font-family: 'Exo', sans-serif; font-size: 1.8rem; letter-spacing: -1.5px; font-weight: 800; }
         .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .secure-tag { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--mint); padding: 6px 15px; border: 1px solid var(--border); border-radius: 50px; background: rgba(53, 240, 186, 0.05); }
 
-        /* --- BENTO ARCHITECTURE --- */
+        /* --- BENTO SYSTEM --- */
         .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 30px; backdrop-filter: blur(40px); position: relative; overflow: hidden; }
-        .span-8 { grid-column: span 8; }
-        .span-4 { grid-column: span 4; }
-        .span-12 { grid-column: span 12; }
+        .card { 
+            background: var(--glass); 
+            border: 1px solid var(--border); 
+            border-radius: 35px; 
+            padding: 30px; 
+            backdrop-filter: blur(25px); 
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative; overflow: hidden;
+        }
+        .card:hover { border-color: rgba(53, 240, 186, 0.3); box-shadow: var(--neon-glow); }
+        .span-8 { grid-column: span 8; } .span-4 { grid-column: span 4; } .span-12 { grid-column: span 12; }
 
         @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
 
@@ -40,157 +47,197 @@
         h3::before { content: "◈"; color: var(--mint); }
 
         textarea, select, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 18px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; }
-        textarea:focus { border-color: var(--mint); }
+        textarea:focus, input:focus { border-color: var(--mint); background: rgba(255,255,255,0.06); }
 
-        .btn-forge { width: 100%; padding: 22px; border-radius: 20px; border: none; background: linear-gradient(90deg, var(--mint), var(--violet)); color: #000; font-family: 'Exo', sans-serif; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; margin-top: 20px; transition: 0.4s; }
-        .btn-forge:hover { filter: brightness(1.1); transform: scale(1.02); }
+        /* --- PREMIUM BUTTONS --- */
+        .btn-forge { 
+            width: 100%; padding: 22px; border-radius: 20px; border: none; 
+            background: linear-gradient(90deg, var(--mint), var(--violet)); 
+            color: #000; font-family: 'Exo', sans-serif; font-weight: 800; 
+            font-size: 1.1rem; text-transform: uppercase; cursor: pointer; 
+            margin-top: 20px; transition: 0.4s; position: relative;
+        }
+        .btn-forge:hover { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 30px rgba(53, 240, 186, 0.4); }
 
-        /* --- HISTORY RAILS (YELLOW BOX AREA) --- */
-        .history-rail { margin-top: 25px; display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        /* --- HISTORY RAILS (YELLOW AREA) --- */
+        .history-rail { display: flex; gap: 12px; overflow-x: auto; padding: 15px 0; margin: 10px 0; scrollbar-width: none; }
         .history-rail::-webkit-scrollbar { display: none; }
-        .history-item { flex: 0 0 140px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 12px; border-radius: 15px; cursor: pointer; transition: 0.3s; }
-        .history-item:hover { border-color: var(--mint); }
-        .history-item span { display: block; font-family: 'JetBrains Mono'; font-size: 8px; color: var(--mint); margin-bottom: 5px; }
-        .history-item p { font-size: 10px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .history-item { 
+            flex: 0 0 160px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
+            padding: 15px; border-radius: 20px; cursor: pointer; transition: 0.3s;
+        }
+        .history-item:hover { background: rgba(53, 240, 186, 0.05); border-color: var(--mint); }
+        .history-item span { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--mint); text-transform: uppercase; }
+        .history-item p { font-size: 11px; color: #777; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* --- OUTPUT ARCHITECTURE (RED BOX AREA) --- */
-        .output-portal { margin-top: 30px; background: #080a0f; border: 1px solid var(--border); border-radius: 25px; padding: 25px; border-left: 4px solid var(--mint); min-height: 120px; }
-        .output-header { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; margin-bottom: 15px; }
-        .output-header b { color: var(--mint); }
-        .main-response { font-size: 1.2rem; line-height: 1.5; font-weight: 500; color: #fff; margin-bottom: 15px; }
-        .full-notes { border-top: 1px solid var(--border); padding-top: 15px; font-size: 11px; color: #666; line-height: 1.6; }
+        /* --- OUTPUT PORTAL (RED AREA) --- */
+        .output-portal { 
+            margin-top: 30px; background: rgba(5, 7, 10, 0.8); border: 1px solid var(--border); 
+            border-radius: 30px; padding: 30px; border-left: 4px solid var(--mint);
+            position: relative; animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } }
+        
+        .copy-btn { 
+            position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.05); 
+            border: 1px solid var(--border); color: #fff; padding: 8px 15px; border-radius: 12px; 
+            font-size: 10px; cursor: pointer; transition: 0.3s; font-family: 'JetBrains Mono';
+        }
+        .copy-btn:hover { background: var(--mint); color: #000; }
 
-        /* --- NOTIFICATION SYSTEM --- */
-        #notification-host { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: var(--glass); border: 1px solid var(--border); padding: 15px 25px; border-radius: 15px; border-left: 3px solid var(--mint); backdrop-filter: blur(10px); color: #fff; font-size: 0.9rem; animation: toastIn 0.4s ease forwards; }
-        @keyframes toastIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        .main-response { font-size: 1.4rem; font-weight: 500; line-height: 1.4; color: #fff; margin: 20px 0; }
+        .meta-tags { display: flex; gap: 20px; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; }
+        .meta-tags b { color: var(--mint); }
+        
+        .strategy-notes { 
+            margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); 
+            font-size: 12px; color: #666; line-height: 1.6; 
+        }
+        .strategy-notes mark { background: transparent; color: var(--mint); font-weight: 600; }
 
-        .scan-line { position: absolute; top: -100%; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, transparent, rgba(53, 240, 186, 0.05), transparent); pointer-events: none; }
-        .scanning .scan-line { animation: scan 2s linear infinite; }
-        @keyframes scan { 0% { top: -50%; } 100% { top: 100%; } }
+        /* --- NOTIFICATION --- */
+        #notif-host { position: fixed; top: 25px; right: 25px; z-index: 9999; }
+        .toast { background: var(--glass); border: 1px solid var(--border); padding: 18px 30px; border-radius: 20px; border-left: 4px solid var(--mint); backdrop-filter: blur(15px); color: #fff; font-size: 0.9rem; margin-bottom: 10px; animation: toastIn 0.4s ease forwards; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- LOADING OVERLAY --- */
+        #neural-loader { position: absolute; inset: 0; background: var(--bg); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10; border-radius: 35px; }
+        .loader-bar { width: 60%; height: 2px; background: rgba(255,255,255,0.1); position: relative; margin-top: 15px; }
+        .loader-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--mint); width: 0%; transition: width 1.5s linear; }
     </style>
 </head>
 <body>
 
-<div id="notification-host"></div>
+<div id="notif-host"></div>
 <div class="ambient-neural"></div>
 
 <div class="container">
     <header>
-        <div class="logo">Viral<span>Forge.</span></div>
-        <div class="secure-tag">SYSTEM: STEALTH_ACTIVE</div>
+        <div class="logo">Forge<span>Legacy.</span></div>
+        <div class="secure-tag">ENCRYPTED_SESSION: ACTIVE</div>
     </header>
 
     <div class="grid">
         <div class="card span-8" id="ghostCard">
-            <div class="scan-line"></div>
+            <div id="neural-loader">
+                <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--mint)">ANALYZING NEURAL PATTERNS...</span>
+                <div class="loader-bar"><div class="loader-fill" id="l-fill"></div></div>
+            </div>
+            
             <h3>Elite Ghostwriter</h3>
-            <textarea id="chatInput" placeholder="Paste history... Scanning for power gaps."></textarea>
+            <textarea id="ghostInput" placeholder="Paste message history for pattern analysis..."></textarea>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
-                <select id="archetype">
-                    <option>The Ego-Centric</option>
-                    <option>The Ghoster</option>
-                </select>
-                <select id="move">
-                    <option value="push">Push-Pull Tension</option>
-                    <option value="stoic">Stoic Scarcity</option>
-                </select>
-            </div>
-            
-            <div class="history-rail" id="ghostHistory">
-                <div class="history-item"><span>ARCHIVE_01</span><p>honestly, i was starting...</p></div>
-                <div class="history-item"><span>ARCHIVE_02</span><p>fair enough. i'm heading...</p></div>
+                <select id="archetype"><option>Ego-Centric (High Power)</option><option>Ghoster (Low Interest)</option></select>
+                <select id="move"><option value="push">Push-Pull Tension</option><option value="stoic">Stoic Scarcity</option></select>
             </div>
 
-            <button class="btn-forge" onclick="forgeAction('ghost')">Forge Stealth Reply</button>
+            <div class="history-rail" id="ghostHistory">
+                </div>
+
+            <button class="btn-forge" onclick="executeForge('ghost')">Forge Stealth Reply</button>
         </div>
 
         <div class="card span-4">
             <h3>Identity Forge</h3>
-            <textarea id="voiceSamples" style="height: 200px;" placeholder="I hate emojis. Short sentences. Lowercase..."></textarea>
+            <textarea id="voiceIn" style="height: 160px;" placeholder="Feed me your voice samples (texts, emails)..."></textarea>
             
-            <div id="voiceStatus" style="font-family:'JetBrains Mono'; font-size: 10px; color:#444; margin-top:15px; text-align:center;">
-                STARK_CALIBRATION: <b style="color:var(--mint)">OFFLINE</b>
+            <div style="margin-top:20px;">
+                <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono'; font-size:9px; color:#444; margin-bottom:5px;">
+                    <span>NEURAL_ACCURACY</span><span id="accVal">0%</span>
+                </div>
+                <div style="width:100%; height:4px; background:rgba(255,255,255,0.05); border-radius:10px;">
+                    <div id="accBar" style="width:0%; height:100%; background:var(--mint); border-radius:10px; transition:1s;"></div>
+                </div>
             </div>
             
-            <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff;" onclick="syncVoice()">Lock Voice</button>
+            <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff;" onclick="lockVoice()">Lock Neural Voice</button>
         </div>
 
         <div class="card span-12">
             <h3>Viral Forge Engine</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: center;">
-                <input type="text" id="niche" placeholder="Niche (e.g. Finance)">
-                <select id="hookType"><option>Authority Gap</option><option>Logic Defiance</option></select>
-                <button class="btn-forge" style="margin:0; padding:18px 40px;" onclick="forgeAction('viral')">Forge Hook</button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px;">
+                <input type="text" id="niche" placeholder="Target Niche (e.g. SaaS, Luxury)">
+                <select id="hookType"><option>The Authority Gap</option><option>Logic Defiance</option></select>
+                <button class="btn-forge" style="margin:0; padding:18px 40px;" onclick="executeForge('viral')">Forge Hook</button>
             </div>
 
             <div class="history-rail" id="viralHistory">
-                <div class="history-item"><span>HOOK_01</span><p>Why 99% of Finance fail...</p></div>
-            </div>
+                </div>
 
             <div class="output-portal" id="outputArea" style="display:none;">
-                <div class="output-header">
-                    <span>STEALTH_RATING: <b id="rating">99.8%</b></span>
-                    <span>ENGINE_SYNC: <b id="sync">STARK_CALIBRATED</b></span>
+                <button class="copy-btn" onclick="copyResult()">COPY_TEXT</button>
+                <div class="meta-tags">
+                    <span>STEALTH_RATING: <b>99.8%</b></span>
+                    <span>ENGINE: <b>STARK_V3</b></span>
+                    <span>STATUS: <b style="color:var(--mint)">OPTIMAL</b></span>
                 </div>
-                <div class="main-response" id="outText">Generating neural response...</div>
-                <div class="full-notes" id="outNotes">
-                    VARIABLES: Frame retention set to High. Pattern interrupt injected in segment 2. Calibrated for stoic scarcity based on recipient subtext.
-                </div>
+                <div class="main-response" id="resText">...</div>
+                <div class="strategy-notes" id="resNotes">...</div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function showToast(msg) {
-        const host = document.getElementById('notification-host');
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerText = msg;
-        host.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
+    function showNotif(msg) {
+        const h = document.getElementById('notif-host');
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.innerText = msg;
+        h.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
     }
 
-    function syncVoice() {
-        document.getElementById('voiceStatus').innerHTML = 'STARK_CALIBRATION: <b style="color:var(--mint)">SYNCED</b>';
-        showToast('Voice Neural Mapping Complete');
+    function lockVoice() {
+        const bar = document.getElementById('accBar');
+        const val = document.getElementById('accVal');
+        bar.style.width = "94%";
+        val.innerText = "94%";
+        showNotif("Neural Identity Calibrated");
     }
 
-    function forgeAction(type) {
-        const card = document.getElementById('ghostCard');
-        const output = document.getElementById('outputArea');
-        const outText = document.getElementById('outText');
-        const outNotes = document.getElementById('outNotes');
+    function copyResult() {
+        const text = document.getElementById('resText').innerText;
+        navigator.clipboard.writeText(text);
+        showNotif("Copied to Clipboard");
+    }
+
+    function executeForge(type) {
+        const loader = document.getElementById('neural-loader');
+        const bar = document.getElementById('l-fill');
+        const out = document.getElementById('outputArea');
         
-        card.classList.add('scanning');
-        output.style.display = 'block';
-        outText.innerText = "Processing through Neural Layers...";
+        loader.style.display = 'flex';
+        bar.style.width = '100%';
 
         setTimeout(() => {
-            card.classList.remove('scanning');
+            loader.style.display = 'none';
+            bar.style.width = '0%';
+            out.style.display = 'block';
+            
             if(type === 'ghost') {
-                outText.innerText = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
-                outNotes.innerText = "NOTES: Calibrated for Push-Pull tension. Use of 'predictable' creates an authority gap, forcing them to re-qualify their interest to you.";
-                updateHistory('ghostHistory', outText.innerText);
+                document.getElementById('resText').innerText = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
+                document.getElementById('resNotes').innerHTML = "STRATEGY: Using <mark>Pattern Interrupt</mark>. Recipient is accustomed to high power; calling them 'predictable' creates an immediate <mark>Authority Gap</mark> they will try to fill.";
+                addHistory('ghostHistory', "honestly, i was starting...");
             } else {
-                const niche = document.getElementById('niche').value || 'Industry';
-                outText.innerText = `Why 99% of ${niche} creators fail—and the 3-minute fix they're ignoring.`;
-                outNotes.innerText = "NOTES: Uses Authority Gap and Pattern Interrupt. High click-through potential for " + niche + " niche audiences.";
-                updateHistory('viralHistory', outText.innerText);
+                const n = document.getElementById('niche').value || 'Industry';
+                document.getElementById('resText').innerText = `Why 99% of ${n} founders fail—and the 3-minute fix they're ignoring.`;
+                document.getElementById('resNotes').innerHTML = "STRATEGY: High <mark>Negative Constraint</mark> hook. Targets the fear of failure while offering an 'easy' proprietary solution.";
+                addHistory('viralHistory', `Why 99% of ${n}...`);
             }
-            showToast('Generation Successful');
-        }, 1500);
+            showNotif("Neural Generation Complete");
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }, 1600);
     }
 
-    function updateHistory(id, text) {
+    function addHistory(id, txt) {
         const rail = document.getElementById(id);
         const item = document.createElement('div');
         item.className = 'history-item';
-        item.innerHTML = `<span>LATEST_SYNC</span><p>${text}</p>`;
+        item.innerHTML = `<span>ARCHIVE_${Date.now().toString().slice(-4)}</span><p>${txt}</p>`;
         rail.prepend(item);
-        if(rail.children.length > 6) rail.lastChild.remove();
+        if(rail.children.length > 5) rail.lastChild.remove();
     }
 </script>
 
