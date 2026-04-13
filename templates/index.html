@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Forge Omni | Elite Content Engine</title>
+    <title>ViralForge | Omni-Channel Intelligence</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -39,7 +39,6 @@
             padding-bottom: 80px;
         }
 
-        /* --- HEADER --- */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -62,7 +61,6 @@
 
         .hero-sub { color: #8b949e; font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; line-height: 1.6; }
 
-        /* --- MULTI-CHANNEL CONTROL --- */
         .control-panel {
             background: var(--glass);
             border: 1px solid var(--border);
@@ -93,10 +91,7 @@
 
         label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #484f58; margin-bottom: 5px; text-transform: uppercase; }
 
-        input, select { 
-            width: 100%; background: transparent; border: none; color: #fff; 
-            font-size: 1.05rem; outline: none; font-weight: 600; 
-        }
+        input, select { width: 100%; background: transparent; border: none; color: #fff; font-size: 1.05rem; outline: none; font-weight: 600; }
 
         .fire-btn {
             width: 100%;
@@ -115,7 +110,6 @@
 
         .fire-btn:hover { background: var(--primary); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 255, 166, 0.3); }
 
-        /* --- OMNI RESULTS GRID --- */
         #omniResults { 
             margin-top: 3rem; 
             display: grid; 
@@ -174,7 +168,7 @@
         <div class="dot"></div> 2026 GLOBAL OMNI-ENGINE ACTIVE
     </div>
 
-    <h1>Forge<span>Omni.</span></h1>
+    <h1>Viral<span>Forge.</span></h1>
     <p class="hero-sub">The ultimate multi-channel intelligence suite. Convert high-value concepts into authority across the entire social ecosystem.</p>
 
     <div class="control-panel">
@@ -198,6 +192,7 @@
                     <option>All Socials</option>
                     <option>Short-form Only</option>
                     <option>Professional Only</option>
+                    <option>Visual Platforms</option>
                 </select>
             </div>
         </div>
@@ -209,7 +204,6 @@
 </div>
 
 <script>
-    // --- NEURAL PHYSICS ---
     const canvas = document.getElementById('neuralCanvas');
     const ctx = canvas.getContext('2d');
     let nodes = [];
@@ -249,7 +243,6 @@
     window.addEventListener('resize', init);
     init(); draw();
 
-    // --- OMNI ENGINE LOGIC ---
     function executeOmniForge() {
         const niche = document.getElementById('mainNiche').value || "Industry";
         const res = document.getElementById('omniResults');
@@ -258,12 +251,12 @@
         setTimeout(() => {
             res.innerHTML = "";
             const platforms = [
-                { p: "LINKEDIN EXECUTIVE", h: `The quiet ${niche} shift that will redefine the next decade.`, l: "Focuses on <strong>Future-Proofing</strong>. High-level professionals engage with long-term security and industry shifts." },
-                { p: "X VIRAL THREAD", h: `Everything you were taught about ${niche} is a lie. 🧵`, l: "Uses <strong>Counter-Intuitive Truths</strong>. Threads that challenge consensus are the most shared format on X." },
+                { p: "LINKEDIN EXECUTIVE", h: `The quiet ${niche} shift that will redefine the next decade.`, l: "Focuses on <strong>Industry Foresight</strong>. High-level professionals prioritize stability and future-proofing." },
+                { p: "X VIRAL THREAD", h: `Everything you were taught about ${niche} is a lie. 🧵`, l: "Uses <strong>Cognitive Dissonance</strong>. Challenging common knowledge is the fastest way to trigger shares on X." },
                 { p: "TIKTOK RETENTION", h: `Stop scrolling if you care about your ${niche} growth.`, l: "The <strong>Negative Constraint</strong> hook. It forces a micro-second of self-reflection to halt the scroll." },
-                { p: "PINTEREST VISUAL", h: `10 Aesthetic ${niche} Frameworks for 2026.`, l: "Leverages <strong>Visual Aspiration</strong>. Users on Pinterest save 'Blueprints' and 'Cheat Sheets'." },
-                { p: "NEWSLETTER (DEEP VALUE)", h: `The raw math behind a $1M ${niche} operation.`, l: "Focuses on <strong>Radical Transparency</strong>. Email subscribers value the 'behind-the-scenes' data they can't get elsewhere." },
-                { p: "IG REELS (LUXURY)", h: `Mastering the art of ${niche} without the noise.`, l: "Uses <strong>Minimalist Authority</strong>. High-end brands win by doing less, better." }
+                { p: "NEWSLETTER (DEEP VALUE)", h: `The raw math behind a $1M ${niche} operation.`, l: "Focuses on <strong>Radical Transparency</strong>. Email subscribers value high-intent data that isn't public." },
+                { p: "IG REELS (LUXURY)", h: `Mastering the art of ${niche} without the noise.`, l: "Uses <strong>Minimalist Authority</strong>. High-end niches win by presenting simplicity over complexity." },
+                { p: "PINTEREST VISUAL", h: `10 Aesthetic ${niche} Blueprints for 2026.`, l: "Leverages <strong>Aspirational Utility</strong>. Users save 'cheat sheets' and frameworks for future reference." }
             ];
 
             platforms.forEach((item, index) => {
@@ -273,17 +266,4 @@
                     card.innerHTML = `
                         <span class="platform-tag">${item.p}</span>
                         <div class="hook-title">${item.h}</div>
-                        <div class="action-logic"><strong>Strategic Logic:</strong> ${item.l}</div>
-                    `;
-                    res.appendChild(card);
-                    if(index === platforms.length - 1) {
-                         window.scrollTo({ top: res.offsetTop - 50, behavior: 'smooth' });
-                    }
-                }, index * 100);
-            });
-        }, 1200);
-    }
-</script>
-
-</body>
-</html>
+                        <div class="action-logic
