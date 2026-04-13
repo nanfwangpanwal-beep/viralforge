@@ -3,238 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViralForge OS | Intelligence Suite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Outfit:wght@300;700&display=swap" rel="stylesheet">
-
+    <title>ViralForge OS | Elite AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --accent: #00ffa6;
-            --accent-glow: rgba(0, 255, 166, 0.4);
-            --bg: #030408;
-            --surface: rgba(255, 255, 255, 0.03);
+            --primary: #00ffa6;
+            --primary-glow: rgba(0, 255, 166, 0.3);
+            --secondary: #00d4ff;
+            --bg: #02040a;
+            --card: rgba(10, 14, 23, 0.8);
             --border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-dim: #8e9196;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
 
         body {
             background-color: var(--bg);
-            color: var(--text-main);
-            height: 100vh;
+            color: #fff;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            perspective: 1200px;
+            overflow-x: hidden;
+            perspective: 1500px;
         }
 
-        /* Animated Nebula Background */
-        .nebula {
+        /* ===== CYBERNETIC BACKGROUND ===== */
+        .bg-mesh {
             position: fixed; inset: 0; z-index: -1;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(0, 255, 166, 0.07) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 195, 255, 0.07) 0%, transparent 40%);
-            filter: blur(100px);
-            animation: drift 15s infinite alternate ease-in-out;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            opacity: 0.2;
         }
 
-        @keyframes drift { from { transform: scale(1); } to { transform: scale(1.1) translate(10px, 10px); } }
+        .orb {
+            position: fixed; width: 400px; height: 400px;
+            background: var(--primary-glow);
+            filter: blur(120px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: float 20s infinite alternate;
+        }
 
-        /* The Main Suite Card */
-        .suite-container {
-            width: 95%; max-width: 1000px; height: 650px;
-            background: rgba(10, 11, 15, 0.8);
-            backdrop-filter: blur(40px) saturate(180%);
+        @keyframes float {
+            from { transform: translate(-20%, -20%); }
+            to { transform: translate(20%, 20%); }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .app-shell {
+            width: 100%;
+            max-width: 850px;
+            background: var(--card);
+            backdrop-filter: blur(50px) saturate(150%);
             border: 1px solid var(--border);
-            border-radius: 32px;
+            border-radius: 40px;
+            padding: 0;
             display: flex;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8), inset 0 0 40px rgba(255,255,255,0.02);
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 40px 100px rgba(0,0,0,0.8);
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
         }
 
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 240px; border-right: 1px solid var(--border);
-            padding: 30px 20px; display: flex; flex-direction: column;
+        /* Top Bar Branding */
+        .top-bar {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .brand { font-family: 'Outfit'; font-weight: 700; font-size: 22px; letter-spacing: -1px; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
-        .brand-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
-
-        .nav-item {
-            padding: 12px 15px; border-radius: 12px; font-size: 14px; font-weight: 500;
-            color: var(--text-dim); margin-bottom: 8px; transition: 0.3s;
+        .status-pill {
+            font-size: 10px;
+            letter-spacing: 2px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(0, 255, 166, 0.05);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 166, 0.2);
+            font-weight: 800;
         }
-        .nav-item.active { background: var(--surface); color: var(--accent); border: 1px solid var(--border); }
-        .nav-item:hover:not(.active) { color: #fff; background: rgba(255,255,255,0.02); }
 
-        /* Main Viewport */
-        .viewport { flex: 1; padding: 40px; display: flex; flex-direction: column; overflow-y: auto; }
+        /* Main Content */
+        .content { padding: 50px 60px; }
 
-        .header { margin-bottom: 30px; }
-        .header h1 { font-family: 'Outfit'; font-size: 32px; letter-spacing: -1px; }
-        .header p { color: var(--text-dim); font-size: 14px; }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            letter-spacing: -3px;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, #fff 40%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle { color: #64748b; font-size: 1.1rem; margin-bottom: 40px; max-width: 500px; }
 
         /* Input Controls */
-        .controls-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 25px; }
-        
-        .input-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 10px; }
-        
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        .field-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #475569;
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 700;
+        }
+
         input, select {
-            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border);
-            padding: 18px; border-radius: 16px; color: white; outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 255, 166, 0.1); }
-
-        /* The Button */
-        .forge-btn {
-            width: 100%; padding: 20px; border: none; border-radius: 18px;
-            background: #fff; color: #000; font-weight: 800; font-size: 15px;
-            cursor: pointer; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative; overflow: hidden;
-        }
-        .forge-btn:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 20px 40px var(--accent-glow); }
-        .forge-btn:active { transform: translateY(0); }
-
-        /* Results Area */
-        .results-window { margin-top: 30px; display: none; flex-direction: column; gap: 12px; }
-        
-        .hook-card {
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 20px; border-radius: 20px; display: flex; justify-content: space-between;
-            align-items: center; animation: slideIn 0.5s ease forwards;
+            width: 100%;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 1rem;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        input:focus {
+            border-color: var(--primary);
+            background: rgba(0, 255, 166, 0.03);
+            box-shadow: 0 0 30px rgba(0, 255, 166, 0.1);
+            outline: none;
+        }
+
+        /* Global Ready Button */
+        .forge-trigger {
+            width: 100%;
+            padding: 25px;
+            border-radius: 24px;
+            border: none;
+            background: #fff;
+            color: #000;
+            font-family: 'Space Grotesk';
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.4s;
+            position: relative;
+        }
+
+        .forge-trigger:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--primary-glow);
+        }
+
+        /* Results Visualization */
+        .result-card {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.01);
+            border: 1px dashed var(--border);
+            padding: 30px;
+            border-radius: 30px;
+            animation: emerge 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes emerge {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
         .copy-btn {
-            background: rgba(0, 255, 166, 0.1); border: 1px solid var(--accent);
-            color: var(--accent); padding: 8px 15px; border-radius: 10px; font-size: 12px;
-            font-weight: 700; cursor: pointer;
+            float: right;
+            padding: 8px 16px;
+            border-radius: 12px;
+            background: rgba(0, 255, 166, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
-        /* Diagnostics / Loading */
-        .diagnostics {
-            display: none; font-family: monospace; font-size: 12px; color: var(--accent);
-            margin-top: 20px; opacity: 0.7;
-        }
-
-        /* Mobile Optimization */
-        @media (max-width: 800px) {
-            .suite-container { flex-direction: column; height: auto; }
-            .sidebar { width: 100%; flex-direction: row; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; }
-            .nav-item { white-space: nowrap; margin-bottom: 0; margin-right: 10px; }
-            .controls-grid { grid-template-columns: 1fr; }
+        .loading-bar {
+            height: 2px; width: 0%;
+            background: var(--primary);
+            position: absolute; bottom: 0; left: 0;
+            transition: width 0.5s;
         }
     </style>
 </head>
-
 <body>
 
-    <div class="nebula"></div>
+    <div class="bg-mesh"></div>
+    <div class="orb"></div>
 
-    <div class="suite-container" id="mainCard">
-        <aside class="sidebar">
-            <div class="brand"><div class="brand-dot"></div> ViralForge.OS</div>
-            <div class="nav-item active">Neural Terminal</div>
-            <div class="nav-item">Content Matrix</div>
-            <div class="nav-item">Trend Arbitrage</div>
-            <div class="nav-item">Asset Library</div>
-            <div class="nav-item" style="margin-top: auto;">System Settings</div>
-        </aside>
+    <div class="app-shell" id="shell">
+        <div class="top-bar">
+            <div style="font-weight: 800; letter-spacing: -1px; font-size: 14px;">VIRALFORGE // REQUISITION_MODE</div>
+            <div class="status-pill">SYSTEM_ACTIVE</div>
+        </div>
 
-        <main class="viewport">
-            <div class="header">
-                <h1>Executive Suite</h1>
-                <p>Advanced algorithmic hook synthesis for global creators.</p>
-            </div>
+        <div class="content">
+            <h1>Forge the <br><span style="-webkit-text-fill-color: initial; color: #fff;">Future.</span></h1>
+            <p class="subtitle">The world's most advanced engine for algorithmic dominance. Command the feed with one click.</p>
 
-            <div class="controls-grid">
-                <div class="input-group">
-                    <label>Target Niche</label>
-                    <input type="text" id="niche" placeholder="e.g. Luxury Finance, AI SaaS">
+            <div class="control-panel">
+                <div class="input-group full-width">
+                    <span class="field-label">Target Market / Niche</span>
+                    <input type="text" id="nicheInput" placeholder="Enter high-value niche...">
                 </div>
                 <div class="input-group">
-                    <label>Strategy Mode</label>
-                    <select id="mode">
+                    <span class="field-label">Psychological Tone</span>
+                    <select id="tone">
                         <option>Authoritative</option>
+                        <option>Curiosity Gap</option>
                         <option>Controversial</option>
-                        <option>Curiosity-Gap</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <span class="field-label">Delivery Channel</span>
+                    <select id="platform">
+                        <option>TikTok (Global)</option>
+                        <option>Reels (Luxury)</option>
+                        <option>Shorts (Retention)</option>
                     </select>
                 </div>
             </div>
 
-            <button class="forge-btn" id="forgeBtn" onclick="initiateForge()">INITIALIZE SYNTHESIS</button>
+            <button class="forge-trigger" id="forgeBtn" onclick="runSynthesis()">
+                Generate Viral Brief
+                <div class="loading-bar" id="loadBar"></div>
+            </button>
 
-            <div class="diagnostics" id="logs">
-                > Initializing Neural Network...<br>
-                > Scraping Global Trends...<br>
-                > Analyzing Psychological Triggers...
-            </div>
-
-            <div class="results-window" id="results">
-                </div>
-        </main>
+            <div id="results"></div>
+        </div>
     </div>
 
     <script>
-        const card = document.getElementById('mainCard');
-        
-        // 3D Tilt Effect
+        // 3D Perspective Mouse Effect
+        const shell = document.getElementById('shell');
         document.addEventListener('mousemove', (e) => {
-            let xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-            let yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            let x = (window.innerWidth / 2 - e.pageX) / 50;
+            let y = (window.innerHeight / 2 - e.pageY) / 50;
+            shell.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
 
-        async function initiateForge() {
-            const niche = document.getElementById('niche').value;
-            if(!niche) return alert("System requires niche input.");
+        async function runSynthesis() {
+            const niche = document.getElementById('nicheInput').value;
+            if(!niche) return;
 
             const btn = document.getElementById('forgeBtn');
-            const logs = document.getElementById('logs');
+            const bar = document.getElementById('loadBar');
             const results = document.getElementById('results');
 
-            btn.innerText = "FORGING...";
-            btn.disabled = true;
-            logs.style.display = "block";
-            results.style.display = "none";
+            btn.innerText = "SYNTHESIZING...";
+            bar.style.width = "100%";
+            results.innerHTML = "";
 
             try {
-                const response = await fetch(`/generate?niche=${encodeURIComponent(niche)}`);
-                const data = await response.json();
-
+                const res = await fetch(`/generate?niche=${encodeURIComponent(niche)}`);
+                const data = await res.json();
+                
                 setTimeout(() => {
-                    logs.style.display = "none";
-                    results.style.display = "flex";
-                    btn.innerText = "INITIALIZE SYNTHESIS";
-                    btn.disabled = false;
-                    results.innerHTML = "";
-
-                    const hooks = Array.isArray(data.hooks) ? data.hooks : [data.hook];
-                    hooks.forEach(h => {
-                        const div = document.createElement('div');
-                        div.className = 'hook-card';
-                        div.innerHTML = `
-                            <div style="font-weight: 600; font-size: 15px;">${h}</div>
-                            <button class="copy-btn" onclick="copyText('${h.replace(/'/g, "\\'")}')">COPY</button>
+                    btn.innerText = "GENERATE VIRAL BRIEF";
+                    bar.style.width = "0%";
+                    
+                    if(data.status === "success") {
+                        const hook = Array.isArray(data.hooks) ? data.hooks[0] : data.hook;
+                        results.innerHTML = `
+                            <div class="result-card">
+                                <button class="copy-btn" onclick="navigator.clipboard.writeText('${hook}')">COPY BRIEF</button>
+                                <span style="color:var(--primary); font-size:10px; font-weight:800;">ALGORITHMIC OUTPUT</span>
+                                <div style="font-size:1.5rem; font-weight:700; margin-top:15px; line-height:1.2;">"${hook}"</div>
+                                <div style="margin-top:20px; color:#475569; font-size:13px; line-height:1.6;">
+                                    <strong>DISTRIBUTION STRATEGY:</strong> High-retention opening, 0.5s visual hook, 120bpm pacing recommended.
+                                </div>
+                            </div>
                         `;
-                        results.appendChild(div);
-                    });
-                }, 1500); // Simulate processing for "Premium" feel
-
-            } catch (err) {
-                btn.innerText = "ENGINE ERROR";
-                logs.innerText = "> Failed to connect to server.";
+                    }
+                }, 1200);
+            } catch (e) {
+                btn.innerText = "LINK FAILURE";
             }
-        }
-
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            alert("Copied to clipboard.");
         }
     </script>
 </body>
