@@ -3,296 +3,487 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ViralForge AI | Premium Creator Suite</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+<title>ViralForge AI - Executive Creative Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
+/* ---------------------------------- */
+/* LUXURY THEME VARIABLES             */
+/* ---------------------------------- */
 :root {
-    --primary: #00ffa6;
-    --secondary: #00c3ff;
-    --bg-dark: #050a15;
-    --card-bg: rgba(13, 20, 38, 0.7);
+    --bg-dark: #050509; /* Deep sapphire black */
+    --bg-card: rgba(20, 20, 27, 0.7); /* Translucent obsidian */
+    --primary-gradient: linear-gradient(135deg, #00ffa6 0%, #00c3ff 100%);
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    --border-subtle: rgba(255,255,255,0.06);
+    --shadow-premium: 0 25px 80px rgba(0,0,0,0.9), 0 0 100px rgba(0,255,166,0.03);
 }
 
+/* ---------------------------------- */
+/* GLOBAL & BODY                      */
+/* ---------------------------------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 body {
+    font-family: "Outfit", sans-serif;
     background-color: var(--bg-dark);
-    background-image: 
-        radial-gradient(circle at 10% 20%, rgba(0, 255, 166, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(0, 195, 255, 0.05) 0%, transparent 20%);
-    color: #fff;
+    color: var(--text-main);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 20px;
+    padding: 1rem; /* Better mobile spacing */
+    position: relative;
+    overflow-x: hidden;
 }
 
+/* ---------------------------------- */
+/* ANIMATED BACKGROUND GLOW           */
+/* ---------------------------------- */
+body::before {
+    content: "";
+    position: absolute;
+    width: 150vw; /* Larger for better desktop spread */
+    height: 150vh;
+    top: -25vh;
+    left: -25vw;
+    background: radial-gradient(circle at center, rgba(0,255,166,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(0,195,255,0.05) 0%, transparent 40%);
+    filter: blur(100px);
+    opacity: 0.6;
+    z-index: -1;
+    animation: luxuriousGlow 15s infinite ease-in-out;
+}
+
+@keyframes luxuriousGlow {
+    0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+    50% { transform: scale(1.1) translate(20px, -20px); opacity: 0.8; }
+}
+
+/* ---------------------------------- */
+/* MAIN CONTAINER (THE CARD)          */
+/* ---------------------------------- */
 .container {
     width: 100%;
-    max-width: 650px; /* Wider for a more professional feel */
-    padding: 3.5rem;
-    border-radius: 40px;
-    background: var(--card-bg);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
-    transition: all 0.5s ease;
+    max-width: 580px; /* Perfect desktop width */
+    padding: 3rem 2.5rem; /* Generous padding */
+    border-radius: 32px;
+    backdrop-filter: blur(25px); /* Stronger blur for luxury */
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-premium);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Better internal spacing */
 }
+
+/* Header Section */
+header { text-align: center; }
 
 h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 15px;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
+    font-size: 2.8rem; /* Bold title */
+    font-weight: 700;
+    letter-spacing: -2px;
+    background: var(--primary-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
 }
 
-.tagline {
-    color: #94a3b8;
+.subtitle {
+    color: var(--text-muted);
     font-size: 1.1rem;
-    margin-bottom: 40px;
     font-weight: 300;
     line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-/* Input Styling */
-.form-group {
-    margin-bottom: 25px;
-    text-align: left;
+/* ---------------------------------- */
+/* INPUT FIELDS SECTION               */
+/* ---------------------------------- */
+.forge-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-label {
-    display: block;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    color: #64748b;
-    margin-bottom: 10px;
-    letter-spacing: 1.5px;
-    font-weight: 600;
-}
-
-.input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-input {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 18px;
-    color: #fff;
-    font-size: 1rem;
-    outline: none;
-    transition: 0.3s;
-}
-
-input:focus {
-    border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 0 20px rgba(0, 255, 166, 0.1);
-}
-
-.char-count {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #475569;
-    font-size: 0.8rem;
-}
-
-.dropdown-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-select {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 14px;
-    color: #fff;
-    appearance: none;
-    cursor: pointer;
-    outline: none;
-}
-
-/* Button */
-#generateBtn {
-    width: 100%;
-    padding: 22px;
-    border-radius: 20px;
-    border: none;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: #020617;
-    font-size: 1.1rem;
-    font-weight: 700;
+.control-group { display: flex; flex-direction: column; gap: 0.75rem; }
+.control-label {
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 2px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Base style for input/select */
+.forge-input, .forge-select {
+    width: 100%;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: rgba(255,255,255,0.02);
+    color: var(--text-main);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.forge-input::placeholder { color: rgba(148, 163, 184, 0.4); }
+
+.forge-input:focus, .forge-select:focus {
+    outline: none;
+    border-color: rgba(0,255,166,0.3);
+    background: rgba(255,255,255,0.04);
+    box-shadow: 0 0 20px rgba(0,255,166,0.1);
+}
+
+/* Character Counter */
+.input-wrapper { position: relative; }
+.counter {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: rgba(148, 163, 184, 0.3);
+}
+
+/* Select Grid (Tone + Platform) */
+.select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+/* Styling dropdowns for luxury look */
+.forge-select {
+    appearance: none;
     cursor: pointer;
-    box-shadow: 0 15px 30px rgba(0, 255, 166, 0.2);
-    transition: 0.3s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8.825L1.175 4 2.225 2.95 6 6.725 9.775 2.95 10.825 4 6 8.825z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    padding-right: 45px;
 }
 
-#generateBtn:hover {
+/* ---------------------------------- */
+/* FORGE BUTTON                      */
+/* ---------------------------------- */
+.forge-btn {
+    width: 100%;
+    padding: 20px;
+    margin-top: 1rem;
+    border-radius: 18px;
+    border: none;
+    background: var(--primary-gradient);
+    color: #020617; /* High contrast text */
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Snappy feedback */
+    position: relative;
+}
+
+.forge-btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 18px;
+    box-shadow: 0 0 30px rgba(0,255,166,0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.forge-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.forge-btn:hover:not(:disabled) {
     transform: translateY(-3px);
-    box-shadow: 0 20px 40px rgba(0, 255, 166, 0.4);
 }
+.forge-btn:hover:not(:disabled)::after { opacity: 1; }
 
-#generateBtn:active { transform: translateY(0); }
+.forge-btn:active:not(:disabled) { transform: translateY(1px) scale(0.99); }
 
-/* Results Section */
+/* ---------------------------------- */
+/* RESULTS SECTION (HOOKS)           */
+/* ---------------------------------- */
 #results {
-    margin-top: 40px;
-    text-align: left;
+    margin-top: 1.5rem;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: 24px;
-    margin-bottom: 20px;
-    animation: fadeIn 0.8s ease forwards;
-}
-
-.card-header {
+.hook-card {
+    background: rgba(255,255,255,0.02);
+    padding: 1.5rem;
+    border-radius: 18px;
+    border: 1px solid var(--border-subtle);
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    align-items: center;
+    gap: 1.5rem;
+    animation: cardEntrance 0.5s ease forwards;
+    transition: background 0.3s ease;
 }
 
-.copy-badge {
-    background: rgba(0, 255, 166, 0.1);
-    color: var(--primary);
-    padding: 6px 14px;
+.hook-card:hover { background: rgba(255,255,255,0.04); }
+
+.hook-content { flex: 1; line-height: 1.6; color: #d1d5db; font-size: 1.05rem;}
+
+/* Dynamic color highlight for generated text */
+.highlight-text {
+    color: #00ffa6;
+    font-weight: 500;
+}
+
+/* Copy Button */
+.copy-action {
+    background: rgba(0,255,166,0.03);
+    border: 1px solid rgba(0,255,166,0.1);
+    padding: 10px 18px;
     border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: 700;
     cursor: pointer;
-    border: 1px solid rgba(0, 255, 166, 0.2);
+    color: #00ffa6;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
-.loading-text {
-    margin-top: 20px;
-    color: var(--primary);
-    font-weight: 600;
-    letter-spacing: 1px;
+.copy-action:hover {
+    background: rgba(0,255,166,0.1);
+    transform: scale(1.03);
+}
+
+/* Loading State */
+.loading-feedback {
+    margin-top: 2rem;
     display: none;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #00ffa6;
+    font-weight: 300;
+    animation: pulse 1.5s infinite;
 }
 
-@keyframes fadeIn {
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* ---------------------------------- */
+/* UTILITIES (Toast, Animation)      */
+/* ---------------------------------- */
+.toast-notice {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-gradient);
+    color: #020617;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: none;
+    z-index: 1000;
+}
+
+@keyframes cardEntrance {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ---------------------------------- */
+/* MOBILE RESPONSIVE TWEAKS          */
+/* ---------------------------------- */
+@media (max-width: 600px) {
+    .container {
+        padding: 2rem 1.5rem;
+        border-radius: 28px;
+    }
+    h1 { font-size: 2.1rem; letter-spacing: -1.5px; }
+    .subtitle { font-size: 1rem; }
+    .select-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .forge-input, .forge-select, .forge-btn { padding: 16px; border-radius: 14px; }
+    .hook-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .copy-action { width: 100%; text-align: center; }
+}
+
+@media (min-width: 1200px) {
+    /* Subtle touch for massive desktop screens */
+    .container { max-width: 620px; }
+}
 </style>
 </head>
+
 <body>
 
 <div class="container">
-    <h1>ViralForge</h1>
-    <p class="tagline">The ultimate AI engine for creators who demand virality. Turn simple ideas into scroll-stopping content briefs.</p>
+    <header>
+        <h1>ViralForge</h1>
+        <p class="subtitle">The ultimate AI engine for creators who demand scroll-stopping briefs.</p>
+    </header>
 
-    <div class="form-group">
-        <label>Your Niche</label>
-        <div class="input-wrapper">
-            <input type="text" id="nicheInput" maxlength="50" placeholder="e.g. Real Estate, Crypto, High Fashion">
-            <span class="char-count" id="counter">0/50</span>
+    <div class="forge-controls">
+        <div class="control-group">
+            <label class="control-label" for="nicheInput">Your Niche</label>
+            <div class="input-wrapper">
+                <input class="forge-input" id="nicheInput" maxlength="50" placeholder="e.g. Real Estate, Crypto, Fitness Luxury">
+                <div class="counter" id="counter">0/50</div>
+            </div>
+        </div>
+
+        <div class="select-grid">
+            <div class="control-group">
+                <label class="control-label" for="toneSelect">Tone</label>
+                <select class="forge-select" id="toneSelect">
+                    <option value="authoritative">⚡ Authoritative</option>
+                    <option value="educational">🎓 Educational</option>
+                    <option value="controversial">🔥 Controversial</option>
+                    <option value="humorous">😂 Humorous</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="platformSelect">Platform</label>
+                <select class="forge-select" id="platformSelect">
+                    <option value="tiktok">TikTok</option>
+                    <option value="reels">IG Reels</option>
+                    <option value="shorts">YT Shorts</option>
+                    <option value="linkedin">LinkedIn</option>
+                </select>
+            </div>
         </div>
     </div>
 
-    <div class="dropdown-grid">
-        <div class="form-group" style="margin:0;">
-            <label>Content Tone</label>
-            <select id="toneSelect">
-                <option value="Authority">⚡ Authoritative</option>
-                <option value="Hype">🔥 Viral Hype</option>
-                <option value="Storytelling">📖 Storytelling</option>
-            </select>
-        </div>
-        <div class="form-group" style="margin:0;">
-            <label>Target Platform</label>
-            <select id="platformSelect">
-                <option value="TikTok">TikTok</option>
-                <option value="Instagram">Reels</option>
-                <option value="YouTube">Shorts</option>
-            </select>
-        </div>
-    </div>
+    <button class="forge-btn" id="generateBtn">Forge Viral Concept</button>
 
-    <button id="generateBtn">Forge Viral Concept</button>
-
-    <div class="loading-text" id="loading">QUANTIZING ALGORITHMS...</div>
-
+    <div class="loading-feedback" id="loading">Consulting the Creative Director...</div>
     <div id="results"></div>
 </div>
 
+<div class="toast-notice" id="toast">Copied to Clipboard</div>
+
 <script>
+/* ---------------------------------- */
+/* JAVASCRIPT LOGIC                   */
+/* ---------------------------------- */
 const input = document.getElementById("nicheInput");
 const counter = document.getElementById("counter");
 const btn = document.getElementById("generateBtn");
-const results = document.getElementById("results");
-const loading = document.getElementById("loading");
+const resultsDiv = document.getElementById("results");
+const loadingFeedback = document.getElementById("loading");
+const toastNotice = document.getElementById("toast");
 
+// Note: For now, tone/platform selects are visual only.
+// Future upgrade: backend needs to accept these parameters.
+
+/* character counter */
 input.addEventListener("input", () => {
     counter.innerText = input.value.length + "/50";
 });
 
-btn.onclick = async () => {
-    const niche = input.value.trim();
-    if (!niche) return;
+/* enter key trigger */
+input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") generateHooks();
+});
 
+btn.onclick = generateHooks;
+
+async function generateHooks() {
+    const niche = input.value.trim();
+    if (!niche) {
+        alert("Please enter a niche to proceed.");
+        input.focus();
+        return;
+    }
+
+    // Prepare UI state for generation
     btn.disabled = true;
-    btn.innerText = "FORGING...";
-    loading.style.display = "block";
-    results.innerHTML = "";
+    btn.innerText = "Forging...";
+    loadingFeedback.style.display = "block";
+    resultsDiv.style.display = "none";
+    resultsDiv.innerHTML = ""; // Clear old results
 
     try {
-        const res = await fetch(`/generate?niche=${encodeURIComponent(niche)}&tone=${toneSelect.value}&platform=${platformSelect.value}`);
+        // Fetch from Flask backend
+        const res = await fetch(`/generate?niche=${encodeURIComponent(niche)}`);
         const data = await res.json();
-        
-        loading.style.display = "none";
+
+        // Restore UI state
+        loadingFeedback.style.display = "none";
         btn.disabled = false;
-        btn.innerText = "FORGE VIRAL CONCEPT";
+        btn.innerText = "Forge Viral Concept";
 
         if (data.status === "success") {
-            const hooks = Array.isArray(data.hooks) ? data.hooks : [data.hook];
-            hooks.forEach(h => {
+            resultsDiv.style.display = "flex";
+
+            // Standardize format: make sure we have an array
+            const hookItems = Array.isArray(data.hooks) ? data.hooks : [data.hook];
+
+            hookItems.forEach(h => {
+                // Create luxury result card
                 const card = document.createElement("div");
-                card.className = "card";
+                card.className = "hook-card";
+
+                // Insert generated text with a highlighted span
                 card.innerHTML = `
-                    <div class="card-header">
-                        <span style="color:#64748b; font-size:0.8rem;">STRATEGY READY</span>
-                        <div class="copy-badge" onclick="navigator.clipboard.writeText('${h}')">COPY HOOK</div>
+                    <div class="hook-content">
+                        <span class="highlight-text">${h}</span>
                     </div>
-                    <div style="font-size:1.3rem; font-weight:600; line-height:1.4;">"${h}"</div>
-                    <div style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.05); color:#94a3b8; font-size:0.9rem;">
-                        <p><strong>Scene 1:</strong> Point of view shot, fast zoom. Text overlay: "THE TRUTH ABOUT ${niche.toUpperCase()}"</p>
-                    </div>
+                    <button class="copy-action">Copy</button>
                 `;
-                results.appendChild(card);
+
+                // Add copy functionality
+                card.querySelector(".copy-action").onclick = () => {
+                    navigator.clipboard.writeText(h).then(() => {
+                        showToast();
+                    });
+                };
+
+                resultsDiv.appendChild(card);
             });
+
+        } else {
+            // Friendly account/error message to match luxury aesthetic
+            resultsDiv.style.display = "flex";
+            resultsDiv.innerHTML = `<div class="hook-card" style="border-color: rgba(239, 68, 68, 0.2);"><div class="hook-content" style="color: #ef4444;">Creative engine temporarily paused: ${data.message}</div></div>`;
         }
-    } catch (e) {
+
+    } catch (err) {
+        // Fallback for server connection issues
+        loadingFeedback.style.display = "none";
         btn.disabled = false;
-        btn.innerText = "FORGE VIRAL CONCEPT";
-        loading.style.display = "none";
+        btn.innerText = "Forge Viral Concept";
+        resultsDiv.style.display = "flex";
+        resultsDiv.innerHTML = `<div class="hook-card" style="border-color: rgba(239, 68, 68, 0.2);"><div class="hook-content" style="color: #ef4444;">Connection failed. Is the server online?</div></div>`;
     }
-};
+}
+
+/* Toast logic */
+function showToast() {
+    toastNotice.style.display = "block";
+    // Smooth fade out
+    setTimeout(() => {
+        toastNotice.style.opacity = "0";
+        setTimeout(() => {
+            toastNotice.style.display = "none";
+            toastNotice.style.opacity = "1"; // Reset for next time
+        }, 300);
+    }, 2000);
+}
 </script>
 
 </body>
