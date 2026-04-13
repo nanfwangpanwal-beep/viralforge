@@ -1,270 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ViralForge X | INSANE MODE</title>
+<title>ViralForge OS | Final Boss AI SaaS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-    --a:#00ffa6;
-    --b:#00d4ff;
-    --c:#7c3aed;
-    --d:#ff2bd6;
-    --bg:#05060a;
+--a:#00ffa6;
+--b:#00d4ff;
+--c:#7c3aed;
+--bg:#05060a;
+--glass:rgba(255,255,255,0.06);
+--border:rgba(255,255,255,0.12);
 }
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Plus Jakarta Sans',sans-serif;
-    cursor:none;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Plus Jakarta Sans',sans-serif;
+cursor:none;
 }
 
 body{
-    height:100vh;
-    overflow:hidden;
-    background:var(--bg);
-    color:white;
+height:100vh;
+overflow:hidden;
+background:var(--bg);
+color:white;
 }
 
-/* ===== PARTICLE CANVAS ===== */
+/* ===== PARTICLES ===== */
 canvas{
-    position:fixed;
-    inset:0;
-    z-index:0;
+position:fixed;
+inset:0;
+z-index:0;
 }
 
-/* ===== AURORA DEPTH ===== */
+/* ===== AURORA ===== */
 body::before{
-    content:"";
-    position:fixed;
-    inset:-200px;
-    background:
-    radial-gradient(circle at 20% 30%, rgba(0,255,166,0.18), transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(0,212,255,0.18), transparent 45%),
-    radial-gradient(circle at 50% 80%, rgba(124,58,237,0.18), transparent 50%);
-    filter: blur(70px);
-    animation:float 10s ease-in-out infinite alternate;
-    z-index:1;
+content:"";
+position:fixed;
+inset:-200px;
+background:
+radial-gradient(circle at 20% 30%, rgba(0,255,166,0.2), transparent 40%),
+radial-gradient(circle at 80% 20%, rgba(0,212,255,0.2), transparent 45%),
+radial-gradient(circle at 40% 80%, rgba(124,58,237,0.2), transparent 50%);
+filter:blur(80px);
+animation:float 12s ease-in-out infinite alternate;
 }
 
 @keyframes float{
-    from{transform:translateY(-20px) scale(1);}
-    to{transform:translateY(20px) scale(1.1);}
-}
-
-/* ===== NOISE ===== */
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity:0.05;
-    z-index:2;
-    pointer-events:none;
+from{transform:translateY(-20px)}
+to{transform:translateY(20px)}
 }
 
 /* ===== CURSOR ===== */
 .cursor{
-    position:fixed;
-    width:12px;height:12px;
-    background:white;
-    border-radius:50%;
-    mix-blend-mode:difference;
-    z-index:9999;
+position:fixed;
+width:10px;height:10px;
+background:white;
+border-radius:50%;
+mix-blend-mode:difference;
+z-index:9999;
 }
 
-.glow{
-    position:fixed;
-    width:420px;height:420px;
-    background:radial-gradient(circle, rgba(0,255,166,0.18), transparent 60%);
-    transform:translate(-50%,-50%);
-    z-index:3;
-}
-
-/* ===== LOADER ===== */
-#loader{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:10000;
-}
-
-.loaderBox{
-    width:320px;
-    height:2px;
-    background:rgba(255,255,255,0.1);
-    overflow:hidden;
-    border-radius:100px;
-}
-
-.loaderBar{
-    height:100%;
-    width:100%;
-    background:linear-gradient(90deg,var(--a),var(--b),var(--c),var(--d));
-    transform:translateX(-100%);
-    animation:load 2s cubic-bezier(.77,0,.18,1) forwards;
-}
-
-@keyframes load{ to{ transform:translateX(0);} }
-
-/* ===== MAIN UI ===== */
-.container{
-    position:relative;
-    z-index:10;
-    max-width:920px;
-    margin:auto;
-    top:50%;
-    transform:translateY(-50%);
-    padding:44px;
-
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:36px;
-    backdrop-filter: blur(35px);
-
-    box-shadow:
-    0 40px 120px rgba(0,0,0,0.7),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-}
-
-/* ===== STATUS ===== */
-.status{
-    display:flex;
-    justify-content:space-between;
-    font-size:11px;
-    letter-spacing:2px;
-    color:#9ca3af;
-    margin-bottom:26px;
-}
-
-.dot{
-    width:6px;height:6px;
-    background:var(--a);
-    border-radius:50%;
-    display:inline-block;
-    box-shadow:0 0 14px var(--a);
-}
-
-/* ===== TITLE ===== */
-h1{
-    font-size:60px;
-    font-weight:800;
-    letter-spacing:-2px;
-}
-
-h1 span{
-    background:linear-gradient(90deg,var(--a),var(--b),var(--c),var(--d));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-p{
-    color:#9ca3af;
-    margin-top:8px;
-    margin-bottom:30px;
-}
-
-/* ===== GRID ===== */
-.grid{
-    display:grid;
-    grid-template-columns:2fr 1fr 1fr;
-    gap:12px;
-}
-
-input,select{
-    background:rgba(0,0,0,0.35);
-    border:1px solid rgba(255,255,255,0.1);
-    padding:16px;
-    border-radius:16px;
-    color:white;
-    transition:0.3s;
-    outline:none;
-}
-
-input:focus,select:focus{
-    border-color:var(--a);
-    box-shadow:0 0 0 3px rgba(0,255,166,0.1);
-}
-
-/* ===== BUTTON (MAGNETIC FEEL) ===== */
-button{
-    margin-top:14px;
-    width:100%;
-    padding:18px;
-    border:none;
-    border-radius:18px;
-    font-weight:800;
-    background:linear-gradient(90deg,var(--a),var(--b),var(--c),var(--d));
-    color:black;
-    transition:0.25s ease;
-}
-
-button:hover{
-    transform:scale(1.03);
-    filter:brightness(1.2);
-}
-
-/* ===== RESULTS ===== */
-.results{
-    margin-top:28px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    max-height:240px;
-    overflow:auto;
+/* ===== AUTH MODAL ===== */
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.6);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
 }
 
 .card{
-    padding:18px;
-    border-radius:18px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.1);
-    animation:pop 0.5s ease;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(30px);
+border:1px solid var(--border);
+padding:30px;
+border-radius:24px;
+width:320px;
 }
 
-@keyframes pop{
-    from{opacity:0;transform:translateY(10px) scale(0.98);}
-    to{opacity:1;transform:translateY(0) scale(1);}
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:12px;
+border:1px solid var(--border);
+background:rgba(0,0,0,0.4);
+color:white;
 }
 
-.meta{
-    font-size:10px;
-    color:var(--a);
-    letter-spacing:2px;
-    margin-bottom:6px;
+button{
+width:100%;
+margin-top:12px;
+padding:12px;
+border:none;
+border-radius:12px;
+background:linear-gradient(90deg,var(--a),var(--b),var(--c));
+font-weight:800;
 }
 
-/* ===== FLOATING ACTIVITY ===== */
-.activity{
-    position:fixed;
-    bottom:25px;
-    right:25px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    z-index:20;
+/* ===== APP ===== */
+.app{
+display:none;
+grid-template-columns:260px 1fr 300px;
+height:100vh;
+position:relative;
+z-index:2;
 }
 
-.pulse{
-    background:rgba(255,255,255,0.05);
-    padding:10px 14px;
-    border-radius:999px;
-    font-size:11px;
-    animation:fade 4s forwards;
+/* SIDEBAR */
+.sidebar{
+padding:20px;
+background:rgba(255,255,255,0.03);
+border-right:1px solid var(--border);
+}
+
+.logo{
+font-size:20px;
+font-weight:800;
+margin-bottom:20px;
+}
+
+.nav div{
+padding:10px;
+border-radius:10px;
+margin-bottom:8px;
+background:rgba(255,255,255,0.04);
+}
+
+/* MAIN */
+.main{
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.hero{
+font-size:28px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.chat{
+flex:1;
+overflow:auto;
+padding:10px;
+}
+
+.msg{
+margin:10px 0;
+padding:12px;
+border-radius:12px;
+background:rgba(255,255,255,0.05);
+animation:fade .3s ease;
 }
 
 @keyframes fade{
-    0%{opacity:0;transform:translateY(10px);}
-    10%,90%{opacity:1;}
-    100%{opacity:0;}
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* INPUT BAR */
+.bar{
+display:flex;
+gap:10px;
+}
+
+.bar input{
+flex:1;
+}
+
+/* ANALYTICS */
+.right{
+padding:20px;
+border-left:1px solid var(--border);
+}
+
+.metric{
+background:rgba(255,255,255,0.05);
+padding:12px;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+canvas#chart{
+width:100%;
+height:120px;
+background:rgba(255,255,255,0.03);
+border-radius:12px;
+margin-top:10px;
+}
+
+/* COMMAND PALETTE */
+.kbd{
+position:fixed;
+bottom:20px;
+left:20px;
+font-size:12px;
+opacity:0.6;
 }
 </style>
 </head>
@@ -272,158 +213,173 @@ button:hover{
 <body>
 
 <canvas id="particles"></canvas>
-
-<div id="loader">
-    <div class="loaderBox"><div class="loaderBar"></div></div>
-</div>
-
 <div class="cursor" id="cursor"></div>
-<div class="glow" id="glow"></div>
 
-<div class="container" id="ui">
-
-    <div class="status">
-        <div><span class="dot"></span> CORE SYSTEM ONLINE</div>
-        <div>VIRALFORGE X</div>
-    </div>
-
-    <h1>Viral<span>Forge</span></h1>
-    <p>Next-gen intelligence engine for elite viral creators.</p>
-
-    <div class="grid">
-        <input id="niche" placeholder="Enter niche (e.g fintech)">
-        <select><option>Hype</option><option>Story</option></select>
-        <select><option>TikTok</option><option>YouTube</option></select>
-    </div>
-
-    <button id="btn">ACTIVATE FORGE ENGINE</button>
-
-    <div class="results" id="results"></div>
+<!-- AUTH -->
+<div class="modal" id="auth">
+<div class="card">
+<h2>ViralForge OS</h2>
+<p style="opacity:0.6;font-size:12px;">Enter demo access</p>
+<input placeholder="Email"/>
+<input placeholder="Password"/>
+<button onclick="enter()">Enter System</button>
+</div>
 </div>
 
-<div class="activity" id="activity"></div>
+<!-- APP -->
+<div class="app" id="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+<div class="logo">ViralForge OS</div>
+<div class="nav">
+<div>Dashboard</div>
+<div>AI Engine</div>
+<div>Analytics</div>
+<div>Exports</div>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+<div class="hero">AI Viral Intelligence System</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="bar">
+<input id="input" placeholder="Ask AI: generate viral hooks..."/>
+<button onclick="send()">Send</button>
+</div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+<div class="metric">System Uptime: 99.99%</div>
+<div class="metric">Latency: 0.9s</div>
+<div class="metric">Active Models: 3</div>
+
+<canvas id="chart"></canvas>
+</div>
+
+</div>
+
+<div class="kbd">Press CTRL + K for command palette (demo)</div>
 
 <script>
+
+/* ===== ENTER SYSTEM ===== */
+function enter(){
+document.getElementById("auth").style.display="none";
+document.getElementById("app").style.display="grid";
+}
+
 /* ===== CURSOR ===== */
-const cursor=document.getElementById("cursor");
-const glow=document.getElementById("glow");
-const ui=document.getElementById("ui");
-
 document.addEventListener("mousemove",(e)=>{
-    cursor.style.left=e.clientX+"px";
-    cursor.style.top=e.clientY+"px";
-
-    glow.style.left=e.clientX+"px";
-    glow.style.top=e.clientY+"px";
-
-    let x=(window.innerWidth/2-e.clientX)/80;
-    let y=(window.innerHeight/2-e.clientY)/80;
-
-    ui.style.transform=`translateY(-50%) rotateY(${-x}deg) rotateX(${y}deg)`;
+document.getElementById("cursor").style.left=e.clientX+"px";
+document.getElementById("cursor").style.top=e.clientY+"px";
 });
 
-/* ===== LOADER ===== */
-setTimeout(()=>document.getElementById("loader").remove(),2200);
+/* ===== CHAT STREAM AI ===== */
+function send(){
+const input=document.getElementById("input");
+const chat=document.getElementById("chat");
 
-/* ===== ENGINE ===== */
-document.getElementById("btn").onclick=function(){
-    const n=document.getElementById("niche").value;
-    if(!n) return;
+if(!input.value)return;
 
-    this.innerText="FORGING...";
-    this.disabled=true;
+chat.innerHTML+=`<div class="msg"><b>You:</b> ${input.value}</div>`;
 
-    setTimeout(()=>{
-        this.innerText="ACTIVATE FORGE ENGINE";
-        this.disabled=false;
+let reply=document.createElement("div");
+reply.className="msg";
+reply.innerHTML="<b>AI:</b> Thinking...";
+chat.appendChild(reply);
 
-        const hooks=[
-            `The $10K ${n} blind spot nobody sees.`,
-            `Why 99% of ${n} creators stay stuck forever.`,
-            `The forbidden ${n} growth loop elites use.`
-        ];
+let steps=[
+"Analyzing viral patterns...",
+"Mapping audience psychology...",
+"Generating hooks...",
+"Ranking engagement probability..."
+];
 
-        const res=document.getElementById("results");
-        res.innerHTML="";
+let i=0;
+let interval=setInterval(()=>{
+reply.innerHTML="<b>AI:</b> "+steps[i];
+i++;
+if(i>=steps.length){
+clearInterval(interval);
 
-        hooks.forEach((h,i)=>{
-            setTimeout(()=>{
-                const div=document.createElement("div");
-                div.className="card";
-                div.innerHTML=`
-                    <div class="meta">STRATEGY NODE 0${i+1}</div>
-                    <div>${h}</div>
-                `;
-                res.appendChild(div);
-            },i*140);
-        });
+setTimeout(()=>{
+reply.innerHTML="<b>AI:</b> The $10K mistake in your niche is hidden distribution, not content quality.";
+},400);
+}
+},600);
 
-    },900);
-};
+input.value="";
+}
 
-/* ===== ACTIVITY ===== */
-const names=["Julian","Sasha","Marcus","Elena","Amir","Nova"];
-setInterval(()=>{
-    const d=document.createElement("div");
-    d.className="pulse";
-    d.innerHTML=`<b>${names[Math.floor(Math.random()*names.length)]}</b> created a viral node`;
-    document.getElementById("activity").prepend(d);
-    if(document.getElementById("activity").children.length>3){
-        document.getElementById("activity").lastChild.remove();
-    }
-},3500);
-
-/* ===== PARTICLES ENGINE ===== */
+/* ===== PARTICLES ===== */
 const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
-let particles=[];
+let p=[];
 
-for(let i=0;i<80;i++){
-    particles.push({
-        x:Math.random()*canvas.width,
-        y:Math.random()*canvas.height,
-        vx:(Math.random()-0.5)*0.6,
-        vy:(Math.random()-0.5)*0.6
-    });
+for(let i=0;i<60;i++){
+p.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*0.5,
+vy:(Math.random()-0.5)*0.5
+});
 }
 
 function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    for(let p of particles){
-        p.x+=p.vx;
-        p.y+=p.vy;
+for(let i=0;i<p.length;i++){
+let a=p[i];
+a.x+=a.vx;
+a.y+=a.vy;
 
-        if(p.x<0||p.x>canvas.width) p.vx*=-1;
-        if(p.y<0||p.y>canvas.height) p.vy*=-1;
+if(a.x<0||a.x>canvas.width)a.vx*=-1;
+if(a.y<0||a.y>canvas.height)a.vy*=-1;
 
-        ctx.fillStyle="rgba(255,255,255,0.4)";
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,1.5,0,Math.PI*2);
-        ctx.fill();
+ctx.fillStyle="rgba(255,255,255,0.5)";
+ctx.fillRect(a.x,a.y,2,2);
+}
 
-        for(let q of particles){
-            let dx=p.x-q.x;
-            let dy=p.y-q.y;
-            let dist=Math.sqrt(dx*dx+dy*dy);
-
-            if(dist<120){
-                ctx.strokeStyle="rgba(0,255,166,0.08)";
-                ctx.beginPath();
-                ctx.moveTo(p.x,p.y);
-                ctx.lineTo(q.x,q.y);
-                ctx.stroke();
-            }
-        }
-    }
-
-    requestAnimationFrame(draw);
+requestAnimationFrame(draw);
 }
 draw();
+
+/* ===== LIVE CHART ===== */
+const c=document.getElementById("chart");
+const x=c.getContext("2d");
+
+let data=[10,20,15,30,25,40,35];
+
+function chart(){
+x.clearRect(0,0,c.width,c.height);
+x.beginPath();
+
+for(let i=0;i<data.length;i++){
+let px=i*40;
+let py=100-data[i];
+
+x.lineTo(px,py);
+}
+
+x.strokeStyle="rgba(0,255,166,0.8)";
+x.stroke();
+
+data.shift();
+data.push(Math.random()*50);
+
+requestAnimationFrame(chart);
+}
+chart();
+
 </script>
 
 </body>
