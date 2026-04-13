@@ -3,273 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViralForge Elite X | The Standard</title>
+    <title>ViralForge Elite | Actionable Intelligence</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-glow: #00ffa6;
-            --accent-glow: #d946ef;
-            --bg-ultra: #020617;
-            --glass: rgba(15, 23, 42, 0.8);
-            --border: rgba(255, 255, 255, 0.08);
+            --primary: #00ffa6;
+            --accent: #d946ef;
+            --bg: #020617;
+            --glass: rgba(15, 23, 42, 0.9);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: var(--bg-ultra); 
+            background: var(--bg); 
             color: #fff; 
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
-            overflow-x: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            overflow-x: hidden;
+            padding: 15px;
         }
 
-        /* --- DYNAMIC NEURAL BACKGROUND --- */
-        #neuralCanvas { position: fixed; inset: 0; z-index: 1; opacity: 0.5; pointer-events: none; }
-
-        /* --- THE COMMAND CONSOLE --- */
-        .console {
+        /* --- THE PROMISE & TRUST SECTION --- */
+        .app-shell {
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 950px;
+            max-width: 900px;
             background: var(--glass);
-            backdrop-filter: blur(40px) saturate(180%);
+            backdrop-filter: blur(50px);
             border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: clamp(1.5rem, 5vw, 4rem);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-            animation: consoleEntry 1s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 36px;
+            padding: clamp(1.5rem, 5vw, 3.5rem);
+            box-shadow: 0 40px 120px rgba(0,0,0,1);
         }
 
-        @keyframes consoleEntry { from { opacity: 0; transform: scale(0.95) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-        .system-meta {
+        .trust-signal {
             display: flex;
-            justify-content: space-between;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--primary-glow);
-            letter-spacing: 3px;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-        }
-
-        .status-pill { padding: 4px 12px; background: rgba(0, 255, 166, 0.1); border-radius: 100px; border: 1px solid rgba(0, 255, 166, 0.2); }
-
-        h1 {
-            font-size: clamp(2.5rem, 7vw, 5rem);
-            font-weight: 800;
-            letter-spacing: -4px;
-            line-height: 0.85;
-            margin-bottom: 1rem;
-        }
-
-        h1 span {
-            background: linear-gradient(90deg, #fff 0%, var(--primary-glow) 50%, var(--accent-glow) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle { color: #94a3b8; font-size: clamp(0.9rem, 2vw, 1.1rem); margin-bottom: 3.5rem; max-width: 550px; line-height: 1.6; }
-
-        /* --- BENTO INPUTS --- */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) { .bento-grid { grid-template-columns: 2fr 1fr 1fr; } }
-
-        .input-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 15px 20px;
-            transition: 0.3s;
-        }
-
-        .input-box:focus-within { border-color: var(--primary-glow); box-shadow: 0 0 20px rgba(0, 255, 166, 0.1); }
-
-        label {
-            display: block;
+            align-items: center;
+            gap: 10px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.6rem;
-            color: #4b5563;
-            margin-bottom: 8px;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        input, select {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1.05rem;
-            outline: none;
-            font-weight: 600;
-        }
+        .pulse { height: 6px; width: 6px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* --- THE IGNITION BUTTON --- */
-        .ignite-btn {
+        h1 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; letter-spacing: -3px; line-height: 0.9; margin-bottom: 1rem; }
+        h1 span { background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .core-promise { color: #94a3b8; font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; }
+
+        /* --- REFINED UX INPUTS --- */
+        .input-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 1.5rem; }
+        @media (min-width: 768px) { .input-grid { grid-template-columns: 2fr 1fr 1fr; } }
+
+        .field-wrap { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 20px; padding: 12px 20px; transition: 0.3s; }
+        .field-wrap:focus-within { border-color: var(--primary); background: rgba(0, 255, 166, 0.03); }
+
+        label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: #4b5563; margin-bottom: 5px; text-transform: uppercase; }
+
+        input, select { width: 100%; background: transparent; border: none; color: #fff; font-size: 1rem; outline: none; font-weight: 600; appearance: none; }
+
+        /* --- CTA CONVERSION ENGINE --- */
+        .execute-btn {
             width: 100%;
-            padding: 24px;
+            padding: 22px;
+            border-radius: 22px;
             border: none;
-            border-radius: 24px;
             background: #fff;
             color: #000;
             font-weight: 800;
             font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             cursor: pointer;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative;
-            overflow: hidden;
+            transition: 0.4s;
+            text-transform: uppercase;
         }
 
-        .ignite-btn:hover {
-            background: var(--primary-glow);
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 20px 40px rgba(0, 255, 166, 0.3);
-        }
+        .execute-btn:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 255, 166, 0.2); }
 
-        /* --- RESULTS --- */
-        #outputArea { margin-top: 3rem; }
-        .strategy-card {
-            background: rgba(255, 255, 255, 0.03);
+        /* --- ACTIONABLE RESULTS --- */
+        #results { margin-top: 2.5rem; }
+        .action-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 25px;
-            border-left: 4px solid var(--primary-glow);
-            margin-bottom: 15px;
-            animation: slideIn 0.6s forwards;
+            padding: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        .action-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--accent); font-weight: 700; }
+        .strategy-text { font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
+        .logic-hint { font-size: 0.75rem; color: #64748b; font-style: italic; }
 
-        .logic-tag { font-size: 0.65rem; color: var(--accent-glow); font-family: 'JetBrains Mono'; font-weight: 700; }
     </style>
 </head>
 <body>
 
-<canvas id="neuralCanvas"></canvas>
-
-<div class="console">
-    <div class="system-meta">
-        <div class="status-pill">● CORE_SYSTEM_ACTIVE</div>
-        <div>NODE_V.4.0_ELITE</div>
+<div class="app-shell">
+    <div class="trust-signal">
+        <div class="pulse"></div> 2026 Engine Online // Verified Actionable Frameworks
     </div>
 
-    <h1>Forge Your <span>Legacy.</span></h1>
-    <p class="subtitle">Enter your domain to generate ultra-luxury, high-retention content frameworks instantly.</p>
+    <h1>Viral<span>Forge</span></h1>
+    <p class="core-promise">Convert high-value niches into viral authority with AI-driven psychological frameworks.</p>
 
-    <div class="bento-grid">
-        <div class="input-box">
+    <div class="input-grid">
+        <div class="field-wrap">
             <label>Niche Industry</label>
             <input type="text" id="niche" placeholder="e.g. Fintech Luxury">
         </div>
-        <div class="input-box">
-            <label>Psychological Tone</label>
-            <select id="tone">
-                <option>Authority</option>
-                <option>Curiosity Gap</option>
-                <option>Aggressive Hype</option>
+        <div class="field-wrap">
+            <label>Trigger</label>
+            <select id="trigger">
+                <option>Authority Gap</option>
+                <option>Hype Cycle</option>
+                <option>Logic Defiance</option>
             </select>
         </div>
-        <div class="input-box">
-            <label>Channel Optimization</label>
-            <select id="channel">
+        <div class="field-wrap">
+            <label>Format</label>
+            <select id="format">
                 <option>TikTok (Global)</option>
-                <option>IG Reels (Premium)</option>
-                <option>YouTube Shorts</option>
+                <option>Reels (Luxury)</option>
+                <option>Shorts (Hard-Cut)</option>
             </select>
         </div>
     </div>
 
-    <button class="ignite-btn" onclick="igniteEngine()">Engage Viral Engine</button>
+    <button class="execute-btn" onclick="generateActionable()">Activate Forge Engine</button>
 
-    <div id="outputArea"></div>
+    <div id="results"></div>
 </div>
 
 <script>
-    // --- NEURAL NETWORK BACKGROUND ---
-    const canvas = document.getElementById('neuralCanvas');
-    const ctx = canvas.getContext('2d');
-    let nodes = [];
-
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    class Node {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-        }
-        update() {
-            this.x += this.vx; this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-    }
-
-    function init() {
-        resize();
-        for(let i=0; i<60; i++) nodes.push(new Node());
-    }
-
-    function draw() {
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        nodes.forEach((n, i) => {
-            n.update();
-            nodes.slice(i+1).forEach(n2 => {
-                let d = Math.hypot(n.x - n2.x, n.y - n2.y);
-                if(d < 180) {
-                    ctx.strokeStyle = `rgba(0, 255, 166, ${1 - d/180})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
-                }
-            });
-        });
-        requestAnimationFrame(draw);
-    }
-
-    window.onresize = resize;
-    init(); draw();
-
-    // --- ENGINE LOGIC ---
-    function igniteEngine() {
+    function generateActionable() {
         const niche = document.getElementById('niche').value;
-        const out = document.getElementById('outputArea');
+        const out = document.getElementById('results');
         if(!niche) return;
 
-        out.innerHTML = `<div style="text-align:center; font-family:'JetBrains Mono'; color:var(--primary-glow);">CALIBRATING ALGORITHMS...</div>`;
+        out.innerHTML = `<div style="text-align:center; font-family:'JetBrains Mono'; font-size:0.7rem;">CALIBRATING PSYCHOLOGICAL TRIGGERS...</div>`;
 
         setTimeout(() => {
             out.innerHTML = "";
-            const briefs = [
-                { tag: "PSYCHOLOGICAL_HOOK", h: `The $10k ${niche} mistake you're making right now.` },
-                { tag: "AUTHORITY_PILLAR", h: `How elite ${niche} creators are dominating 2026.` }
+            const data = [
+                { type: "PATTERN INTERRUPT", hook: `The $50k ${niche} mistake that looks like a success.`, logic: "Uses 'Fear of Loss' to stop the scroll immediately." },
+                { type: "AUTHORITY FRAME", hook: `Stop using basic tools for ${niche}. Do this instead.`, logic: "Establishes you as an expert by dismissing common methods." }
             ];
 
-            briefs.forEach(b => {
-                const div = document.createElement('div');
-                div.className = "strategy-card";
-                div.innerHTML = `
-                    <div class="logic-tag">${b.tag}</div>
-                    <div style="font-size:1.2rem; font-weight:600; margin-top:10px;">"${b.h}"</div>
+            data.forEach(d => {
+                const card = document.createElement('div');
+                card.className = "action-card";
+                card.innerHTML = `
+                    <span class="action-label">${d.type}</span>
+                    <p class="strategy-text">${d.hook}</p>
+                    <p class="logic-hint">Why this works: ${d.logic}</p>
                 `;
-                out.appendChild(div);
+                out.appendChild(card);
             });
-        }, 1200);
+        }, 1000);
     }
 </script>
 
