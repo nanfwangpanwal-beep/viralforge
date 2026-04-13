@@ -2,125 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ViralForge | Social Architecture OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;600&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeLegacy | Stealth OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --mint: #35F0BA;
-            --violet: #A75FFF;
+            --primary-gradient: linear-gradient(90deg, #35F0BA 0%, #A75FFF 100%);
+            --accent: #35F0BA;
             --bg: #000000;
-            --glass: rgba(12, 15, 22, 0.95);
+            --card-bg: rgba(15, 18, 25, 0.9);
             --border: rgba(255, 255, 255, 0.08);
-            --neon-glow: 0 0 25px rgba(53, 240, 186, 0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: #fff; line-height: 1.5; overflow-x: hidden; }
 
-        /* --- BACKGROUND ATMOSPHERE --- */
-        .ambient-neural {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at 50% -20%, #151b2d 0%, #000 100%);
-            z-index: -1;
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* --- COMPACT HEADER --- */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 30px; }
+        .logo { font-family: 'Exo', sans-serif; font-size: 1.5rem; font-weight: 800; }
+        .logo span { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .status-dot { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--accent); text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+        .status-dot::before { content: ""; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+
+        /* --- TAB NAVIGATION (From Screenshot 1000408986) --- */
+        .tabs { 
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; 
+            background: rgba(255,255,255,0.03); padding: 5px; border-radius: 50px; border: 1px solid var(--border);
         }
+        .tab-btn { 
+            padding: 8px 20px; border-radius: 50px; border: none; background: transparent; 
+            color: #555; font-size: 11px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+        }
+        .tab-btn.active { background: var(--primary-gradient); color: #000; }
 
-        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        /* --- DASHBOARD CONTENT --- */
+        .view-section { display: none; animation: fadeIn 0.4s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- TOP BRANDING --- */
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .logo { font-family: 'Exo', sans-serif; font-size: 1.8rem; letter-spacing: -1.5px; font-weight: 800; }
-        .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .secure-tag { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--mint); padding: 6px 15px; border: 1px solid var(--border); border-radius: 50px; background: rgba(53, 240, 186, 0.05); }
-
-        /* --- BENTO GRID LAYOUT --- */
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
         .card { 
-            background: var(--glass); 
-            border: 1px solid var(--border); 
-            border-radius: 35px; 
-            padding: 30px; 
-            backdrop-filter: blur(40px); 
-            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; 
+            padding: 25px; position: relative;
         }
-        .card:hover { border-color: rgba(53, 240, 186, 0.4); transform: translateY(-5px); box-shadow: var(--neon-glow); }
+        
+        .compact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
 
-        .span-8 { grid-column: span 8; }
-        .span-4 { grid-column: span 4; }
-        .span-12 { grid-column: span 12; }
+        h2 { font-family: 'Exo', sans-serif; font-size: 1.2rem; margin-bottom: 5px; }
+        p.sub { font-size: 12px; color: #666; margin-bottom: 20px; }
 
-        @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
-
-        /* --- UI ELEMENTS --- */
-        h3 { font-family: 'Exo', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #555; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-        h3::before { content: "◈"; color: var(--mint); }
-
-        textarea, select, input {
-            width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            border-radius: 18px; padding: 18px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
+        /* --- INPUTS (Optimized Height) --- */
+        label { display: block; font-size: 9px; font-weight: 700; color: #444; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 1px; }
+        textarea, select, input { 
+            width: 100%; background: #080a0f; border: 1px solid var(--border); border-radius: 10px; 
+            padding: 12px; color: #fff; font-size: 13px; outline: none; transition: 0.2s;
         }
-        textarea:focus { border-color: var(--mint); background: rgba(255,255,255,0.05); }
+        textarea:focus { border-color: var(--accent); }
 
-        .btn-forge {
-            width: 100%; padding: 22px; border-radius: 20px; border: none;
-            background: linear-gradient(90deg, var(--mint), var(--violet));
-            color: #000; font-family: 'Exo', sans-serif; font-weight: 900;
-            font-size: 1.1rem; text-transform: uppercase; cursor: pointer; margin-top: 20px;
-            transition: 0.4s;
+        /* --- BUTTONS (From UI Guide 1000408939) --- */
+        .btn-forge { 
+            width: 100%; margin-top: 20px; padding: 15px; border-radius: 12px; border: none;
+            background: var(--primary-gradient); color: #000; font-family: 'Exo', sans-serif; 
+            font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.3s;
         }
-        .btn-forge:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .btn-forge:hover { transform: scale(1.01); box-shadow: 0 0 20px rgba(53, 240, 186, 0.2); }
 
-        /* --- NEURAL SCAN ANIMATION --- */
-        .scan-line {
-            position: absolute; top: -100%; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to bottom, transparent, rgba(53, 240, 186, 0.05), transparent);
-            z-index: 1; pointer-events: none;
-        }
-        .scanning .scan-line { animation: scan 2s linear infinite; }
-        @keyframes scan { 0% { top: -50%; } 100% { top: 100%; } }
+        /* --- OUTPUT PANEL --- */
+        .output { margin-top: 20px; display: none; border-left: 3px solid var(--accent); background: rgba(53, 240, 186, 0.02); padding: 20px; border-radius: 0 15px 15px 0; }
+        .output h4 { font-size: 10px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; font-family: 'JetBrains Mono'; }
+        .output-text { font-size: 1.1rem; line-height: 1.4; font-weight: 500; }
 
-        /* --- OUTPUT ARCHITECTURE --- */
-        .result-area { margin-top: 30px; display: none; animation: slideUp 0.6s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .stealth-status { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; margin-bottom: 12px; }
-        .stealth-status span b { color: var(--mint); }
-
-        .reply-display { 
-            background: #080a0f; border-left: 4px solid var(--mint); padding: 25px; 
-            border-radius: 0 20px 20px 0; font-size: 1.3rem; line-height: 1.4; font-weight: 500;
-        }
-
-        .latency-advice {
-            margin-top: 15px; background: rgba(167, 95, 255, 0.05); padding: 12px 20px;
-            border-radius: 12px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--violet);
-            display: flex; justify-content: space-between;
-        }
     </style>
 </head>
 <body>
 
-<div class="ambient-neural"></div>
-
 <div class="container">
-    <header>
-        <div class="logo">Viral<span>Forge.</span></div>
-        <div class="secure-tag">SYSTEM: STEALTH_ACTIVE</div>
+    <header class="header">
+        <div class="logo">Forge<span>Legacy.</span></div>
+        <div class="status-dot">Actionable Frameworks // 2026</div>
     </header>
 
-    <div class="grid">
-        <div class="card span-8" id="ghostCard">
-            <div class="scan-line"></div>
-            <h3>Elite Ghostwriter</h3>
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 10px; color: #444; text-transform: uppercase; margin-bottom: 8px; display: block;">Chat Context / Recipient Subtext</label>
-                <textarea id="chatInput" placeholder="Paste the last few messages... ViralForge will scan for power gaps."></textarea>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('ghostwriter', this)">Ghostwriter</button>
+        <button class="tab-btn" onclick="switchTab('viral', this)">Viral Engine</button>
+        <button class="tab-btn" onclick="switchTab('identity', this)">Identity Forge</button>
+    </div>
+
+    <section id="ghostwriter" class="view-section active">
+        <div class="card">
+            <h2>Elite Ghost-Reply.</h2>
+            <p class="sub">Map power dynamics and forge the perfect response.</p>
+            
+            <label>Chat Context (Paste History)</label>
+            <textarea id="chatInput" style="height: 100px;" placeholder="Them: That was an interesting take. &#10;You: I try my best..."></textarea>
+
+            <div class="compact-grid">
                 <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Target Archetype</label>
+                    <label>Recipient Archetype</label>
                     <select id="archetype">
                         <option>The Ego-Centric (High Power)</option>
                         <option>The Ghoster (Cold Interest)</option>
@@ -129,102 +108,89 @@
                     </select>
                 </div>
                 <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Desired Move</label>
-                    <select id="move">
-                        <option value="push">Push-Pull Tension</option>
-                        <option value="stoic">Stoic Scarcity</option>
-                        <option value="humor">Pattern Interrupt</option>
-                        <option value="expert">Expert Dominance</option>
-                    </select>
+                    <label>Objective</label>
+                    <input type="text" placeholder="e.g. Tension, Meeting, Closure">
                 </div>
             </div>
-            <button class="btn-forge" onclick="forgeEliteReply()">Forge Stealth Reply</button>
+            
+            <button class="btn-forge" onclick="executeForge('ghostwriter')">Generate Calibrated Reply</button>
 
-            <div class="result-area" id="resultArea">
-                <div class="stealth-status">
-                    <span>STEALTH_RATING: <b>99.8% HUMAN</b></span>
-                    <span>MOVE: <b>HIGH-VALUE FRAME</b></span>
-                </div>
-                <div class="reply-display" id="replyText"></div>
-                <div class="latency-advice">
-                    <span>RESPONSE LATENCY: <b id="timer">18m 42s</b></span>
-                    <span>ROI: <b style="color:var(--mint);">+88% CAPITAL</b></span>
-                </div>
+            <div class="output" id="out-ghost">
+                <h4>Engine Output: Frame Established</h4>
+                <div class="output-text">"honestly, i was starting to think you were interesting, but now you’re just being predictable. we might have to rethink this."</div>
             </div>
         </div>
+    </section>
 
-        <div class="card span-4">
-            <h3>Identity Forge</h3>
-            <div style="margin-bottom: 20px;">
-                <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Voice Samples (Paste 3-5 Texts)</label>
-                <textarea id="voiceSamples" style="height: 290px;" placeholder="I use lowercase only. I hate emojis. I speak in short sentences."></textarea>
-            </div>
-            <button class="btn-forge" style="background: transparent; border: 1px solid var(--border); color: #fff;" onclick="alert('Digital Twin Synced.')">Lock Voice</button>
-        </div>
-
-        <div class="card span-12">
-            <h3>Viral Forge Engine</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; align-items: flex-end;">
+    <section id="viral" class="view-section">
+        <div class="card">
+            <h2>Viral Authority Engine.</h2>
+            <p class="sub">Convert high-value niches into viral dominance.</p>
+            
+            <div class="compact-grid" style="grid-template-columns: 1fr;">
                 <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Industry Niche</label>
-                    <input type="text" id="niche" placeholder="Finance, SaaS, Luxury...">
+                    <label>Niche Industry</label>
+                    <input type="text" id="niche" placeholder="e.g. Finance, Luxury, SaaS">
                 </div>
-                <div>
-                    <label style="font-size: 10px; color: #444; margin-bottom: 8px; display: block;">Psychological Hook</label>
-                    <select id="hookType">
-                        <option>The Authority Gap</option>
-                        <option>The Negative Constraint</option>
-                        <option>Logic Defiance</option>
-                    </select>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label>Psychological Trigger</label>
+                        <select id="trigger">
+                            <option>Authority Gap</option>
+                            <option>Logic Defiance</option>
+                            <option>Pattern Interrupt</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Format</label>
+                        <select>
+                            <option>TikTok (Global)</option>
+                            <option>X / Threads</option>
+                            <option>LinkedIn Elite</option>
+                        </select>
+                    </div>
                 </div>
-                <button class="btn-forge" style="margin: 0;" onclick="forgeViralHook()">Forge Viral Hook</button>
+            </div>
+            
+            <button class="btn-forge" onclick="executeForge('viral')">Activate Forge Engine</button>
+
+            <div class="output" id="out-viral">
+                <h4>Engine Output: Strategy Forged</h4>
+                <div class="output-text" id="viral-result"></div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="identity" class="view-section">
+        <div class="card">
+            <h2>Identity Sync.</h2>
+            <p class="sub">Calibrate your AI twin to mirror your exact voice.</p>
+            
+            <label>Voice Samples (Paste 3-5 Texts)</label>
+            <textarea style="height: 180px;" placeholder="I love being free funny and emojis..."></textarea>
+            
+            <button class="btn-forge" style="background: transparent; border: 1px solid var(--border); color: #fff;" onclick="alert('Digital Twin Calibrated.')">Sync Personality</button>
+        </div>
+    </section>
+
 </div>
 
 <script>
-    function forgeEliteReply() {
-        const card = document.getElementById('ghostCard');
-        const res = document.getElementById('resultArea');
-        const text = document.getElementById('replyText');
-        const timer = document.getElementById('timer');
-        const move = document.getElementById('move').value;
-
-        // Visual Feedback
-        card.classList.add('scanning');
-        res.style.display = 'none';
-
-        const db = {
-            "push": {
-                reply: "honestly, i was starting to think you were interesting, but now you’re just being predictable. we might have to rethink this.",
-                time: "22m 14s"
-            },
-            "stoic": {
-                reply: "fair enough. i'm heading into a session anyway, so we'll just leave it at that for now.",
-                time: "34m 05s"
-            },
-            "humor": {
-                reply: "you’re dangerous. i was supposed to be productive tonight, but now i’m just wondering what else you’re good at besides being a distraction.",
-                time: "14m 50s"
-            },
-            "expert": {
-                reply: "i appreciate the enthusiasm, but let's stick to the data—the logic here is what actually changes the game.",
-                time: "08m 22s"
-            }
-        };
-
-        setTimeout(() => {
-            card.classList.remove('scanning');
-            res.style.display = 'block';
-            text.innerText = db[move].reply;
-            timer.innerText = db[move].time;
-        }, 1800);
+    function switchTab(sectionId, btn) {
+        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        btn.classList.add('active');
     }
 
-    function forgeViralHook() {
-        const niche = document.getElementById('niche').value || "Industry";
-        alert("VIRALFORGE GENERATED: Why 99% of " + niche + " creators fail—and the 3-minute fix they're ignoring.");
+    function executeForge(type) {
+        if(type === 'ghostwriter') {
+            document.getElementById('out-ghost').style.display = 'block';
+        } else {
+            const niche = document.getElementById('niche').value || "Industry";
+            document.getElementById('viral-result').innerText = `Why 99% of ${niche} creators fail—and the 3-minute fix they're ignoring in 2026.`;
+            document.getElementById('out-viral').style.display = 'block';
+        }
     }
 </script>
 
