@@ -3,301 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViralForge OS | Elite AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    
+    <title>ViralForge X | Elite Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00ffa6;
-            --primary-glow: rgba(0, 255, 166, 0.3);
-            --secondary: #00d4ff;
-            --bg: #02040a;
-            --card: rgba(10, 14, 23, 0.8);
-            --border: rgba(255, 255, 255, 0.08);
+            --primary-grad: linear-gradient(90deg, #00ffa6 0%, #00d4ff 50%, #d946ef 100%);
+            --bg-obsidian: #030712;
+            --glass-card: rgba(17, 24, 39, 0.75);
+            --border-glow: rgba(0, 255, 166, 0.2);
+            --text-muted: #94a3b8;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
-
-        body {
-            background-color: var(--bg);
-            color: #fff;
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        body { 
+            background: var(--bg-obsidian); 
+            color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
-            perspective: 1500px;
         }
 
-        /* ===== CYBERNETIC BACKGROUND ===== */
-        .bg-mesh {
-            position: fixed; inset: 0; z-index: -1;
-            background-image: 
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at center, black, transparent 80%);
-            opacity: 0.2;
-        }
+        /* --- NEURAL PLEXUS CANVAS --- */
+        #plexus { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.6; }
 
-        .orb {
-            position: fixed; width: 400px; height: 400px;
-            background: var(--primary-glow);
-            filter: blur(120px);
-            border-radius: 50%;
-            z-index: -1;
-            animation: float 20s infinite alternate;
-        }
-
-        @keyframes float {
-            from { transform: translate(-20%, -20%); }
-            to { transform: translate(20%, 20%); }
-        }
-
-        /* ===== MAIN CONTAINER ===== */
-        .app-shell {
-            width: 100%;
-            max-width: 850px;
-            background: var(--card);
-            backdrop-filter: blur(50px) saturate(150%);
-            border: 1px solid var(--border);
+        /* --- RESPONSIVE COMMAND CENTER --- */
+        .command-center {
+            position: relative;
+            z-index: 10;
+            width: 92%;
+            max-width: 1000px;
+            background: var(--glass-card);
+            backdrop-filter: blur(30px) saturate(150%);
+            border: 1px solid var(--border-glow);
             border-radius: 40px;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 40px 100px rgba(0,0,0,0.8);
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+            padding: clamp(1.5rem, 5vw, 4rem);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 50px rgba(0, 255, 166, 0.05);
         }
 
-        /* Top Bar Branding */
-        .top-bar {
-            padding: 20px 40px;
-            border-bottom: 1px solid var(--border);
+        /* Header Info */
+        .sys-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .status-pill {
-            font-size: 10px;
+            margin-bottom: 2.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
             letter-spacing: 2px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            background: rgba(0, 255, 166, 0.05);
-            color: var(--primary);
-            border: 1px solid rgba(0, 255, 166, 0.2);
-            font-weight: 800;
+            color: var(--text-muted);
         }
-
-        /* Main Content */
-        .content { padding: 50px 60px; }
+        .status-dot { height: 8px; width: 8px; background: #00ffa6; border-radius: 50%; display: inline-block; margin-right: 8px; box-shadow: 0 0 10px #00ffa6; }
 
         h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 4rem;
-            letter-spacing: -3px;
-            line-height: 0.9;
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom, #fff 40%, var(--primary));
+            font-size: clamp(2.8rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 0.85;
+            letter-spacing: -4px;
+            margin-bottom: 1rem;
+            background: #fff;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        h1 span { background: var(--primary-grad); -webkit-background-clip: text; }
 
-        .subtitle { color: #64748b; font-size: 1.1rem; margin-bottom: 40px; max-width: 500px; }
+        .tagline { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 3rem; max-width: 500px; }
 
-        /* Input Controls */
-        .control-panel {
+        /* --- BENTO INPUT GRID --- */
+        .input-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 1.5rem;
         }
 
-        .full-width { grid-column: span 2; }
+        @media (min-width: 768px) {
+            .input-grid { grid-template-columns: 2fr 1fr 1fr; }
+            .span-full { grid-column: span 3; }
+        }
 
-        .field-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #475569;
-            margin-bottom: 12px;
+        .field { position: relative; }
+        .label {
             display: block;
-            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            color: #4b5563;
+            margin-bottom: 8px;
+            padding-left: 5px;
         }
 
         input, select {
             width: 100%;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-glow);
             padding: 20px;
             border-radius: 20px;
             color: #fff;
             font-size: 1rem;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        input:focus {
-            border-color: var(--primary);
-            background: rgba(0, 255, 166, 0.03);
-            box-shadow: 0 0 30px rgba(0, 255, 166, 0.1);
             outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Global Ready Button */
-        .forge-trigger {
+        input:focus, select:focus { border-color: #00ffa6; background: rgba(0, 255, 166, 0.05); }
+
+        /* --- THE ULTIMATE ACTION BUTTON --- */
+        .activate-btn {
             width: 100%;
-            padding: 25px;
-            border-radius: 24px;
+            padding: 24px;
             border: none;
-            background: #fff;
+            border-radius: 24px;
+            background: var(--primary-grad);
             color: #000;
-            font-family: 'Space Grotesk';
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            cursor: pointer;
             transition: 0.4s;
-            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 255, 166, 0.2);
         }
 
-        .forge-trigger:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px var(--primary-glow);
+        .activate-btn:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+            box-shadow: 0 15px 50px rgba(217, 70, 239, 0.3);
         }
 
-        /* Results Visualization */
-        .result-card {
-            margin-top: 30px;
-            background: rgba(255,255,255,0.01);
-            border: 1px dashed var(--border);
-            padding: 30px;
-            border-radius: 30px;
-            animation: emerge 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        }
+        /* Results Area */
+        #results { margin-top: 3rem; display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 768px) { #results { grid-template-columns: 1fr 1fr; } }
 
-        @keyframes emerge {
-            from { opacity: 0; transform: translateY(30px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        .concept-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glow);
+            padding: 25px;
+            border-radius: 25px;
+            transition: 0.3s;
         }
-
-        .copy-btn {
-            float: right;
-            padding: 8px 16px;
-            border-radius: 12px;
-            background: rgba(0, 255, 166, 0.1);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .loading-bar {
-            height: 2px; width: 0%;
-            background: var(--primary);
-            position: absolute; bottom: 0; left: 0;
-            transition: width 0.5s;
-        }
+        .concept-box:hover { background: rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
 
-    <div class="bg-mesh"></div>
-    <div class="orb"></div>
+<canvas id="plexus"></canvas>
 
-    <div class="app-shell" id="shell">
-        <div class="top-bar">
-            <div style="font-weight: 800; letter-spacing: -1px; font-size: 14px;">VIRALFORGE // REQUISITION_MODE</div>
-            <div class="status-pill">SYSTEM_ACTIVE</div>
+<div class="command-center">
+    <div class="sys-header">
+        <div><span class="status-dot"></span> CORE SYSTEM ONLINE</div>
+        <div>VIRALFORGE X-SERIES</div>
+    </div>
+
+    <h1>Viral<span>Forge</span></h1>
+    <p class="tagline">The world's most advanced intelligence engine for elite creators.</p>
+
+    <div class="input-grid">
+        <div class="field">
+            <span class="label">Niche / Target Industry</span>
+            <input type="text" id="niche" placeholder="e.g. Fintech, SaaS, Luxury">
         </div>
-
-        <div class="content">
-            <h1>Forge the <br><span style="-webkit-text-fill-color: initial; color: #fff;">Future.</span></h1>
-            <p class="subtitle">The world's most advanced engine for algorithmic dominance. Command the feed with one click.</p>
-
-            <div class="control-panel">
-                <div class="input-group full-width">
-                    <span class="field-label">Target Market / Niche</span>
-                    <input type="text" id="nicheInput" placeholder="Enter high-value niche...">
-                </div>
-                <div class="input-group">
-                    <span class="field-label">Psychological Tone</span>
-                    <select id="tone">
-                        <option>Authoritative</option>
-                        <option>Curiosity Gap</option>
-                        <option>Controversial</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <span class="field-label">Delivery Channel</span>
-                    <select id="platform">
-                        <option>TikTok (Global)</option>
-                        <option>Reels (Luxury)</option>
-                        <option>Shorts (Retention)</option>
-                    </select>
-                </div>
-            </div>
-
-            <button class="forge-trigger" id="forgeBtn" onclick="runSynthesis()">
-                Generate Viral Brief
-                <div class="loading-bar" id="loadBar"></div>
-            </button>
-
-            <div id="results"></div>
+        <div class="field">
+            <span class="label">Trigger</span>
+            <select id="trigger">
+                <option>Hype</option>
+                <option>Curiosity</option>
+                <option>Authority</option>
+            </select>
+        </div>
+        <div class="field">
+            <span class="label">Channel</span>
+            <select id="channel">
+                <option>TikTok</option>
+                <option>IG Reels</option>
+                <option>YT Shorts</option>
+            </select>
         </div>
     </div>
 
-    <script>
-        // 3D Perspective Mouse Effect
-        const shell = document.getElementById('shell');
-        document.addEventListener('mousemove', (e) => {
-            let x = (window.innerWidth / 2 - e.pageX) / 50;
-            let y = (window.innerHeight / 2 - e.pageY) / 50;
-            shell.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-        });
+    <button class="activate-btn" onclick="activateForge()">Activate Forge Engine</button>
 
-        async function runSynthesis() {
-            const niche = document.getElementById('nicheInput').value;
-            if(!niche) return;
+    <div id="results"></div>
+</div>
 
-            const btn = document.getElementById('forgeBtn');
-            const bar = document.getElementById('loadBar');
-            const results = document.getElementById('results');
+<script>
+    // --- PLEXUS ENGINE ---
+    const canvas = document.getElementById('plexus');
+    const ctx = canvas.getContext('2d');
+    let points = [];
+    const maxPoints = 80;
 
-            btn.innerText = "SYNTHESIZING...";
-            bar.style.width = "100%";
-            results.innerHTML = "";
-
-            try {
-                const res = await fetch(`/generate?niche=${encodeURIComponent(niche)}`);
-                const data = await res.json();
-                
-                setTimeout(() => {
-                    btn.innerText = "GENERATE VIRAL BRIEF";
-                    bar.style.width = "0%";
-                    
-                    if(data.status === "success") {
-                        const hook = Array.isArray(data.hooks) ? data.hooks[0] : data.hook;
-                        results.innerHTML = `
-                            <div class="result-card">
-                                <button class="copy-btn" onclick="navigator.clipboard.writeText('${hook}')">COPY BRIEF</button>
-                                <span style="color:var(--primary); font-size:10px; font-weight:800;">ALGORITHMIC OUTPUT</span>
-                                <div style="font-size:1.5rem; font-weight:700; margin-top:15px; line-height:1.2;">"${hook}"</div>
-                                <div style="margin-top:20px; color:#475569; font-size:13px; line-height:1.6;">
-                                    <strong>DISTRIBUTION STRATEGY:</strong> High-retention opening, 0.5s visual hook, 120bpm pacing recommended.
-                                </div>
-                            </div>
-                        `;
-                    }
-                }, 1200);
-            } catch (e) {
-                btn.innerText = "LINK FAILURE";
-            }
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        points = [];
+        for(let i=0; i<maxPoints; i++) {
+            points.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5
+            });
         }
-    </script>
+    }
+
+    function animate() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        points.forEach((p, i) => {
+            p.x += p.vx; p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+            points.slice(i + 1).forEach(p2 => {
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if(dist < 150) {
+                    ctx.strokeStyle = `rgba(0, 255, 166, ${1 - dist/150})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                }
+            });
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', init);
+    init(); animate();
+
+    // --- FORGE LOGIC ---
+    function activateForge() {
+        const btn = document.querySelector('.activate-btn');
+        const res = document.getElementById('results');
+        const n = document.getElementById('niche').value;
+        if(!n) return;
+
+        btn.innerText = "CALCULATING VIRALITY...";
+        res.innerHTML = "";
+
+        setTimeout(() => {
+            btn.innerText = "ACTIVATE FORGE ENGINE";
+            const concepts = [
+                `Why 99% of ${n} startups fail in the first 30 days.`,
+                `The "Hidden Truth" about ${n} nobody tells you.`
+            ];
+            concepts.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "concept-box";
+                div.innerHTML = `<div style="color:#00ffa6; font-size:0.7rem; margin-bottom:10px;">GENERATED STRATEGY</div><div style="font-weight:600;">${c}</div>`;
+                res.appendChild(div);
+            });
+        }, 1500);
+    }
+</script>
+
 </body>
 </html>
