@@ -2,85 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViralForge Elite | The Standard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Forge Omni | Elite Content Engine</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00ffa6;
             --accent: #d946ef;
-            --bg: #020617;
-            --glass: rgba(15, 23, 42, 0.92);
+            --bg: #010409;
+            --glass: rgba(13, 17, 23, 0.96);
             --border: rgba(255, 255, 255, 0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body { 
             background: var(--bg); 
             color: #fff; 
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 20px;
+            overflow-x: hidden;
+            padding: 10px;
         }
 
-        /* --- INTERACTIVE NEURAL BACKGROUND --- */
         #neuralCanvas { position: fixed; inset: 0; z-index: 1; opacity: 0.4; pointer-events: none; }
 
-        /* --- COMMAND CENTER --- */
-        .app-container {
+        .app-wrapper {
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 850px;
+            max-width: 1000px;
+            margin-top: 4vh;
+            padding-bottom: 80px;
+        }
+
+        /* --- HEADER --- */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--primary);
+            background: rgba(0, 255, 166, 0.05);
+            padding: 8px 16px;
+            border-radius: 100px;
+            border: 1px solid rgba(0, 255, 166, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .dot { height: 6px; width: 6px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        h1 { font-size: clamp(3rem, 8vw, 5rem); font-weight: 800; letter-spacing: -4px; line-height: 0.85; margin-bottom: 1rem; }
+        h1 span { color: var(--primary); }
+
+        .hero-sub { color: #8b949e; font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; line-height: 1.6; }
+
+        /* --- MULTI-CHANNEL CONTROL --- */
+        .control-panel {
             background: var(--glass);
-            backdrop-filter: blur(40px);
             border: 1px solid var(--border);
             border-radius: 32px;
-            padding: clamp(1.5rem, 5vw, 3rem);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-            animation: fadeIn 0.8s ease-out;
+            padding: 30px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Trust Signals */
-        .status-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--primary);
+        .grid-inputs {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
             margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
-        .pulse { height: 8px; width: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 12px var(--primary); animation: pulseGlow 2s infinite; }
-        @keyframes pulseGlow { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+        @media (min-width: 768px) { .grid-inputs { grid-template-columns: 2fr 1fr 1fr; } }
 
-        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -3px; line-height: 0.85; margin-bottom: 1rem; }
-        h1 span { background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .input-wrap {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 14px 20px;
+            transition: 0.3s;
+        }
 
-        .promise { color: #94a3b8; font-size: 1.1rem; margin-bottom: 3rem; max-width: 550px; line-height: 1.5; }
+        .input-wrap:focus-within { border-color: var(--primary); box-shadow: 0 0 25px rgba(0, 255, 166, 0.1); }
 
-        /* --- BENTO INPUTS --- */
-        .input-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 1.5rem; }
-        @media (min-width: 768px) { .input-grid { grid-template-columns: 2fr 1fr 1fr; } }
+        label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #484f58; margin-bottom: 5px; text-transform: uppercase; }
 
-        .field-group { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 18px; padding: 12px 18px; transition: 0.3s; }
-        .field-group:focus-within { border-color: var(--primary); background: rgba(0, 255, 166, 0.03); }
+        input, select { 
+            width: 100%; background: transparent; border: none; color: #fff; 
+            font-size: 1.05rem; outline: none; font-weight: 600; 
+        }
 
-        label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: #4b5563; margin-bottom: 4px; text-transform: uppercase; }
-
-        input, select { width: 100%; background: transparent; border: none; color: #fff; font-size: 1rem; outline: none; font-weight: 600; appearance: none; }
-
-        /* --- CTA BUTTON --- */
-        .activate-btn {
+        .fire-btn {
             width: 100%;
             padding: 24px;
             border-radius: 20px;
@@ -88,35 +106,62 @@
             background: #fff;
             color: #000;
             font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.2rem;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        .activate-btn:hover { background: var(--primary); transform: scale(1.02); box-shadow: 0 20px 40px rgba(0, 255, 166, 0.25); }
+        .fire-btn:hover { background: var(--primary); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 255, 166, 0.3); }
 
-        /* --- ACTIONABLE RESULTS --- */
-        #output { margin-top: 2.5rem; max-height: 300px; overflow-y: auto; padding-right: 5px; }
-        #output::-webkit-scrollbar { width: 4px; }
-        #output::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        /* --- OMNI RESULTS GRID --- */
+        #omniResults { 
+            margin-top: 3rem; 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 20px; 
+        }
 
-        .result-card {
-            background: rgba(255, 255, 255, 0.03);
+        @media (min-width: 768px) { #omniResults { grid-template-columns: 1fr 1fr; } }
+
+        .strategy-item {
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
-            border-radius: 22px;
-            padding: 22px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--accent);
-            animation: slideIn 0.5s ease-out forwards;
+            border-radius: 28px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: reveal 0.6s ease-out forwards;
         }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes reveal { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-        .type-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--accent); font-weight: 700; margin-bottom: 8px; display: block; }
-        .hook-text { font-size: 1.2rem; font-weight: 600; line-height: 1.4; margin-bottom: 10px; }
-        .logic-hint { font-size: 0.8rem; color: #64748b; font-style: italic; display: block; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; }
+        .platform-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            background: rgba(217, 70, 239, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 100px;
+            width: fit-content;
+            font-weight: 700;
+        }
+
+        .hook-title { font-size: 1.4rem; font-weight: 800; line-height: 1.2; color: #fff; }
+
+        .action-logic {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            color: #8b949e;
+            line-height: 1.6;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .action-logic strong { color: var(--primary); }
 
     </style>
 </head>
@@ -124,106 +169,117 @@
 
 <canvas id="neuralCanvas"></canvas>
 
-<div class="app-container">
-    <div class="status-bar">
-        <div class="pulse"></div> 2026 Engine Online // Verified Actionable Frameworks
+<div class="app-wrapper">
+    <div class="status-badge">
+        <div class="dot"></div> 2026 GLOBAL OMNI-ENGINE ACTIVE
     </div>
 
-    <h1>Forge <span>Legacy.</span></h1>
-    <p class="promise">Convert high-value niches into viral authority with AI-driven psychological frameworks.</p>
+    <h1>Forge<span>Omni.</span></h1>
+    <p class="hero-sub">The ultimate multi-channel intelligence suite. Convert high-value concepts into authority across the entire social ecosystem.</p>
 
-    <div class="input-grid">
-        <div class="field-group">
-            <label>Niche Industry</label>
-            <input type="text" id="niche" placeholder="e.g. Luxury Finance">
+    <div class="control-panel">
+        <div class="grid-inputs">
+            <div class="input-wrap">
+                <label>Industry / Niche</label>
+                <input type="text" id="mainNiche" placeholder="e.g. BioTech, Real Estate">
+            </div>
+            <div class="input-wrap">
+                <label>Primary Intent</label>
+                <select id="intent">
+                    <option>Authority Build</option>
+                    <option>Logic Defiance</option>
+                    <option>Viral Growth</option>
+                    <option>Community Trust</option>
+                </select>
+            </div>
+            <div class="input-wrap">
+                <label>Channel Scope</label>
+                <select id="scope">
+                    <option>All Socials</option>
+                    <option>Short-form Only</option>
+                    <option>Professional Only</option>
+                </select>
+            </div>
         </div>
-        <div class="field-group">
-            <label>Trigger</label>
-            <select id="trigger">
-                <option>Authority Gap</option>
-                <option>Logic Defiance</option>
-                <option>Hype Momentum</option>
-            </select>
-        </div>
-        <div class="field-group">
-            <label>Format</label>
-            <select id="format">
-                <option>TikTok (Global)</option>
-                <option>Reels (Luxury)</option>
-                <option>YT Shorts</option>
-            </select>
-        </div>
+
+        <button class="fire-btn" onclick="executeOmniForge()">Execute Omni-Forge</button>
     </div>
 
-    <button class="activate-btn" onclick="engageForge()">Activate Forge Engine</button>
-
-    <div id="output"></div>
+    <div id="omniResults"></div>
 </div>
 
 <script>
-    // --- NEURAL NETWORK BACKGROUND ---
+    // --- NEURAL PHYSICS ---
     const canvas = document.getElementById('neuralCanvas');
     const ctx = canvas.getContext('2d');
-    let particles = [];
+    let nodes = [];
 
     function init() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        particles = [];
-        for(let i=0; i<70; i++) {
-            particles.push({
+        nodes = [];
+        for(let i=0; i<80; i++) {
+            nodes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3
             });
         }
     }
 
     function draw() {
         ctx.clearRect(0,0,canvas.width, canvas.height);
-        particles.forEach((p, i) => {
-            p.x += p.vx; p.y += p.vy;
-            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        nodes.forEach((n, i) => {
+            n.x += n.vx; n.y += n.vy;
+            if(n.x < 0 || n.x > canvas.width) n.vx *= -1;
+            if(n.y < 0 || n.y > canvas.height) n.vy *= -1;
 
-            particles.slice(i+1).forEach(p2 => {
-                let d = Math.hypot(p.x - p2.x, p.y - p2.y);
-                if(d < 150) {
-                    ctx.strokeStyle = `rgba(0, 255, 166, ${1 - d/150})`;
-                    ctx.lineWidth = 0.6;
-                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+            nodes.slice(i+1).forEach(n2 => {
+                let d = Math.hypot(n.x - n2.x, n.y - n2.y);
+                if(d < 160) {
+                    ctx.strokeStyle = `rgba(0, 255, 166, ${1 - d/160})`;
+                    ctx.lineWidth = 0.4;
+                    ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
                 }
             });
         });
         requestAnimationFrame(draw);
     }
-
     window.addEventListener('resize', init);
     init(); draw();
 
-    // --- STRATEGY ENGINE ---
-    function engageForge() {
-        const niche = document.getElementById('niche').value || "Luxury Finance";
-        const out = document.getElementById('output');
-        out.innerHTML = `<div style="text-align:center; font-family:'JetBrains Mono'; color:var(--primary); font-size:0.7rem;">CALIBRATING NEURAL TRIGGERS...</div>`;
+    // --- OMNI ENGINE LOGIC ---
+    function executeOmniForge() {
+        const niche = document.getElementById('mainNiche').value || "Industry";
+        const res = document.getElementById('omniResults');
+        res.innerHTML = `<div style="grid-column: 1/-1; text-align:center; font-family:'JetBrains Mono'; color:var(--primary); padding:40px;">SYNCHRONIZING GLOBAL CHANNELS...</div>`;
 
         setTimeout(() => {
-            out.innerHTML = "";
-            const strategies = [
-                { type: "PATTERN INTERRUPT", hook: `The $50k ${niche} mistake that looks like a success.`, why: "Uses 'Negative Constraint' to stop the scroll immediately." },
-                { type: "LOGIC DEFIANCE", hook: `Why doing the opposite of ${niche} experts is your fastest path to growth.`, why: "Creates a 'Curiosity Gap' by challenging established norms." }
+            res.innerHTML = "";
+            const platforms = [
+                { p: "LINKEDIN EXECUTIVE", h: `The quiet ${niche} shift that will redefine the next decade.`, l: "Focuses on <strong>Future-Proofing</strong>. High-level professionals engage with long-term security and industry shifts." },
+                { p: "X VIRAL THREAD", h: `Everything you were taught about ${niche} is a lie. 🧵`, l: "Uses <strong>Counter-Intuitive Truths</strong>. Threads that challenge consensus are the most shared format on X." },
+                { p: "TIKTOK RETENTION", h: `Stop scrolling if you care about your ${niche} growth.`, l: "The <strong>Negative Constraint</strong> hook. It forces a micro-second of self-reflection to halt the scroll." },
+                { p: "PINTEREST VISUAL", h: `10 Aesthetic ${niche} Frameworks for 2026.`, l: "Leverages <strong>Visual Aspiration</strong>. Users on Pinterest save 'Blueprints' and 'Cheat Sheets'." },
+                { p: "NEWSLETTER (DEEP VALUE)", h: `The raw math behind a $1M ${niche} operation.`, l: "Focuses on <strong>Radical Transparency</strong>. Email subscribers value the 'behind-the-scenes' data they can't get elsewhere." },
+                { p: "IG REELS (LUXURY)", h: `Mastering the art of ${niche} without the noise.`, l: "Uses <strong>Minimalist Authority</strong>. High-end brands win by doing less, better." }
             ];
 
-            strategies.forEach(s => {
-                const card = document.createElement('div');
-                card.className = "result-card";
-                card.innerHTML = `
-                    <span class="type-tag">${s.type}</span>
-                    <p class="hook-text">${s.hook}</p>
-                    <span class="logic-hint">Strategic Logic: ${s.why}</span>
-                `;
-                out.appendChild(card);
+            platforms.forEach((item, index) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = "strategy-item";
+                    card.innerHTML = `
+                        <span class="platform-tag">${item.p}</span>
+                        <div class="hook-title">${item.h}</div>
+                        <div class="action-logic"><strong>Strategic Logic:</strong> ${item.l}</div>
+                    `;
+                    res.appendChild(card);
+                    if(index === platforms.length - 1) {
+                         window.scrollTo({ top: res.offsetTop - 50, behavior: 'smooth' });
+                    }
+                }, index * 100);
             });
         }, 1200);
     }
