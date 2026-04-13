@@ -266,4 +266,17 @@
                     card.innerHTML = `
                         <span class="platform-tag">${item.p}</span>
                         <div class="hook-title">${item.h}</div>
-                        <div class="action-logic
+                        <div class="action-logic"><strong>Strategic Logic:</strong> ${item.l}</div>
+                    `;
+                    res.appendChild(card);
+                    if(index === platforms.length - 1) {
+                         window.scrollTo({ top: res.offsetTop - 50, behavior: 'smooth' });
+                    }
+                }, index * 100);
+            });
+        }, 1200);
+    }
+</script>
+
+</body>
+</html>
