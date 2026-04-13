@@ -3,241 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Forge Legacy | Social Architecture OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <title>ViralForge | OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --mint: #35F0BA;
             --violet: #A75FFF;
-            --bg: #000000;
-            --glass: rgba(12, 15, 22, 0.8);
+            --bg: #030508;
+            --card-bg: rgba(15, 18, 25, 0.9);
             --border: rgba(255, 255, 255, 0.08);
-            --neon-glow: 0 0 25px rgba(53, 240, 186, 0.15);
+            --neon: 0 0 20px rgba(53, 240, 186, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; min-height: 100vh; padding-bottom: 80px; }
+        body { background: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; }
 
-        .ambient-neural { position: fixed; inset: 0; background: radial-gradient(circle at 50% -20%, #151b2d 0%, #000 100%); z-index: -1; }
-        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
-
-        /* --- BRANDING --- */
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .logo { font-family: 'Exo', sans-serif; font-size: 1.8rem; letter-spacing: -1.5px; font-weight: 800; }
-        .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .secure-tag { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--mint); padding: 6px 15px; border: 1px solid var(--border); border-radius: 50px; background: rgba(53, 240, 186, 0.05); }
-
-        /* --- BENTO SYSTEM --- */
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-        .card { 
-            background: var(--glass); 
-            border: 1px solid var(--border); 
-            border-radius: 35px; 
-            padding: 30px; 
-            backdrop-filter: blur(25px); 
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; overflow: hidden;
+        /* --- LUXURIOUS STICKY HEADER --- */
+        header { 
+            position: sticky; top: 0; z-index: 1000; background: rgba(3, 5, 8, 0.85); 
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+            padding: 12px 25px; display: flex; justify-content: space-between; align-items: center;
         }
-        .card:hover { border-color: rgba(53, 240, 186, 0.3); box-shadow: var(--neon-glow); }
+        .logo { font-family: 'Exo', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .chronos-module { text-align: right; font-family: 'JetBrains Mono'; }
+        #live-clock { font-size: 11px; color: #fff; font-weight: 700; display: block; letter-spacing: 1px; }
+        #live-date { font-size: 8px; color: var(--mint); text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
+        .sync-dot { display: inline-block; width: 4px; height: 4px; background: var(--mint); border-radius: 50%; margin-right: 5px; animation: blink 2s infinite; box-shadow: 0 0 8px var(--mint); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 25px 15px; }
+
+        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 24px; position: relative; transition: 0.3s ease; overflow: hidden; }
+        .card:hover { border-color: rgba(53, 240, 186, 0.25); box-shadow: var(--neon); }
         .span-8 { grid-column: span 8; } .span-4 { grid-column: span 4; } .span-12 { grid-column: span 12; }
 
-        @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
+        @media (max-width: 850px) { .span-8, .span-4 { grid-column: span 12; } }
 
-        h3 { font-family: 'Exo', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: #555; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-        h3::before { content: "◈"; color: var(--mint); }
+        h3 { font-family: 'Exo', sans-serif; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: #666; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        h3::before { content: ""; width: 6px; height: 6px; background: var(--mint); border-radius: 50%; box-shadow: 0 0 10px var(--mint); }
 
-        textarea, select, input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 18px; padding: 18px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; }
-        textarea:focus, input:focus { border-color: var(--mint); background: rgba(255,255,255,0.06); }
+        textarea, select, input { 
+            width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); 
+            border-radius: 16px; padding: 15px; color: #fff; font-size: 0.95rem; outline: none; transition: 0.2s;
+        }
+        textarea:focus, input:focus { border-color: var(--mint); background: rgba(255,255,255,0.04); }
 
-        /* --- PREMIUM BUTTONS --- */
         .btn-forge { 
-            width: 100%; padding: 22px; border-radius: 20px; border: none; 
+            width: 100%; padding: 18px; border-radius: 16px; border: none; 
             background: linear-gradient(90deg, var(--mint), var(--violet)); 
             color: #000; font-family: 'Exo', sans-serif; font-weight: 800; 
-            font-size: 1.1rem; text-transform: uppercase; cursor: pointer; 
-            margin-top: 20px; transition: 0.4s; position: relative;
+            font-size: 0.95rem; text-transform: uppercase; cursor: pointer; margin-top: 15px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .btn-forge:hover { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 30px rgba(53, 240, 186, 0.4); }
+        .btn-forge:active { transform: scale(0.96); }
 
-        /* --- HISTORY RAILS (YELLOW AREA) --- */
-        .history-rail { display: flex; gap: 12px; overflow-x: auto; padding: 15px 0; margin: 10px 0; scrollbar-width: none; }
-        .history-rail::-webkit-scrollbar { display: none; }
-        .history-item { 
-            flex: 0 0 160px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
-            padding: 15px; border-radius: 20px; cursor: pointer; transition: 0.3s;
+        .neural-accuracy { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); }
+        .accuracy-label { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 9px; color: #444; margin-bottom: 8px; }
+        .accuracy-track { width: 100%; height: 3px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        #accuracyFill { width: 0%; height: 100%; background: var(--mint); transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px var(--mint); }
+
+        .history-slider { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
+        .history-slider::-webkit-scrollbar { display: none; }
+        .history-blob { 
+            flex: 0 0 145px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); 
+            padding: 12px; border-radius: 18px; font-size: 10px; cursor: pointer; transition: 0.2s;
         }
-        .history-item:hover { background: rgba(53, 240, 186, 0.05); border-color: var(--mint); }
-        .history-item span { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--mint); text-transform: uppercase; }
-        .history-item p { font-size: 11px; color: #777; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .history-blob:hover { border-color: var(--mint); background: rgba(53, 240, 186, 0.03); }
+        .history-blob span { font-family: 'JetBrains Mono'; color: var(--mint); display: block; margin-bottom: 4px; }
+        .history-blob p { color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* --- OUTPUT PORTAL (RED AREA) --- */
         .output-portal { 
-            margin-top: 30px; background: rgba(5, 7, 10, 0.8); border: 1px solid var(--border); 
-            border-radius: 30px; padding: 30px; border-left: 4px solid var(--mint);
-            position: relative; animation: slideUp 0.5s ease;
+            margin-top: 25px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); 
+            border-radius: 25px; padding: 25px; position: relative; display: none;
+            border-left: 3px solid var(--mint); animation: slideUp 0.4s ease forwards;
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .copy-btn { 
-            position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.05); 
-            border: 1px solid var(--border); color: #fff; padding: 8px 15px; border-radius: 12px; 
-            font-size: 10px; cursor: pointer; transition: 0.3s; font-family: 'JetBrains Mono';
+        .output-ctrl { position: absolute; top: 20px; right: 20px; }
+        .copy-pill { 
+            background: rgba(53, 240, 186, 0.1); border: 1px solid rgba(53, 240, 186, 0.2);
+            color: var(--mint); font-family: 'JetBrains Mono'; font-size: 8px; 
+            padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: 0.3s;
         }
-        .copy-btn:hover { background: var(--mint); color: #000; }
+        .copy-pill:hover { background: var(--mint); color: #000; }
 
-        .main-response { font-size: 1.4rem; font-weight: 500; line-height: 1.4; color: #fff; margin: 20px 0; }
-        .meta-tags { display: flex; gap: 20px; font-family: 'JetBrains Mono'; font-size: 10px; color: #444; }
-        .meta-tags b { color: var(--mint); }
+        .res-body { font-size: 1.25rem; font-weight: 500; margin: 15px 0; color: #eee; }
+        .res-meta { font-family: 'JetBrains Mono'; font-size: 10px; color: #444; display: flex; gap: 15px; }
+        .res-meta b { color: var(--mint); }
         
-        .strategy-notes { 
-            margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); 
-            font-size: 12px; color: #666; line-height: 1.6; 
+        .strategy-box { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); font-size: 11px; color: #666; }
+        .strategy-box mark { background: transparent; color: var(--mint); font-weight: 600; }
+
+        #notification-host { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .stealth-notif { 
+            background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--violet);
+            padding: 12px 20px; border-radius: 12px; backdrop-filter: blur(10px);
+            font-size: 11px; font-weight: 600; color: #fff; letter-spacing: 0.5px;
+            animation: toastIn 0.3s ease forwards;
         }
-        .strategy-notes mark { background: transparent; color: var(--mint); font-weight: 600; }
+        @keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* --- NOTIFICATION --- */
-        #notif-host { position: fixed; top: 25px; right: 25px; z-index: 9999; }
-        .toast { background: var(--glass); border: 1px solid var(--border); padding: 18px 30px; border-radius: 20px; border-left: 4px solid var(--mint); backdrop-filter: blur(15px); color: #fff; font-size: 0.9rem; margin-bottom: 10px; animation: toastIn 0.4s ease forwards; }
-        @keyframes toastIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
-
-        /* --- LOADING OVERLAY --- */
-        #neural-loader { position: absolute; inset: 0; background: var(--bg); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10; border-radius: 35px; }
-        .loader-bar { width: 60%; height: 2px; background: rgba(255,255,255,0.1); position: relative; margin-top: 15px; }
-        .loader-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--mint); width: 0%; transition: width 1.5s linear; }
+        .loading-shimmer {
+            position: absolute; inset: 0; background: var(--card-bg); z-index: 10;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 28px;
+        }
     </style>
 </head>
 <body>
 
-<div id="notif-host"></div>
-<div class="ambient-neural"></div>
+<header>
+    <div class="logo">Viral<span>Forge.</span></div>
+    <div class="chronos-module">
+        <span id="live-clock">00:00:00</span>
+        <span id="live-date"><span class="sync-dot"></span>CONNECTING...</span>
+    </div>
+</header>
+
+<div id="notification-host"></div>
 
 <div class="container">
-    <header>
-        <div class="logo">Forge<span>Legacy.</span></div>
-        <div class="secure-tag">ENCRYPTED_SESSION: ACTIVE</div>
-    </header>
-
     <div class="grid">
         <div class="card span-8" id="ghostCard">
-            <div id="neural-loader">
-                <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--mint)">ANALYZING NEURAL PATTERNS...</span>
-                <div class="loader-bar"><div class="loader-fill" id="l-fill"></div></div>
+            <div class="loading-shimmer" id="loader">
+                <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--mint); letter-spacing: 2px;">NEURAL_SCAN_ACTIVE</span>
             </div>
-            
             <h3>Elite Ghostwriter</h3>
-            <textarea id="ghostInput" placeholder="Paste message history for pattern analysis..."></textarea>
+            <textarea id="ghostIn" placeholder="Paste chat history for power gap analysis..." rows="4" oninput="updateAccuracy()"></textarea>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
-                <select id="archetype"><option>Ego-Centric (High Power)</option><option>Ghoster (Low Interest)</option></select>
-                <select id="move"><option value="push">Push-Pull Tension</option><option value="stoic">Stoic Scarcity</option></select>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                <select id="arc"><option>Archetype: Ego-Centric</option><option>Archetype: Cold Negotiator</option></select>
+                <select id="move"><option>Move: Push-Pull Tension</option><option>Move: Stoic Scarcity</option></select>
             </div>
 
-            <div class="history-rail" id="ghostHistory">
-                </div>
-
-            <button class="btn-forge" onclick="executeForge('ghost')">Forge Stealth Reply</button>
+            <div class="history-slider" id="ghostHist"></div>
+            <button class="btn-forge" onclick="forge('ghost')">Forge Stealth Reply</button>
         </div>
 
         <div class="card span-4">
             <h3>Identity Forge</h3>
-            <textarea id="voiceIn" style="height: 160px;" placeholder="Feed me your voice samples (texts, emails)..."></textarea>
-            
-            <div style="margin-top:20px;">
-                <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono'; font-size:9px; color:#444; margin-bottom:5px;">
-                    <span>NEURAL_ACCURACY</span><span id="accVal">0%</span>
-                </div>
-                <div style="width:100%; height:4px; background:rgba(255,255,255,0.05); border-radius:10px;">
-                    <div id="accBar" style="width:0%; height:100%; background:var(--mint); border-radius:10px; transition:1s;"></div>
-                </div>
+            <textarea id="voiceIn" placeholder="Paste your writing samples..." style="height:120px;"></textarea>
+            <div class="neural-accuracy">
+                <div class="accuracy-label"><span>NEURAL_ACCURACY</span><span id="accNum">0%</span></div>
+                <div class="accuracy-track"><div id="accuracyFill"></div></div>
             </div>
-            
             <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff;" onclick="lockVoice()">Lock Neural Voice</button>
         </div>
 
         <div class="card span-12">
             <h3>Viral Forge Engine</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px;">
-                <input type="text" id="niche" placeholder="Target Niche (e.g. SaaS, Luxury)">
-                <select id="hookType"><option>The Authority Gap</option><option>Logic Defiance</option></select>
-                <button class="btn-forge" style="margin:0; padding:18px 40px;" onclick="executeForge('viral')">Forge Hook</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr auto; gap:10px;">
+                <input type="text" id="niche" placeholder="Niche (SaaS, AI, Luxury...)">
+                <select id="hook"><option>Hook: Authority Gap</option><option>Hook: Pattern Interrupt</option></select>
+                <button class="btn-forge" style="margin:0; padding:15px 30px;" onclick="forge('viral')">Forge Hook</button>
             </div>
+            <div class="history-slider" id="viralHist"></div>
 
-            <div class="history-rail" id="viralHistory">
-                </div>
-
-            <div class="output-portal" id="outputArea" style="display:none;">
-                <button class="copy-btn" onclick="copyResult()">COPY_TEXT</button>
-                <div class="meta-tags">
+            <div class="output-portal" id="outBox">
+                <div class="output-ctrl"><button class="copy-pill" onclick="copy()">COPY_TEXT</button></div>
+                <div class="res-meta">
                     <span>STEALTH_RATING: <b>99.8%</b></span>
-                    <span>ENGINE: <b>STARK_V3</b></span>
-                    <span>STATUS: <b style="color:var(--mint)">OPTIMAL</b></span>
+                    <span>ENGINE_SYNC: <b>STARK_V5</b></span>
                 </div>
-                <div class="main-response" id="resText">...</div>
-                <div class="strategy-notes" id="resNotes">...</div>
+                <div class="res-body" id="resText"></div>
+                <div class="strategy-box" id="resStrategy"></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function showNotif(msg) {
-        const h = document.getElementById('notif-host');
-        const t = document.createElement('div');
-        t.className = 'toast';
-        t.innerText = msg;
-        h.appendChild(t);
-        setTimeout(() => t.remove(), 3000);
+    function updateClock() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' });
+        document.getElementById('live-clock').innerText = timeStr;
+        document.getElementById('live-date').innerHTML = `<span class="sync-dot"></span>${dateStr}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function notify(message) {
+        const host = document.getElementById('notification-host');
+        const n = document.createElement('div');
+        n.className = 'stealth-notif';
+        n.innerText = `[SYS] ${message}`;
+        host.appendChild(n);
+        setTimeout(() => { n.style.opacity = '0'; setTimeout(() => n.remove(), 500); }, 3000);
+    }
+
+    function updateAccuracy() {
+        const val = Math.min(document.getElementById('ghostIn').value.length / 2, 94);
+        document.getElementById('accuracyFill').style.width = val + '%';
+        document.getElementById('accNum').innerText = Math.floor(val) + '%';
     }
 
     function lockVoice() {
-        const bar = document.getElementById('accBar');
-        const val = document.getElementById('accVal');
-        bar.style.width = "94%";
-        val.innerText = "94%";
-        showNotif("Neural Identity Calibrated");
+        document.getElementById('accuracyFill').style.width = '94%';
+        document.getElementById('accNum').innerText = '94%';
+        notify("Neural Mapping Confirmed");
     }
 
-    function copyResult() {
-        const text = document.getElementById('resText').innerText;
-        navigator.clipboard.writeText(text);
-        showNotif("Copied to Clipboard");
-    }
-
-    function executeForge(type) {
-        const loader = document.getElementById('neural-loader');
-        const bar = document.getElementById('l-fill');
-        const out = document.getElementById('outputArea');
-        
+    function forge(type) {
+        const loader = document.getElementById('loader');
+        const box = document.getElementById('outBox');
         loader.style.display = 'flex';
-        bar.style.width = '100%';
-
+        
         setTimeout(() => {
             loader.style.display = 'none';
-            bar.style.width = '0%';
-            out.style.display = 'block';
+            box.style.display = 'block';
             
             if(type === 'ghost') {
                 document.getElementById('resText').innerText = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
-                document.getElementById('resNotes').innerHTML = "STRATEGY: Using <mark>Pattern Interrupt</mark>. Recipient is accustomed to high power; calling them 'predictable' creates an immediate <mark>Authority Gap</mark> they will try to fill.";
-                addHistory('ghostHistory', "honestly, i was starting...");
+                document.getElementById('resStrategy').innerHTML = "Calibrated for <mark>Push-Pull</mark>. Uses an <mark>Authority Gap</mark> to force the recipient to re-qualify their interest.";
+                addHist('ghostHist', "honestly, i was starting...");
             } else {
                 const n = document.getElementById('niche').value || 'Industry';
                 document.getElementById('resText').innerText = `Why 99% of ${n} founders fail—and the 3-minute fix they're ignoring.`;
-                document.getElementById('resNotes').innerHTML = "STRATEGY: High <mark>Negative Constraint</mark> hook. Targets the fear of failure while offering an 'easy' proprietary solution.";
-                addHistory('viralHistory', `Why 99% of ${n}...`);
+                document.getElementById('resStrategy').innerHTML = "Uses <mark>Logic Defiance</mark> to stop the scroll. Ideal for high-intent professional audiences.";
+                addHist('viralHist', "Why 99% of founders...");
             }
-            showNotif("Neural Generation Complete");
+            notify("Response Generation Complete");
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 1600);
+        }, 1500);
     }
 
-    function addHistory(id, txt) {
+    function addHist(id, txt) {
         const rail = document.getElementById(id);
         const item = document.createElement('div');
-        item.className = 'history-item';
-        item.innerHTML = `<span>ARCHIVE_${Date.now().toString().slice(-4)}</span><p>${txt}</p>`;
+        item.className = 'history-blob';
+        item.innerHTML = `<span>ARCH_SYNC</span><p>${txt}</p>`;
         rail.prepend(item);
         if(rail.children.length > 5) rail.lastChild.remove();
+    }
+
+    function copy() {
+        const text = document.getElementById('resText').innerText;
+        if(text) {
+            navigator.clipboard.writeText(text);
+            notify("Data Copied to Clipboard");
+        }
     }
 </script>
 
