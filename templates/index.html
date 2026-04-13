@@ -1,309 +1,429 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ViralForge Pro | Luxury AI</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ViralForge X | INSANE MODE</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --primary: #00ffa6;
-    --secondary: #00d4ff;
-    --bg: #030712;
-    --card-bg: rgba(17, 24, 39, 0.7);
-    --border: rgba(255, 255, 255, 0.08);
+:root{
+    --a:#00ffa6;
+    --b:#00d4ff;
+    --c:#7c3aed;
+    --d:#ff2bd6;
+    --bg:#05060a;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-
-body {
-    height: 100vh;
-    background-color: var(--bg);
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(0, 255, 166, 0.07) 0, transparent 50%), 
-        radial-gradient(at 100% 100%, rgba(0, 212, 255, 0.07) 0, transparent 50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    overflow: hidden;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    cursor:none;
 }
 
-/* Background Texture */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 0;
+body{
+    height:100vh;
+    overflow:hidden;
+    background:var(--bg);
+    color:white;
 }
 
-.cursor-glow {
-    position: fixed;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(0, 255, 166, 0.1), transparent 70%);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    transition: width 0.3s, height 0.3s;
+/* ===== PARTICLE CANVAS ===== */
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:0;
 }
 
-/* Container */
-.container {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 720px;
-    padding: 3.5rem;
-    border-radius: 40px;
-    background: var(--card-bg);
-    backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid var(--border);
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.6);
+/* ===== AURORA DEPTH ===== */
+body::before{
+    content:"";
+    position:fixed;
+    inset:-200px;
+    background:
+    radial-gradient(circle at 20% 30%, rgba(0,255,166,0.18), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(0,212,255,0.18), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(124,58,237,0.18), transparent 50%);
+    filter: blur(70px);
+    animation:float 10s ease-in-out infinite alternate;
+    z-index:1;
 }
 
-.header { text-align: left; margin-bottom: 2rem; }
-
-h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    letter-spacing: -2px;
-    background: linear-gradient(to right, #fff, #94a3b8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+@keyframes float{
+    from{transform:translateY(-20px) scale(1);}
+    to{transform:translateY(20px) scale(1.1);}
 }
 
-h1 span {
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* ===== NOISE ===== */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity:0.05;
+    z-index:2;
+    pointer-events:none;
 }
 
-.tagline { color: #64748b; font-size: 1rem; margin-top: 5px; }
-
-/* Form Elements */
-.input-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 1.5rem; }
-
-.field-label { display: block; font-size: 0.7rem; color: #4b5563; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
-
-input, select {
-    width: 100%;
-    padding: 16px;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    color: #fff;
-    outline: none;
-    transition: 0.3s;
-    font-size: 0.95rem;
+/* ===== CURSOR ===== */
+.cursor{
+    position:fixed;
+    width:12px;height:12px;
+    background:white;
+    border-radius:50%;
+    mix-blend-mode:difference;
+    z-index:9999;
 }
 
-input:focus, select:focus { border-color: var(--primary); background: rgba(0, 0, 0, 0.4); }
-
-/* Forge Button */
-.forge-btn {
-    width: 100%;
-    padding: 20px;
-    border: none;
-    border-radius: 20px;
-    background: #fff;
-    color: #000;
-    font-weight: 800;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+.glow{
+    position:fixed;
+    width:420px;height:420px;
+    background:radial-gradient(circle, rgba(0,255,166,0.18), transparent 60%);
+    transform:translate(-50%,-50%);
+    z-index:3;
 }
 
-.forge-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 30px rgba(0, 255, 166, 0.3);
-    background: var(--primary);
+/* ===== LOADER ===== */
+#loader{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:10000;
 }
 
-/* Results */
-#results { margin-top: 2.5rem; max-height: 300px; overflow-y: auto; padding-right: 10px; }
-#results::-webkit-scrollbar { width: 4px; }
-#results::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
-.card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border);
-    padding: 25px;
-    border-radius: 24px;
-    margin-bottom: 15px;
-    transition: 0.3s;
+.loaderBox{
+    width:320px;
+    height:2px;
+    background:rgba(255,255,255,0.1);
+    overflow:hidden;
+    border-radius:100px;
 }
 
-.card:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2); }
-
-.card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-
-.status-tag {
-    background: rgba(0, 255, 166, 0.1);
-    color: var(--primary);
-    padding: 4px 12px;
-    border-radius: 100px;
-    font-size: 0.7rem;
-    font-weight: 700;
+.loaderBar{
+    height:100%;
+    width:100%;
+    background:linear-gradient(90deg,var(--a),var(--b),var(--c),var(--d));
+    transform:translateX(-100%);
+    animation:load 2s cubic-bezier(.77,0,.18,1) forwards;
 }
 
-.copy-icon { cursor: pointer; opacity: 0.5; transition: 0.3s; }
-.copy-icon:hover { opacity: 1; color: var(--primary); }
+@keyframes load{ to{ transform:translateX(0);} }
 
-.hook-text { font-size: 1.1rem; line-height: 1.6; font-weight: 500; color: #e5e7eb; }
+/* ===== MAIN UI ===== */
+.container{
+    position:relative;
+    z-index:10;
+    max-width:920px;
+    margin:auto;
+    top:50%;
+    transform:translateY(-50%);
+    padding:44px;
 
-/* Activity Feed */
-.activity-feed { position: fixed; bottom: 30px; left: 30px; z-index: 100; }
-.activity-item {
-    background: rgba(17, 24, 39, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
-    padding: 12px 20px;
-    border-radius: 100px;
-    margin-bottom: 10px;
-    font-size: 0.8rem;
-    color: #94a3b8;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    animation: slideIn 0.5s ease-out forwards;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:36px;
+    backdrop-filter: blur(35px);
+
+    box-shadow:
+    0 40px 120px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
-@keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+/* ===== STATUS ===== */
+.status{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    letter-spacing:2px;
+    color:#9ca3af;
+    margin-bottom:26px;
+}
 
-.dot { width: 6px; height: 6px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); }
+.dot{
+    width:6px;height:6px;
+    background:var(--a);
+    border-radius:50%;
+    display:inline-block;
+    box-shadow:0 0 14px var(--a);
+}
 
+/* ===== TITLE ===== */
+h1{
+    font-size:60px;
+    font-weight:800;
+    letter-spacing:-2px;
+}
+
+h1 span{
+    background:linear-gradient(90deg,var(--a),var(--b),var(--c),var(--d));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+p{
+    color:#9ca3af;
+    margin-top:8px;
+    margin-bottom:30px;
+}
+
+/* ===== GRID ===== */
+.grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:12px;
+}
+
+input,select{
+    background:rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:16px;
+    border-radius:16px;
+    color:white;
+    transition:0.3s;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:var(--a);
+    box-shadow:0 0 0 3px rgba(0,255,166,0.1);
+}
+
+/* ===== BUTTON (MAGNETIC FEEL) ===== */
+button{
+    margin-top:14px;
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:18px;
+    font-weight:800;
+    background:linear-gradient(90deg,var(--a),var(--b),var(--c),var(--d));
+    color:black;
+    transition:0.25s ease;
+}
+
+button:hover{
+    transform:scale(1.03);
+    filter:brightness(1.2);
+}
+
+/* ===== RESULTS ===== */
+.results{
+    margin-top:28px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    max-height:240px;
+    overflow:auto;
+}
+
+.card{
+    padding:18px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    animation:pop 0.5s ease;
+}
+
+@keyframes pop{
+    from{opacity:0;transform:translateY(10px) scale(0.98);}
+    to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.meta{
+    font-size:10px;
+    color:var(--a);
+    letter-spacing:2px;
+    margin-bottom:6px;
+}
+
+/* ===== FLOATING ACTIVITY ===== */
+.activity{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    z-index:20;
+}
+
+.pulse{
+    background:rgba(255,255,255,0.05);
+    padding:10px 14px;
+    border-radius:999px;
+    font-size:11px;
+    animation:fade 4s forwards;
+}
+
+@keyframes fade{
+    0%{opacity:0;transform:translateY(10px);}
+    10%,90%{opacity:1;}
+    100%{opacity:0;}
+}
 </style>
 </head>
 
 <body>
 
-<div class="cursor-glow" id="cursorGlow"></div>
+<canvas id="particles"></canvas>
 
-<div class="container">
-    <div class="header">
-        <h1>Viral<span>Forge</span></h1>
-        <p class="tagline">Luxury AI content engine for global creators.</p>
-    </div>
-
-    <div class="input-grid">
-        <div>
-            <label class="field-label">Content Niche</label>
-            <input id="nicheInput" maxlength="50" placeholder="e.g. Luxury Watches">
-        </div>
-        <div>
-            <label class="field-label">Tone</label>
-            <select id="tone"><option>Authority</option><option>Viral Hype</option><option>Storytelling</option></select>
-        </div>
-        <div>
-            <label class="field-label">Platform</label>
-            <select id="platform"><option>TikTok</option><option>Instagram</option><option>YouTube</option></select>
-        </div>
-    </div>
-
-    <button class="forge-btn" id="btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        FORGE VIRAL CONCEPT
-    </button>
-
-    <div id="results"></div>
+<div id="loader">
+    <div class="loaderBox"><div class="loaderBar"></div></div>
 </div>
 
-<div class="activity-feed" id="feed"></div>
+<div class="cursor" id="cursor"></div>
+<div class="glow" id="glow"></div>
+
+<div class="container" id="ui">
+
+    <div class="status">
+        <div><span class="dot"></span> CORE SYSTEM ONLINE</div>
+        <div>VIRALFORGE X</div>
+    </div>
+
+    <h1>Viral<span>Forge</span></h1>
+    <p>Next-gen intelligence engine for elite viral creators.</p>
+
+    <div class="grid">
+        <input id="niche" placeholder="Enter niche (e.g fintech)">
+        <select><option>Hype</option><option>Story</option></select>
+        <select><option>TikTok</option><option>YouTube</option></select>
+    </div>
+
+    <button id="btn">ACTIVATE FORGE ENGINE</button>
+
+    <div class="results" id="results"></div>
+</div>
+
+<div class="activity" id="activity"></div>
 
 <script>
-const input = document.getElementById("nicheInput");
-const btn = document.getElementById("btn");
-const results = document.getElementById("results");
-const feed = document.getElementById("feed");
-const cursor = document.getElementById("cursorGlow");
+/* ===== CURSOR ===== */
+const cursor=document.getElementById("cursor");
+const glow=document.getElementById("glow");
+const ui=document.getElementById("ui");
 
-// Cursor Movement
-document.addEventListener("mousemove", e => {
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
+document.addEventListener("mousemove",(e)=>{
+    cursor.style.left=e.clientX+"px";
+    cursor.style.top=e.clientY+"px";
+
+    glow.style.left=e.clientX+"px";
+    glow.style.top=e.clientY+"px";
+
+    let x=(window.innerWidth/2-e.clientX)/80;
+    let y=(window.innerHeight/2-e.clientY)/80;
+
+    ui.style.transform=`translateY(-50%) rotateY(${-x}deg) rotateX(${y}deg)`;
 });
 
-// Magnetic Button Effect
-btn.addEventListener("mousedown", () => {
-    cursor.style.width = "200px";
-    cursor.style.height = "200px";
-});
-btn.addEventListener("mouseup", () => {
-    cursor.style.width = "400px";
-    cursor.style.height = "400px";
-});
+/* ===== LOADER ===== */
+setTimeout(()=>document.getElementById("loader").remove(),2200);
 
-async function generate() {
-    const niche = input.value.trim();
-    if (!niche) return;
+/* ===== ENGINE ===== */
+document.getElementById("btn").onclick=function(){
+    const n=document.getElementById("niche").value;
+    if(!n) return;
 
-    btn.innerText = "FORGING MASTERPIECE...";
-    btn.style.opacity = "0.7";
-    results.innerHTML = "";
+    this.innerText="FORGING...";
+    this.disabled=true;
 
-    // Simulated Luxury Generation
-    setTimeout(() => {
-        btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> FORGE VIRAL CONCEPT`;
-        btn.style.opacity = "1";
+    setTimeout(()=>{
+        this.innerText="ACTIVATE FORGE ENGINE";
+        this.disabled=false;
 
-        const ideas = [
-            `The $10,000 ${niche} mistake most creators are making right now...`,
-            `Why nobody is talking about the "Hidden Truth" of ${niche}...`,
-            `3 tools that will make your ${niche} workflow 10x faster.`
+        const hooks=[
+            `The $10K ${n} blind spot nobody sees.`,
+            `Why 99% of ${n} creators stay stuck forever.`,
+            `The forbidden ${n} growth loop elites use.`
         ];
 
-        ideas.forEach((text, i) => {
-            setTimeout(() => {
-                const card = document.createElement("div");
-                card.className = "card";
-                card.innerHTML = `
-                    <div class="card-top">
-                        <span class="status-tag">CONCEPT ${i+1}</span>
-                        <span class="copy-icon" onclick="copyText('${text}', this)">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        </span>
-                    </div>
-                    <div class="hook-text">${text}</div>
+        const res=document.getElementById("results");
+        res.innerHTML="";
+
+        hooks.forEach((h,i)=>{
+            setTimeout(()=>{
+                const div=document.createElement("div");
+                div.className="card";
+                div.innerHTML=`
+                    <div class="meta">STRATEGY NODE 0${i+1}</div>
+                    <div>${h}</div>
                 `;
-                results.prepend(card);
-            }, i * 200);
+                res.appendChild(div);
+            },i*140);
         });
-    }, 1200);
+
+    },900);
+};
+
+/* ===== ACTIVITY ===== */
+const names=["Julian","Sasha","Marcus","Elena","Amir","Nova"];
+setInterval(()=>{
+    const d=document.createElement("div");
+    d.className="pulse";
+    d.innerHTML=`<b>${names[Math.floor(Math.random()*names.length)]}</b> created a viral node`;
+    document.getElementById("activity").prepend(d);
+    if(document.getElementById("activity").children.length>3){
+        document.getElementById("activity").lastChild.remove();
+    }
+},3500);
+
+/* ===== PARTICLES ENGINE ===== */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+for(let i=0;i<80;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        vx:(Math.random()-0.5)*0.6,
+        vy:(Math.random()-0.5)*0.6
+    });
 }
 
-btn.onclick = generate;
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-function copyText(text, el) {
-    navigator.clipboard.writeText(text);
-    el.innerHTML = '<span style="font-size:0.7rem; font-weight:700; color:var(--primary)">COPIED!</span>';
-    setTimeout(() => {
-        el.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
-    }, 2000);
+    for(let p of particles){
+        p.x+=p.vx;
+        p.y+=p.vy;
+
+        if(p.x<0||p.x>canvas.width) p.vx*=-1;
+        if(p.y<0||p.y>canvas.height) p.vy*=-1;
+
+        ctx.fillStyle="rgba(255,255,255,0.4)";
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,1.5,0,Math.PI*2);
+        ctx.fill();
+
+        for(let q of particles){
+            let dx=p.x-q.x;
+            let dy=p.y-q.y;
+            let dist=Math.sqrt(dx*dx+dy*dy);
+
+            if(dist<120){
+                ctx.strokeStyle="rgba(0,255,166,0.08)";
+                ctx.beginPath();
+                ctx.moveTo(p.x,p.y);
+                ctx.lineTo(q.x,q.y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(draw);
 }
-
-// Live Social Proof
-const users = ["Alex", "Elena", "Marcus", "Sasha", "Julian"];
-const niches = ["Luxury", "E-commerce", "SaaS", "Fitness"];
-
-setInterval(() => {
-    const item = document.createElement("div");
-    item.className = "activity-item";
-    item.innerHTML = `<div class="dot"></div> <strong>${users[Math.floor(Math.random()*users.length)]}</strong> generated a ${niches[Math.floor(Math.random()*niches.length)]} idea`;
-    feed.prepend(item);
-    if(feed.children.length > 3) feed.lastChild.remove();
-}, 4000);
-
+draw();
 </script>
 
 </body>
