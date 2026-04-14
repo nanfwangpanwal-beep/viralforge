@@ -1,119 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ViralForge | OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --mint: #35F0BA;
-            --violet: #A75FFF;
-            --bg: #030508;
-            --glass: rgba(15, 18, 25, 0.9);
-            --border: rgba(255, 255, 255, 0.08);
-            /* Restored Fixed Glow Strength */
-            --neon-glow: 0 0 20px rgba(53, 240, 186, 0.15);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ViralForge OS - Final Boss</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; padding-bottom: 40px; }
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
-        .ambient-neural { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, #0d121f 0%, #000 100%); z-index: -1; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 25px 20px; }
+<style>
+:root{
+--mint:#35F0BA;
+--violet:#A75FFF;
+--bg:#020305;
+--glass:rgba(15,18,25,.85);
+--border:rgba(255,255,255,.08);
+}
 
-        /* --- RESTORED BRANDING & CHRONOS --- */
-        header { 
-            position: sticky; top: 0; z-index: 1000; background: rgba(3, 5, 8, 0.85); 
-            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
-            padding: 15px 25px; display: flex; justify-content: space-between; align-items: center;
-        }
-        .logo { 
-            font-family: 'Exo', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -1px;
-            text-shadow: 0 0 15px rgba(53, 240, 186, 0.4); 
-        }
-        .logo span { background: linear-gradient(90deg, var(--mint), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .chronos-module { text-align: right; font-family: 'JetBrains Mono'; }
-        #live-clock { font-size: 11px; color: #fff; font-weight: 700; display: block; }
-        #live-date { font-size: 8px; color: var(--mint); text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; }
+*{margin:0;padding:0;box-sizing:border-box}
 
-        /* --- BENTO GRID SYSTEM (FIXED LOOK) --- */
-        .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
-        .card { 
-            background: var(--glass); 
-            border: 1px solid var(--border); 
-            border-radius: 35px; 
-            padding: 30px; 
-            backdrop-filter: blur(30px);
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; overflow: hidden;
-            box-shadow: var(--neon-glow); /* Constant subtle glow as requested */
-        }
-        .card:hover { border-color: rgba(53, 240, 186, 0.3); }
+body{
+background:var(--bg);
+color:#fff;
+font-family:Inter, sans-serif;
+overflow-x:hidden;
+}
 
-        .span-8 { grid-column: span 8; } .span-4 { grid-column: span 4; } .span-12 { grid-column: span 12; }
+/* INTRO */
+.intro{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+flex-direction:column;
+animation:fadeOut 4s forwards 3s;
+}
+.logo-build{
+font-family:Exo;
+font-size:2rem;
+background:linear-gradient(90deg,var(--mint),var(--violet));
+-webkit-background-clip:text;
+color:transparent;
+opacity:0;
+animation:build 2s forwards;
+}
+.tag{
+opacity:0;
+margin-top:10px;
+font-size:12px;
+letter-spacing:2px;
+animation:fadeIn 2s forwards 1.5s;
+}
+@keyframes build{to{opacity:1;letter-spacing:2px}}
+@keyframes fadeIn{to{opacity:.7}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
-        @media (max-width: 900px) { .span-8, .span-4 { grid-column: span 12; } }
+/* CURSOR GLOW */
+.cursor-glow{
+position:fixed;
+width:300px;
+height:300px;
+background:radial-gradient(circle, rgba(53,240,186,0.15), transparent 70%);
+pointer-events:none;
+z-index:999;
+transform:translate(-50%,-50%);
+}
 
-        h3 { font-family: 'Exo', sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 20px; opacity: 0.9; }
+/* HEADER */
+header{
+position:sticky;
+top:0;
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(20px);
+padding:15px 20px;
+display:flex;
+justify-content:space-between;
+}
 
-        textarea, input, select { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 20px; padding: 18px; color: #fff; font-size: 0.9rem; outline: none; transition: 0.2s; }
-        textarea:focus { border-color: var(--mint); background: rgba(53, 240, 186, 0.02); }
+.container{
+padding:20px;
+max-width:1200px;
+margin:auto;
+}
 
-        .btn-forge { width: 100%; padding: 22px; border-radius: 22px; border: none; background: linear-gradient(90deg, var(--mint), var(--violet)); color: #000; font-family: 'Exo', sans-serif; font-weight: 800; font-size: 1rem; text-transform: uppercase; cursor: pointer; margin-top: 15px; transition: 0.3s; }
-        .btn-forge:active { transform: scale(0.98); }
+/* CARD */
+.card{
+background:var(--glass);
+padding:25px;
+border-radius:25px;
+border:1px solid var(--border);
+transition:.4s cubic-bezier(0.16,1,0.3,1);
+transform-style:preserve-3d;
+}
 
-        /* --- EXPANDED SOCIAL SUITE --- */
-        .output-portal { 
-            margin-top: 25px; background: rgba(5, 7, 10, 0.6); border: 1px solid var(--border); 
-            border-radius: 30px; padding: 30px; position: relative;
-            border-left: 3px solid var(--mint); animation: slideUp 0.4s ease;
-        }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+/* INPUT */
+textarea{
+width:100%;
+padding:15px;
+border-radius:15px;
+background:#000;
+border:1px solid var(--border);
+color:#fff;
+}
+textarea:focus{
+box-shadow:0 0 20px rgba(53,240,186,0.25);
+}
 
-        .output-ctrl { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
-        
-        /* Specific platform styling for visibility */
-        .share-pill { 
-            padding: 6px 12px; border-radius: 10px; font-family: 'JetBrains Mono'; font-size: 8px; font-weight: 800;
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; cursor: pointer; transition: 0.2s;
-        }
-        .share-pill:hover { background: #fff; color: #000; }
-        .share-x { border-color: #fff; }
-        .share-wa { border-color: #25D366; color: #25D366; }
-        .share-tg { border-color: #0088cc; color: #0088cc; }
-        .copy-pill { background: var(--mint); color: #000; border: none; }
+/* BUTTON */
+button{
+margin-top:15px;
+width:100%;
+padding:18px;
+border:none;
+border-radius:20px;
+background:linear-gradient(90deg,var(--mint),var(--violet));
+font-weight:800;
+cursor:pointer;
+position:relative;
+overflow:hidden;
+}
 
-        .res-text { font-size: 1.3rem; font-weight: 500; color: #fff; margin: 20px 0; line-height: 1.5; padding-right: 40px; }
-        .res-meta { display: flex; gap: 15px; font-family: 'JetBrains Mono'; font-size: 9px; color: #555; }
-        .res-meta b { color: var(--mint); }
+.ripple{
+position:absolute;
+border-radius:50%;
+transform:scale(0);
+animation:ripple 600ms linear;
+background:rgba(255,255,255,0.4);
+}
+@keyframes ripple{
+to{transform:scale(4);opacity:0;}
+}
 
-        /* --- HISTORY ENGINE --- */
-        .history-rail { display: flex; gap: 12px; overflow-x: auto; padding: 10px 0; margin-top: 15px; scrollbar-width: none; }
-        .history-rail::-webkit-scrollbar { display: none; }
-        .history-item { flex: 0 0 160px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 15px; border-radius: 20px; font-size: 10px; cursor: pointer; }
-        .history-item span { color: var(--mint); font-family: 'JetBrains Mono'; display: block; margin-bottom: 5px; font-weight: 700; }
-        .history-item p { opacity: 0.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* OUTPUT */
+.output{
+margin-top:20px;
+padding:20px;
+border-left:3px solid var(--mint);
+background:#05070a;
+border-radius:20px;
+}
 
-    </style>
+/* METRICS */
+.metric{margin-top:10px}
+.bar{
+height:6px;
+background:#111;
+border-radius:10px;
+overflow:hidden;
+}
+.fill{
+height:100%;
+background:linear-gradient(90deg,var(--mint),var(--violet));
+}
+
+/* FADE */
+.fade-in{
+opacity:0;
+transform:translateY(10px);
+animation:fadeUp 0.6s forwards;
+}
+@keyframes fadeUp{
+to{opacity:1;transform:translateY(0);}
+}
+
+</style>
 </head>
+
 <body>
 
+<div class="cursor-glow"></div>
+
+<div class="intro">
+<div class="logo-build">ViralForge</div>
+<div class="tag">WEAPONIZING WORDS INTO VIRALITY</div>
+</div>
+
 <header>
-    <div class="logo">Viral<span>Forge.</span></div>
-    <div class="chronos-module">
-        <span id="live-clock">00:00:00</span>
-        <span id="live-date">MON, APR 13, 2026</span>
-    </div>
+<div>ViralForge</div>
+<div id="clock"></div>
 </header>
 
-<div class="ambient-neural"></div>
+<div style="font-size:10px;color:var(--mint);padding:5px 20px;">
+SYSTEM STATUS: NEURAL ENGINE ACTIVE
+</div>
 
 <div class="container">
-    <div class="grid">
-        <div class="card span-8">
-            <h3>Elite Ghostwriter</h3>
-            <textarea placeholder="Paste dialogue for power gap analysis..." rows="4"></textarea>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:12px;">
-                <select><option>Archetype: Ego-Centric</option><option>Archetype: Cold Ghoster</option></select>
-                <select><option>Move: Push-Pull
+<div class="card">
+
+<h3>Elite Ghostwriter</h3>
+
+<textarea id="input" placeholder="Paste dialogue..."></textarea>
+
+<button onclick="generate()">Forge Response</button>
+<button onclick="remix()">Remix Output</button>
+
+<div id="thinking" style="display:none;margin-top:15px;font-size:12px;color:var(--mint)">
+<span id="stage">Initializing...</span>
+</div>
+
+<div id="output" class="output" style="display:none"></div>
+
+</div>
+</div>
+
+<script>
+
+/* CURSOR GLOW */
+const glow=document.querySelector('.cursor-glow');
+document.addEventListener('mousemove',e=>{
+glow.style.left=e.clientX+'px';
+glow.style.top=e.clientY+'px';
+});
+
+/* CARD 3D */
+document.querySelectorAll('.card').forEach(card=>{
+card.addEventListener('mousemove',e=>{
+const rect=card.getBoundingClientRect();
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+
+const rotateX=(y/rect.height-0.5)*8;
+const rotateY=(x/rect.width-0.5)*-8;
+
+card.style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+card.style.background=`radial-gradient(circle at ${x}px ${y}px, rgba(53,240,186,0.12), transparent 60%)`;
+});
+card.addEventListener('mouseleave',()=>{
+card.style.transform='';
+card.style.background='';
+});
+});
+
+/* SOUND */
+const clickSound=new Audio('https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3');
+const successSound=new Audio('https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3');
+
+/* THINKING */
+const stages=[
+"Parsing intent...",
+"Detecting emotional leverage...",
+"Rewriting power frame...",
+"Amplifying virality..."
+];
+
+function runThinking(){
+let i=0;
+const el=document.getElementById('stage');
+const interval=setInterval(()=>{
+el.innerText=stages[i];
+i++;
+if(i>=stages.length)clearInterval(interval);
+},500);
+}
+
+/* TYPE EFFECT */
+function typeEffect(el,text){
+el.innerHTML="";
+let i=0;
+function typing(){
+if(i<text.length){
+el.innerHTML+=text.charAt(i);
+i++;
+requestAnimationFrame(typing);
+}
+}
+typing();
+}
+
+/* GENERATE */
+function generate(){
+clickSound.play();
+
+const thinking=document.getElementById('thinking');
+const output=document.getElementById('output');
+
+thinking.style.display='block';
+output.style.display='none';
+
+runThinking();
+
+setTimeout(()=>{
+thinking.style.display='none';
+output.style.display='block';
+output.classList.add('fade-in');
+
+typeEffect(output,"You're overthinking this. The power isn't in chasing — it's in controlling the frame.");
+
+setTimeout(()=>{
+output.innerHTML+=metrics();
+successSound.play();
+},1200);
+
+},2000);
+}
+
+/* METRICS */
+function metrics(){
+return `
+<div class="metric">Viral Score<div class="bar"><div class="fill" style="width:92%"></div></div></div>
+<div class="metric">Hook Strength<div class="bar"><div class="fill" style="width:88%"></div></div></div>
+<div class="metric">Psychological Grip<div class="bar"><div class="fill" style="width:95%"></div></div></div>
+`;
+}
+
+/* REMIX */
+function remix(){
+const modes=[
+"Savage: You're replaceable. Act accordingly.",
+"Luxury: Scarcity creates value. Move like it.",
+"Dark: Control the frame or get controlled."
+];
+
+const output=document.getElementById('output');
+output.innerHTML="";
+typeEffect(output,modes[Math.floor(Math.random()*modes.length)]);
+}
+
+/* RIPPLE */
+document.querySelectorAll('button').forEach(btn=>{
+btn.addEventListener('click',function(e){
+const circle=document.createElement("span");
+circle.classList.add("ripple");
+
+const rect=this.getBoundingClientRect();
+circle.style.left=e.clientX-rect.left+"px";
+circle.style.top=e.clientY-rect.top+"px";
+
+this.appendChild(circle);
+setTimeout(()=>circle.remove(),600);
+});
+});
+
+/* CLOCK */
+setInterval(()=>{
+document.getElementById('clock').innerText=new Date().toLocaleTimeString();
+},1000);
+
+</script>
+
+</body>
+</html>
