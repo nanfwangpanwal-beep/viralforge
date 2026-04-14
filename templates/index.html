@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ViralForge | Social Architecture OS</title>
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        // If the user hasn't logged in, send them to the login page
+        if (document.referrer === "" && !window.location.href.includes('login.html')) {
+            window.location.href = 'login.html';
+        }
+    </script>
     <style>
         :root {
             --mint: #35F0BA;
@@ -244,7 +250,6 @@
     }
 
     function saveToCloud(id, txt) {
-        // Placeholder for cloud saving logic
         console.log(`Saving ${id}: ${txt}`);
     }
 
@@ -255,7 +260,6 @@
         const div = document.createElement('div');
         div.className = 'history-item';
 
-        // High-end ID Generation
         const prefix = id === 'gHist' ? 'NEURAL_LOG' : 'SYNC_ID';
         const hex = Math.floor(Math.random() * 65535).toString(16).toUpperCase().padStart(4, '0');
 
