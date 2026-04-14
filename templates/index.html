@@ -6,9 +6,10 @@
     <title>ViralForge | Social Architecture OS</title>
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <script>
-        // If the user hasn't logged in, send them to the login page
+        // Updated for Render folder structure
         if (document.referrer === "" && !window.location.href.includes('login.html')) {
-            window.location.href = 'login.html';
+            // Points directly to the templates subfolder to fix 404
+            window.location.href = 'templates/login.html';
         }
     </script>
     <style>
