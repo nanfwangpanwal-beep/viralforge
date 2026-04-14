@@ -53,7 +53,6 @@
             width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); 
             border-radius: 22px; padding: 20px; color: #fff; outline: none; transition: 0.3s;
         }
-        textarea:focus { border-color: var(--mint); background: rgba(53, 240, 186, 0.03); }
 
         .btn-forge { 
             width: 100%; padding: 22px; border-radius: 22px; border: none; 
@@ -67,14 +66,15 @@
             position: relative; overflow: hidden; display: none;
         }
 
-        .output-ctrl { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; }
+        /* EXPANDED SOCIAL SUITE */
+        .output-ctrl { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; max-width: 300px; }
         .ctrl-btn { 
             background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff;
-            padding: 8px 15px; border-radius: 12px; font-family: 'JetBrains Mono'; font-size: 9px; font-weight: 700; cursor: pointer;
+            padding: 6px 12px; border-radius: 10px; font-family: 'JetBrains Mono'; font-size: 8px; font-weight: 700; cursor: pointer; transition: 0.2s;
         }
+        .ctrl-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--mint); }
         .btn-copy { background: var(--mint); color: #000; border: none; }
 
-        /* GLITCH REVEAL ANIMATION */
         .glitch-reveal {
             animation: glitchReveal 0.4s steps(4) forwards;
             opacity: 0;
@@ -82,8 +82,6 @@
 
         @keyframes glitchReveal {
             0% { opacity: 0; transform: skewX(20deg); filter: blur(5px); }
-            20% { opacity: 0.5; transform: skewX(-15deg); filter: blur(2px); }
-            50% { opacity: 0.8; transform: skewX(10deg); filter: blur(1px); }
             100% { opacity: 1; transform: skewX(0); filter: blur(0); }
         }
 
@@ -94,10 +92,7 @@
 
         .history-rail { display: flex; gap: 15px; overflow-x: auto; padding: 15px 0; margin-top: 15px; }
         .history-rail::-webkit-scrollbar { display: none; }
-        .history-item { 
-            flex: 0 0 180px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); 
-            padding: 18px; border-radius: 25px;
-        }
+        .history-item { flex: 0 0 180px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 18px; border-radius: 25px; }
         .history-item span { color: var(--mint); font-family: 'JetBrains Mono'; font-size: 10px; display: block; margin-bottom: 5px; }
         .history-item p { font-size: 10px; opacity: 0.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     </style>
@@ -131,98 +126,4 @@
             <h3>Identity Forge</h3>
             <textarea id="voiceIn" placeholder="Feed voice samples for calibration..." style="height:160px;"></textarea>
             <div class="sync-container">
-                <div class="sync-meta"><span>NEURAL_SYNC</span><span id="syncPerc">0%</span></div>
-                <div class="sync-track"><div class="sync-fill" id="syncFill" style="width: 0%;"></div></div>
-            </div>
-            <button class="btn-forge" style="background:transparent; border:1px solid var(--border); color:#fff; font-size:11px; margin-top:20px;" onclick="syncIdentity()">Sync Identity</button>
-        </div>
-
-        <div class="card span-12">
-            <h3>Viral Forge Engine</h3>
-            <div style="display:grid; grid-template-columns: 1fr 1fr auto; gap:15px;">
-                <input type="text" id="vIn" placeholder="Niche (e.g. SaaS, AI, Luxury)">
-                <select id="vHook"><option value="gap">Hook: Authority Gap</option><option value="pattern">Hook: Pattern Interrupt</option></select>
-                <button class="btn-forge" style="margin:0; padding:0 40px;" onclick="forge('viral')">Forge Hook</button>
-            </div>
-            <div class="history-rail" id="vHist"></div>
-
-            <div class="output-portal" id="outBox">
-                <div class="output-ctrl">
-                    <button class="ctrl-btn" onclick="share('x')">X</button>
-                    <button class="ctrl-btn" onclick="share('wa')">WA</button>
-                    <button class="ctrl-btn" onclick="share('tg')">TG</button>
-                    <button class="ctrl-btn btn-copy" onclick="copy()">COPY</button>
-                </div>
-                <div style="font-family:'JetBrains Mono'; font-size:9px; color:#555;">[PROTOCOL: ACTIVE] [ENGINE: STARK_V5]</div>
-                <div class="res-text" id="resText" style="font-size: 1.5rem; font-weight: 600; margin: 30px 0;"></div>
-                <div style="font-size:11px; color:#666; border-top:1px solid var(--border); padding-top:20px;" id="resStrategy"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('live-clock').innerText = now.toLocaleTimeString('en-US', {hour12:false});
-    }
-    setInterval(updateClock, 1000); updateClock();
-
-    function syncIdentity() {
-        document.getElementById('syncFill').style.width = '94%';
-        document.getElementById('syncPerc').innerText = '94.2%';
-    }
-
-    function forge(type) {
-        const box = document.getElementById('outBox');
-        const resText = document.getElementById('resText');
-        box.style.display = 'block';
-        
-        // Apply Glitch Reveal
-        resText.classList.remove('glitch-reveal');
-        void resText.offsetWidth; // Trigger reflow
-        resText.classList.add('glitch-reveal');
-
-        const hex = Math.floor(Math.random()*65535).toString(16).toUpperCase().padStart(4, '0');
-        
-        if(type === 'ghost') {
-            const content = "honestly, i was starting to think you were interesting, but now you’re just being predictable.";
-            resText.innerText = content;
-            document.getElementById('resStrategy').innerText = "Neural Insight: Pattern Interrupt establishing high-status frame.";
-            addHist('gHist', content, hex);
-        } else {
-            const niche = document.getElementById('vIn').value || 'Industry';
-            const content = `Why 99% of ${niche} founders fail—and the 2-minute fix they ignore.`;
-            resText.innerText = content;
-            document.getElementById('resStrategy').innerText = "Neural Insight: Leverages Logic Defiance to command attention.";
-            addHist('vHist', content, hex);
-        }
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    }
-
-    function addHist(id, txt, hex) {
-        const rail = document.getElementById(id);
-        const item = document.createElement('div');
-        item.className = 'history-item';
-        item.innerHTML = `<span>ID_${hex}</span><p>${txt}</p>`;
-        rail.prepend(item);
-    }
-
-    function copy() {
-        navigator.clipboard.writeText(document.getElementById('resText').innerText);
-        alert("Synced to clipboard.");
-    }
-
-    function share(platform) {
-        const text = encodeURIComponent(document.getElementById('resText').innerText);
-        const urls = {
-            x: `https://twitter.com/intent/tweet?text=${text}`,
-            wa: `https://wa.me/?text=${text}`,
-            tg: `https://t.me/share/url?url=${text}`
-        };
-        window.open(urls[platform], '_blank');
-    }
-</script>
-
-</body>
-</html>
+                <div class="sync-meta"><span>NEURAL_SYNC</span>
