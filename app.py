@@ -2,12 +2,18 @@ from flask import Flask, request, jsonify, render_template
 import os
 import requests
 
-app = Flask(__name__)
+# CRITICAL FIX: Tell Flask to look in the main folder ('.') for HTML files
+app = Flask(__name__, template_folder='.')
 
 @app.route('/')
 def home():
-    # This tells Flask to look for index.html in the /templates folder
+    # Now looks for index.html in your main directory
     return render_template('index.html')
+
+@app.route('/login.html')
+def login_page():
+    # Explicitly serves the login page from the main directory
+    return render_template('login.html')
 
 @app.route('/generate', methods=['GET'])
 def generate():
@@ -17,13 +23,11 @@ def generate():
     if not api_key:
         return jsonify({"status": "error", "message": "API Key missing in Render settings"}), 500
 
-    # Headers for direct API communication
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
     
-    # Data structure for the AI request
     data = {
         "model": "gpt-3.5-turbo",
         "messages": [
@@ -33,7 +37,6 @@ def generate():
     }
 
     try:
-        # Direct POST request to bypass library/proxy bugs
         response = requests.post(
             "https://api.openai.com/v1/chat/completions",
             headers=headers,
@@ -56,6 +59,5 @@ def generate():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-    # Render provides the PORT environment variable automatically
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
