@@ -18,7 +18,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--bg); color: #fff; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         
-        /* Animated Background Layer */
         .ambient-neural { 
             position: fixed; inset: 0; 
             background: radial-gradient(circle at 50% 50%, #0d121f 0%, #000 100%); 
@@ -37,14 +36,13 @@
         .logo { font-family: 'Exo', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 40px; letter-spacing: -1px; }
         .logo span { background: linear-gradient(135deg, var(--mint), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        h2 { font-family: 'Exo', sans-serif; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--mint); margin-bottom: 30px; opacity: 0.8; }
+        h2 { font-family: 'Exo', sans-serif; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--mint); margin-bottom: 30px; }
 
         input { 
             width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); 
             border-radius: 20px; padding: 18px 25px; color: #fff; outline: none; transition: 0.3s; margin-bottom: 15px;
-            font-size: 14px;
         }
-        input:focus { border-color: var(--mint); background: rgba(53, 240, 186, 0.03); box-shadow: 0 0 15px rgba(53, 240, 186, 0.1); }
+        input:focus { border-color: var(--mint); background: rgba(53, 240, 186, 0.03); }
 
         .btn-access { 
             width: 100%; padding: 20px; border-radius: 20px; border: none; 
@@ -52,7 +50,6 @@
             color: #000; font-family: 'Exo', sans-serif; font-weight: 800; text-transform: uppercase; 
             cursor: pointer; margin-top: 10px; transition: 0.3s;
         }
-        .btn-access:active { transform: scale(0.98); opacity: 0.9; }
 
         /* Sync Loader Overlay */
         #sync-overlay {
@@ -60,8 +57,8 @@
             display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10;
         }
         .sync-spinner {
-            width: 40px; height: 40px; border: 3px solid rgba(53, 240, 186, 0.1);
-            border-top: 3px solid var(--mint); border-radius: 50%; animation: spin 0.8s linear infinite;
+            width: 30px; height: 30px; border: 2px solid rgba(53, 240, 186, 0.1);
+            border-top: 2px solid var(--mint); border-radius: 50%; animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .sync-text { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--mint); margin-top: 15px; letter-spacing: 2px; }
@@ -72,8 +69,7 @@
         .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .social-btn { 
             background: rgba(255,255,255,0.04); border: 1px solid var(--border); 
-            padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; justify-content: center;
+            padding: 15px; border-radius: 18px; cursor: pointer;
         }
         .social-btn:hover { border-color: var(--mint); background: rgba(255, 255, 255, 0.08); }
         .social-btn img { width: 20px; opacity: 0.7; }
@@ -96,18 +92,15 @@
     
     <div id="login-view">
         <h2>Initialize Session</h2>
-        <input type="email" id="login-email" placeholder="Neural ID (Email)">
-        <input type="password" id="login-pass" placeholder="Access Code">
+        <input type="email" placeholder="Neural ID (Email)">
+        <input type="password" placeholder="Access Code">
         <button class="btn-access" onclick="enterTerminal()">Enter Terminal</button>
-        
         <div class="divider">OR SECURE CONNECT</div>
-        
         <div class="social-grid">
             <div class="social-btn" onclick="enterTerminal()"><img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png"></div>
             <div class="social-btn" onclick="enterTerminal()"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" style="filter:invert(1)"></div>
             <div class="social-btn" onclick="enterTerminal()"><img src="https://abs.twimg.com/responsive-web/client-web/icon-ios.b174528a.png"></div>
         </div>
-        
         <div class="toggle-auth" onclick="toggle()">New Architect? <span>Forge Identity</span></div>
     </div>
 
@@ -117,49 +110,33 @@
         <input type="email" placeholder="Neural ID (Email)">
         <input type="password" placeholder="Create Access Code">
         <button class="btn-access" onclick="enterTerminal()">Initialize Identity</button>
-        
         <div class="toggle-auth" onclick="toggle()">Existing Architect? <span>Enter Terminal</span></div>
     </div>
 </div>
 
 <script>
-    // Toggle between Login and Signup
     function toggle() {
         const login = document.getElementById('login-view');
         const signup = document.getElementById('signup-view');
         const isLogin = login.style.display !== 'none';
-        
         login.style.display = isLogin ? 'none' : 'block';
         signup.style.display = isLogin ? 'block' : 'none';
     }
 
-    // THE BRIDGE: Optimized connection logic
     function enterTerminal() {
         const overlay = document.getElementById('sync-overlay');
-        const btn = document.querySelector('.btn-access');
-        
-        // 1. Visual Feedback
         overlay.style.display = 'flex';
-        btn.innerText = "Connecting...";
         
-        // 2. Short delay to ensure the OS "Syncs" (Better UX)
+        // Ensure index.html exists in the same folder
         setTimeout(() => {
-            // Check if we are running locally or on a server
-            try {
-                // Force redirect to your master file
-                window.location.replace('index.html');
-            } catch (err) {
-                // Fallback if replace fails
-                window.location.href = 'index.html';
-            }
+            window.location.href = 'index.html';
         }, 1200);
     }
 
-    // Allow "Enter" key to trigger login
+    // Keypress support
     document.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') enterTerminal();
     });
 </script>
-
 </body>
 </html>
