@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | viralforge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; }
+        .sidebar { background: #0d6efd; min-height: 100vh; color: white; padding: 20px; }
+        .nav-link { color: rgba(255,255,255,0.8); margin-bottom: 10px; border-radius: 8px; }
+        .nav-link.active { background: rgba(255,255,255,0.2); color: white; }
+        .main-content { padding: 30px; }
+        .stat-card { background: white; border: none; border-radius: 16px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .balance-display { font-size: 2.5rem; font-weight: 700; color: #0d6efd; letter-spacing: -1px; }
+        .growth-badge { background: #e8f5e9; color: #2e7d32; padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; }
+        .chart-container { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar d-none d-md-block">
+            <h3 class="fw-bold mb-4">viralforge</h3>
+            <nav class="nav flex-column">
+                <a class="nav-link active" href="#"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+                <a class="nav-link" href="#"><i class="bi bi-wallet2 me-2"></i> My Portfolio</a>
+                <a class="nav-link" href="#"><i class="bi bi-arrow-up-right-circle me-2"></i> Transactions</a>
+                <a class="nav-link" href="#"><i class="bi bi-person me-2"></i> Profile</a>
+                <a class="nav-link mt-5" href="index.html"><i class="bi bi-box-arrow-left me-2"></i> Logout</a>
+            </nav>
+        </div>
+
+        <div class="col-md-10 main-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Investment Overview</h2>
+                <div class="growth-badge"><i class="bi bi-graph-up-arrow me-1"></i> Live Portfolio Tracking</div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-5">
+                    <div class="stat-card h-100">
+                        <span class="text-muted text-uppercase small fw-bold">Total Portfolio Value</span>
+                        <div class="balance-display my-2">$<span id="liveBalance">500.00</span></div>
+                        <p class="text-success mb-0 fw-bold"><i class="bi bi-caret-up-fill"></i> +<span id="growthPercentage">0.00</span>% today</p>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="stat-card">
+                                <span class="text-muted small">Daily Profit</span>
+                                <h4 class="fw-bold mb-0 text-primary">+$12.40</h4>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card">
+                                <span class="text-muted small">Active Plan</span>
+                                <h4 class="fw-bold mb-0 text-dark">Premium</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="chart-container">
+                        <h5 class="fw-bold mb-4">Growth Projection</h5>
+                        <canvas id="growthChart" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. THE GROWTH ENGINE
+    let currentBalance = 500.00;
+    let baseAmount = 500.00;
+
+    function updateGrowth() {
+        // Randomly add between 0.01 and 0.05 every few seconds
+        let addition = (Math.random() * 0.05);
+        currentBalance += addition;
+        
+        // Update the numbers on screen
+        document.getElementById('liveBalance').innerText = currentBalance.toFixed(2);
+        
+        // Update growth percentage
+        let growth = ((currentBalance - baseAmount) / baseAmount) * 100;
+        document.getElementById('growthPercentage').innerText = growth.toFixed(4);
+    }
+
+    // Run growth every 3 seconds
+    setInterval(updateGrowth, 3000);
+
+    // 2. THE CHART
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Live'],
+            datasets: [{
+                label: 'Portfolio Growth',
+                data: [500, 508, 515, 522, 535, 542, 550],
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: false, grid: { display: false } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+</script>
+</body>
+</html>
